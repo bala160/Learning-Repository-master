@@ -24,5 +24,7 @@ public class hashTableProgram {
         for(Map.Entry res : data.entrySet()){
             System.out.println(res.getKey()+" " +res.getValue());
         }
+
+        //data.forEach((k,v) -> System.out.println(k+" "+v));
     }
 }
