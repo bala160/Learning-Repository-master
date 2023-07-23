@@ -6,8 +6,12 @@ public class reverseIntegerProgram {
 
         int num = 12345;
         String reverse = String.valueOf(num);
-        StringBuilder sb = new StringBuilder(reverse).reverse();
+        char[] arr = reverse.toCharArray();
+        for(int i = arr.length-1;i>=0;i--){
+            System.out.println(arr[i]);
+        }
+       /* StringBuilder sb = new StringBuilder(reverse).reverse();
         int res = Integer.parseInt(String.valueOf(sb));
-        System.out.println(res);
+        System.out.println(res);*/
     }
 }

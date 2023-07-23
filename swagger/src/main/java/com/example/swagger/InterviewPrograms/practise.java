@@ -1,17 +1,20 @@
 package com.example.swagger.InterviewPrograms;
 
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class practise {
     public static void main(String[] args) {
 
-        int[] arr = new int[5];
+        String name = " Java is a Programminf Language ";
+        //String[] arr = name.split(" ");
 
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = i;
-            System.out.println(arr[i]);
-        }
+        /*for(String res: arr){
+            System.out.println(res);
+        }*/
 
-        System.out.println(arr[2]);
+
+        System.out.println(name);
     }
 }
