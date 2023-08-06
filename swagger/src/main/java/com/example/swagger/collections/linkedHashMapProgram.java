@@ -20,6 +20,13 @@ public class linkedHashMapProgram {
         data.put(3, null);
         data.put(4, m3);
 
+        /*LinkedHashMap<Integer, String> data = new LinkedHashMap<>();
+        data.put(2, "Bala");
+        data.put(null, null);
+        data.put(3, null);
+        data.put(4, "Suchi");
+        data.put(2,"sandhiya");*//*----it will be override*/
+
         for (Map.Entry res : data.entrySet()) {
             System.out.println(res.getKey() + " " + res.getValue());
         }
