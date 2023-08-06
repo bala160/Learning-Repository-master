@@ -1,0 +1,91 @@
+<FormDef>
+    <FormName>process1</FormName>
+    <FormAlias>process1</FormAlias>
+    <Columns>1</Columns>
+    <ThemeName></ThemeName>
+    <ThemeColor>0072c6</ThemeColor>
+    <LogoStyle Visible="true"/>
+    <LogoProperties ImageUrl="" LogoName="" LogoWidth="50" LogoHeight="50"/>
+    <LogoBuffer></LogoBuffer>
+    <Style FontStyle="1" FontWeight="2" FontSize="8" FontColor="000000" BackColor="ffffff" BackColorBoundary="ffffff"
+           BoderSize="0" FontFamily="2" ImageFormUrl="" InputStyle="" ShowHeader="true" HeaderAllignment="center"
+           FixHeader="1" ImageAllignment="Center" CombinedFontWeight="Bold" FormWidthType="1" FormWidth="100"
+           FormBackgroundColor="ffffff" BGActiveColor="" BGInactiveColor="" MenuActiveColor="" MenuInactiveColor=""
+           AddGradient="false" GradientColor1="transparent" GradientColor2="transparent" GradientPercent1="0"
+           GradientPercent2="100" GradientAngles="" FormVertical="center" FormHorizontal="false" TopPercent="0"
+           LeftPercent="0" RightPercent="0" FitToContentHeight="false" FormAllignments="" ScreenBackgroundColor="ffffff"
+           ScreenBackgroundImage="" SelectedCarouselImages="" EnableSliderArrows="false" AllowAutoScroll="false"
+           ScreenBackgroundRadio="bgcolor" ScreenBgImgWidth="" FormBorderColor="d7d7d7" FormBorderWidth="0"
+           FormMaxWidth="" FormMinWidth=""/>
+    <CustomControl ControlName="Slider" ControlIcon="slider.png" max="100" min="0" value="0" unit=""/>
+    <CustomControl ControlName="Doclist" ControlIcon="doclist.png" DocType="" DocName="" DocSize="" DocComment=""
+                   DocIndex="" NoOfPageInDoc="1" DocControlID="" Latitude="" Longitude="" WaiverComments=""
+                   WaiverDoc=""/>
+    <CustomControl ControlName="Toggle" ControlIcon="toggle.png"/>
+    <CustomControl ControlName="Tile" ControlIcon="tile.png" TileHeader="" TilePoint="" TileButtonLabel=""
+                   TileAlignLabel="left" VisibleOnMobile="yes"/>
+    <CustomControl ControlName="Captcha" ControlIcon="tile.png" RetryCount="5"/>
+    <LabelStyle FontStyle="1" FontWeight="" FontSize="1" FontColor="363636" BackColor="" FontFamily="12" FontAlign=""
+                CombinedFontWeight="Bold"/>
+    <InputStyle FontStyle="1" FontWeight="" FontSize="1" FontColor="000000" BackColor="FFFFFF" FontFamily="12"
+                FontAlign="" BorderColor="ccc" DateStyle="1" BorderWidth="0" ControlStyle="Style1"
+                ControlStyleTextarea="Style1" ControlStyleCombobox="Style1" ControlStyleDatepick="Style1"
+                ControlStyleRadio="Style1" ControlStyleCheckbox="Style1" ControlStyleTab="Style1" DateFormat="1"
+                DateSeparator="1" LabelInputRatio="ratio1" LabelFontSize="4" LabelFontWeight="2" LabelFontFamily="2"
+                LabelBackgoundColor="ffffff" LabelFontColor="000000" DisabledFontFamily="2" DisabledFontSize="4"
+                DisabledLabelFontSize="4" DisabledLabelFontColor="000000" DisabledLabelFontFamily="2"
+                DisabledLabelCombinedFontWeight="Bold" DisabledFontColor="000000" DisabledFontStyle="1"
+                DisabledLabelFontWeight="2" DisabledLabelInputRatio="ratio1" DisabledFontlayout="true"
+                AlignColon="false" ColonAlignment="colonWithValue" DisabledLabelAlignment="left"
+                PicklistBackColor="ffffff" IdentifierImageName="" FieldLayout="true" CombinedFontWeight="Bold"
+                DisabledCombinedFontWeight="Bold" InputLabelFontFamily="2" InputLabelFontSize="4"
+                InputLabelFontColor="000000" InputLabelCombinedFontWeight="Bold" InputLabelAlignment=""
+                InputLabelBackColor="ffffff"/>
+    <ZoneList/>
+    <ButtonStyle FontStyle="1" FontWeight="2" FontSize="6" FontColor="" BackColor="0072c6" FontFamily="2"
+                 ControlStyleButton="Style1" BorderColor="0072C6" BorderWidth="1" CombinedFontWeight="Bold"/>
+    <TableStyle FontStyle="1" FontWeight="2" FontSize="4" FontColor="000000" BackColor="efefef" FontFamily="2"
+                HeaderFontFamily="2" HeaderFontSize="4" HeaderFontColor="000000" HeaderBackColor="ffffff"
+                ControlStyle="Style1" BorderColor="ccc" BorderWidth="1" FontAlign="center" AltRowColor="ECEFF1"
+                AltRowColorCheck="false" CombinedFontWeight="Bold" CombinedHeaderFontWeight="Bold"/>
+    <Navigation NavigationStyle="Style1" displaynavigation="true" headerimage="" navbtnfontfamily="12"
+                navbtnfontsize="6" navBtnCombinedFontWeight="Bold" nextBtnText="" nextBtnBackColor="0072c6"
+                nextBtnFontColor="FFFFFF" nextBtnBackColorboundary="" backBtnText="" backBtnBackColor="E8E8E8"
+                backBtnFontColor="2E2E2E" backBtnBackColorboundary="" saveBtnText="" saveBtnBackColor="0072c6"
+                saveBtnFontColor="FFFFFF" saveBtnBackColorboundary="" saveExitBtnText="" saveExitBtnBackColor="FFFFFF"
+                saveExitBtnFontColor="0072c6" saveExitBtnBackColorboundary="0072c6" finishBtnText=""
+                finishBtnBackColor="0072c6" finishBtnFontColor="FFFFFF" finishBtnBackColorboundary="" moveSelBtnText=""
+                moveSelBtnBackColor="E8E8E8" moveSelBtnFontColor="000000" moveSelBtnBackColorboundary=""/>
+    <TabSheetStyle FontStyle="1" FontWeight="2" FontSize="4" FontColor="000000" BackColor="0072c6" FontFamily="2"
+                   ControlStyle="Style1" iFontColor="000000" BorderRadius="" ActiveBackColor="0072c6"
+                   InActiveBackColor="ffffff" CombinedFontWeight="Bold" TabBorderStyle="1" TabType="1"/>
+    <SectionStyle FontStyle="" FontWeight="" FontSize="" FontColor="FFFFFF" BackColor="0072c6" SectionBackColor=""
+                  FontFamily="" SectionType="" Bordercolor="" Bordersize="" RemoveMargins="false" InterRowSpacing=""
+                  ReadOnlyRowSpacing="" InterColumnSpacing="" CombinedFontWeight="Regular"/>
+    <ElementCount button="1" checkbox="1" combo="1" datepick="1" frame="1" iframe="1" image="1" label="1" radio="1"
+                  sheet="1" tab="1" table="1" textarea="1" textbox="1" listbox="1" map="1" video="1" headerframe="2"
+                  EmptyCell="1" EmptyRow="1" CustomControl="1"/>
+    <HeaderSection HeaderAdded="true"/>
+    <TileStyle TileStyleType="Style1" TileBackColor="" TileBorderColor="" TileBorderWidth="" ShowTitle="true"
+               TitlePlacement="Style1" TitleFontFamily="" TitleFontSize="" TitleFontColor="" ContentFontFamily=""
+               ContentFontSize="" ContentFontColor="" ButtonStyle="Style1" BtnBackColor="" BtnBorderColor=""
+               BtnBorderWidth="" BtnFontFamily="" BtnFontSize="" BtnFontColor="" BtnFontWeight="" BtnFontStyle=""/>
+    <GroupInfo/>
+    <ControlGroupsInfo/>
+    <RootControl>
+        <HeaderFrame FrameId="headerframe1" ControlType="headerframe" Caption="Header Section" FontStyle=""
+                     FontWeight="" FontSize="" FontColor="" BackColor="" SectionBackColor="" FontFamily="" Enable="true"
+                     ColumnLayout="1" FormWidthType="1" FormWidth="100" FormBackgroundColor="ffffff" BGActiveColor=""
+                     BGInactiveColor="" MenuActiveColor="" MenuInactiveColor="" AddGradient="false"
+                     GradientColor1="transparent" GradientColor2="transparent" GradientPercent1="0"
+                     GradientPercent2="100" GradientAngles="" FormVertical="center" FormHorizontal="false"
+                     TopPercent="0" LeftPercent="0" RightPercent="0" FitToContentHeight="false" FormAllignments=""
+                     ScreenBackgroundColor="ffffff" ScreenBackgroundImage="" SelectedCarouselImages=""
+                     ScreenBackgroundRadio="" ScreenBgImgWidth="" FormBorderColor="d7d7d7" FormBorderWidth="2"
+                     FormMaxWidth="" FormMinWidth="" Grouping="1" MergeSection="1" FixHeaderSection="false"
+                     ReadOnlyStyle="N" CombinedFontWeight="Regular"/>
+        <Event>
+            <Events/>
+        </Event>
+    </RootControl>
+</FormDef>
