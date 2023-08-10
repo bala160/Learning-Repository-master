@@ -37,7 +37,7 @@ public class XMLManipulationWithExcel {
                 System.out.println(controlType+" ------");
                 if (controlType.equals(desiredControlType)) {
                     desiredControl = control;
-                    break;
+                    //break;
                 }
             }
 
