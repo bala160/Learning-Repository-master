@@ -16,7 +16,7 @@ public class lambdaExpression {
         data.add("bala");
         data.add("priya");
 
-       // data.forEach((name) -> System.out.println(name));
+        data.forEach((name) -> System.out.println(name));
 
 
         List<Integer> res = new ArrayList<>();
