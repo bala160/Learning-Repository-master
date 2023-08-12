@@ -14,5 +14,6 @@ public class constructor {
         GetterSetterClass g = new GetterSetterClass("Bala");
         g.setName("Krish");
         System.out.println(g.getName());
+        System.out.println("Constructor Worked");
     }
 }
