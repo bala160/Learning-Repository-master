@@ -16,6 +16,13 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>jcenter</id>
+			<url>https://jcenter.bintray.com</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -26,6 +33,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>-->
+		<dependency>
+			<groupId>org.xmlunit</groupId>
+			<artifactId>xmlunit-core</artifactId>
+			<version>2.9.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xmlunit</groupId>
+			<artifactId>xmlunit-matchers</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		<!-- ... other XmlUnit dependencies ... -->
 
 			<dependency>
 				<groupId>mysql</groupId>
@@ -35,9 +53,21 @@
 		<dependency>
 			<groupId>org.xmlunit</groupId>
 			<artifactId>xmlunit-core</artifactId>
-			<version>2.8.1</version> <!-- Use the latest version available -->
+			<version>2.9.0</version> <!-- Use the latest version available -->
+		</dependency>
+		<dependency>
+			<groupId>org.xmlunit</groupId>
+			<artifactId>xmlunit-core</artifactId>
+			<version>2.8.2</version> <!-- Replace with the appropriate version -->
 		</dependency>
 
+		<!-- XmlUnit Matchers -->
+		<dependency>
+			<groupId>org.xmlunit</groupId>
+			<artifactId>xmlunit-matchers</artifactId>
+			<version>2.8.2</version> <!-- Replace with the appropriate version -->
+			<scope>test</scope> <!-- Use the appropriate scope based on your needs -->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.retry</groupId>
 			<artifactId>spring-retry</artifactId>
@@ -53,19 +83,21 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>5.1.0</version> <!-- Replace with the latest version of Apache POI -->
+			<version>5.0.0</version>
 		</dependency>
+
+		<!-- Apache POI XWPF Converter -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>5.1.0</version> <!-- Replace with the latest version of Apache POI -->
+			<version>5.0.0</version>
 		</dependency>
 
 		<!-- Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.12.5</version> <!-- Replace with the latest version of Jackson -->
+			<version>2.15.1</version> <!-- Replace with the latest version of Jackson -->
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
@@ -107,6 +139,11 @@
 			<groupId>com.skynav.ttt</groupId>
 			<artifactId>ttt-xmlunit-core</artifactId>
 			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>org.apache.poi.xwpf.converter.xhtml</artifactId>
+			<version>1.0.6</version>
 		</dependency>
 	</dependencies>
 
