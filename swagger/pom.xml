@@ -21,6 +21,19 @@
 			<id>jcenter</id>
 			<url>https://jcenter.bintray.com</url>
 		</repository>
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+		<repository>
+			<id>AsposeJavaAPI</id>
+			<name>Aspose Java API</name>
+			<url>https://repository.aspose.com/repo/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -29,22 +42,16 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>-->
 		<dependency>
-			<groupId>org.xmlunit</groupId>
-			<artifactId>xmlunit-core</artifactId>
-			<version>2.9.1</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.9</version> <!-- Use the latest version -->
 		</dependency>
 		<dependency>
-			<groupId>org.xmlunit</groupId>
-			<artifactId>xmlunit-matchers</artifactId>
-			<version>2.7.0</version>
+			<groupId>com.groupdocs</groupId>
+			<artifactId>groupdocs-conversion</artifactId>
+			<version>17.12</version>
 		</dependency>
-		<!-- ... other XmlUnit dependencies ... -->
-
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
@@ -56,16 +63,20 @@
 			<version>2.9.0</version> <!-- Use the latest version available -->
 		</dependency>
 		<dependency>
-			<groupId>org.xmlunit</groupId>
-			<artifactId>xmlunit-core</artifactId>
-			<version>2.8.2</version> <!-- Replace with the appropriate version -->
-		</dependency>
-		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.14.3</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.0.0</version> <!-- Use the appropriate version -->
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.0.0</version> <!-- Use the appropriate version -->
+		</dependency>
 		<!-- XmlUnit Matchers -->
 		<dependency>
 			<groupId>org.xmlunit</groupId>
@@ -84,20 +95,11 @@
 				<version>2.10.1</version>
 				<scope>compile</scope>
 			</dependency>
-		<!-- Apache POI -->
 		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>5.0.0</version>
+			<groupId>org.xmlunit</groupId>
+			<artifactId>xmlunit-parent</artifactId>
+			<version>2.9.1</version> <!-- Update to the latest version -->
 		</dependency>
-
-		<!-- Apache POI XWPF Converter -->
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>5.0.0</version>
-		</dependency>
-
 		<!-- Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -149,6 +151,22 @@
 			<groupId>fr.opensagres.xdocreport</groupId>
 			<artifactId>org.apache.poi.xwpf.converter.xhtml</artifactId>
 			<version>1.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aspose</groupId>
+			<artifactId>aspose-words</artifactId>
+			<version>18.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xmlunit</groupId>
+			<artifactId>xmlunit-parent</artifactId>
+			<version>2.9.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.1.0</version> <!-- Use the latest version -->
 		</dependency>
 	</dependencies>
 

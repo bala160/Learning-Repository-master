@@ -4,6 +4,7 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTVMerge;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -49,8 +50,12 @@ public class EnhancedDocxToHtmlConverter {
                     XWPFParagraph paragraph = (XWPFParagraph) element;
                     String alignment = getParagraphAlignment(paragraph);
                     String style = getParagraphStyles(paragraph);
+                    String text = paragraph.getText();
+                    //System.out.println(text);
+                    text = StringEscapeUtils.escapeHtml4(text); // Escape special characters
+                    text = text.replace(" ", "&nbsp;"); // Replace spaces with non-breaking spaces
                     htmlContent.append("<p style=\"text-align: ").append(alignment).append("; ").append(style).append("\">")
-                            .append(paragraph.getText()).append("</p>");
+                            .append(text).append("</p>");
                 } else if (element instanceof XWPFTable) {
                     XWPFTable table = (XWPFTable) element;
                     convertTableToHTML(table, htmlContent);
@@ -85,7 +90,9 @@ public class EnhancedDocxToHtmlConverter {
 
                     cellContent.append("\">");
 
-                    cellContent.append(run.getText(0));
+                    // Convert special characters to HTML entities
+                    String runText = StringEscapeUtils.escapeHtml4(run.getText(0));
+                    cellContent.append(runText);
 
                     cellContent.append("</span>");
                 }
@@ -108,7 +115,7 @@ public class EnhancedDocxToHtmlConverter {
         StringBuilder styles = new StringBuilder();
 
         if (run.isBold()) {
-            styles.append("font-weight: bold; ");
+            styles.append("<strong>");
         }
 
         if (run.isItalic()) {
@@ -119,10 +126,17 @@ public class EnhancedDocxToHtmlConverter {
             styles.append("text-decoration: line-through; ");
         }
 
+        String runText = StringEscapeUtils.escapeHtml4(run.getText(0));
+        styles.append(runText);
+
+        if (run.isBold()) {
+            styles.append("</strong>");
+        }
+
         UnderlinePatterns underline = run.getUnderline();
         if (underline != null && underline != UnderlinePatterns.NONE) {
             styles.append("text-decoration: underline; ");
-            System.out.println("Underline pattern: " + underline.toString());
+            // System.out.println("Underline pattern: " + underline.toString());
         }
 
         if (run.getColor() != null && !"000000".equals(run.getColor())) {
@@ -181,12 +195,7 @@ public class EnhancedDocxToHtmlConverter {
         }
         return "left"; // Default to left alignment if not specified
     }
-    private static String getParagraphAlignment(XWPFParagraph paragraph) {
-        if (paragraph.getAlignment() != null) {
-            return paragraph.getAlignment().toString().toLowerCase();
-        }
-        return "left"; // Default to left alignment if not specified
-    }
+
 
     private static int getColSpan(XWPFTableCell cell) {
         CTTcPr cellProperties = cell.getCTTc().getTcPr();
@@ -217,8 +226,26 @@ public class EnhancedDocxToHtmlConverter {
         return 1;
     }
 
-// ... (rest of your code remains unchanged)
+    private static String getCellStyles(XWPFTableCell cell) {
+        StringBuilder styles = new StringBuilder();
 
+        // Check for cell background color
+        if (cell.getColor() != null && !"000000".equals(cell.getColor())) {
+            styles.append("background-color: #").append(cell.getColor()).append("; ");
+        }
+
+        // Check for other cell styles and add them here
+
+        return styles.toString();
+    }
+
+// ... (rest of your code remains unchanged)
+private static String getParagraphAlignment(XWPFParagraph paragraph) {
+    if (paragraph.getAlignment() != null) {
+        return paragraph.getAlignment().toString().toLowerCase();
+    }
+    return "left"; // Default to left alignment if not specified
+}
 
     private static String getParagraphStyles(XWPFParagraph paragraph) {
         StringBuilder styles = new StringBuilder();
@@ -256,18 +283,7 @@ public class EnhancedDocxToHtmlConverter {
         htmlContent.append("</table>");
     }*/
 
-    private static String getCellStyles(XWPFTableCell cell) {
-        StringBuilder styles = new StringBuilder();
 
-        // Check for cell background color
-        if (cell.getColor() != null && !"000000".equals(cell.getColor())) {
-            styles.append("background-color: #").append(cell.getColor()).append("; ");
-        }
-
-        // Check for other cell styles and add them here
-
-        return styles.toString();
-    }
 
     /*private static String convertCellContentToHTML(XWPFTableCell cell) {
         StringBuilder cellContent = new StringBuilder();

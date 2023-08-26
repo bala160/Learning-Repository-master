@@ -1,0 +1,3864 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>input</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height; auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p><strong>HOUSING DEVELOPMENT FINANCE CORPORATION LIMITED</strong></p>
+<p><strong>Branch Name Date:</strong></p>
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Borrower Name</strong></th>
+<th>Mapped to Entity Details&gt;Entity Name&gt;Where
+Relationship=Borrower</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Constitution</strong></td>
+<td><p>Mapped to Constitution of the Borrower</p>
+<p><strong>Share Price Details</strong></p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>CMP</th>
+<th>Market CAP</th>
+<th>As on Date</th>
+<th>52 W H/L</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+<tr class="even">
+<td><strong>Group Name</strong></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>External Rating</strong></td>
+<td><table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 24%" />
+<col style="width: 29%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Date</strong></th>
+<th><strong>Current Rating</strong></th>
+<th><strong>Intrument</strong></th>
+<th><strong>Outlook</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 26%" />
+<col style="width: 36%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Date</strong></th>
+<th><strong>Previous Rating</strong></th>
+<th><strong>Instrument Rating</strong></th>
+<th><strong>Outlook</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+<tr class="even">
+<td><strong>Industry/Sector</strong></td>
+<td>Mapped to Deal Info&gt;Entity Details&gt;Relationship=Borrower,
+Industry</td>
+</tr>
+<tr class="odd">
+<td><strong>Loan Amount</strong></td>
+<td>Mapped to Main Facility Amount</td>
+</tr>
+<tr class="even">
+<td><strong>Facility Type/Facility Sub-Type</strong></td>
+<td><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Facility Sub-Type</strong></th>
+<th><strong>Loan Type</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+<tr class="odd">
+<td><strong>Purpose/End-use</strong></td>
+<td>Mapped to Detailed Purpose&gt;at Sub Facility level</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Proposal in Brief:</strong></p>
+<p><strong>Mapped to Deal Info&gt;Proposal Info&gt;Proposal
+Summary</strong></p>
+<h3 id="exposure">2. Exposure:</h3>
+<p>The HDFC exposure to the company and the group is as follows:</p>
+<ul>
+<li><p><u>HDFC’s Existing Exposure to Company</u></p></li>
+</ul>
+<p>(Rs crores)</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 9%" />
+<col style="width: 12%" />
+<col style="width: 11%" />
+<col style="width: 1%" />
+<col style="width: 12%" />
+<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Loan Account No</strong></th>
+<th><strong>Loan Type</strong></th>
+<th><strong>Sanctioned</strong></th>
+<th><strong>Disbursed</strong></th>
+<th colspan="2"><strong>Committed</strong></th>
+<th><strong>Current O/s</strong></th>
+<th><p><strong>Total</strong></p>
+<p><strong>Exposure</strong></p></th>
+<th><strong>Security Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Mapped to Deal Info&gt;Request Details&gt; Borrower’s
+Existing Loans&gt;Loan Account Number</strong></td>
+<td><strong>Deal Info&gt; Request Details&gt; Sub Facility ID&gt;Loan
+Type</strong></td>
+<td><strong>Deal Info&gt; Request Details&gt; Borrower Existing
+Loans&gt; Sub Facility ID&gt; Sanctioned Loans</strong></td>
+<td><strong>Deal Info&gt; Request Details&gt; Borrower Existing
+Loans&gt; Sub Facility ID&gt; Disbursed Amount</strong></td>
+<td colspan="2"><strong>Deal Info&gt; Request Details&gt; Borrower
+Existing Loans&gt; Sub Facility ID&gt; Undisbursed Amount</strong></td>
+<td><strong>Deal Info&gt; Request Details&gt; Borrower Existing
+Loans&gt; Sub Facility ID&gt; Current O/s</strong></td>
+<td><strong>Mapped to Deal Info&gt;Promoter Exposure&gt;</strong>
+<strong>Existing Loans</strong></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong><u>Grand Total</u></strong></td>
+<td></td>
+<td><strong>100</strong></td>
+<td colspan="2"><strong>20</strong></td>
+<td><strong>180</strong></td>
+<td><strong>10</strong></td>
+<td><strong>190</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Comments on Borrower’s Conduct: Mapped to Deal
+Info&gt;Request Details&gt; Comments on Existing Loans (New RTE after
+Borrower’s Existing Loans)</strong></p>
+<p><u>Group Exposure Details:</u></p>
+<p><strong>Mapped to Deal Info&gt;Group Exposure&gt;Bank/FIs Exposure to
+Developer Group</strong></p>
+<p>(In Rs crores)</p>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 14%" />
+<col style="width: 0%" />
+<col style="width: 13%" />
+<col style="width: 0%" />
+<col style="width: 9%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Company Name</strong></th>
+<th colspan="2"><strong>Existing Exposure</strong></th>
+<th><strong>Proposed Exposure</strong></th>
+<th colspan="2"><p><strong>Total</strong></p>
+<p><strong>(Incl Proposed)</strong></p></th>
+<th colspan="2"><strong>Security Value</strong></th>
+<th><strong>Principal Overdue</strong></th>
+<th><strong>Interest Overdue</strong></th>
+<th><strong>SMA classification</strong></th>
+<th><strong>SMA Classification Date</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td><strong><mark>Sanctioned</mark></strong></td>
+<td><strong>Of which Committed</strong></td>
+<td colspan="2"></td>
+<td colspan="2"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Mapped to Deal Info&gt;Group Exposure&gt;Bank/FIs Exposure
+to Developer Group&gt;Entity Name</strong></td>
+<td></td>
+<td><strong>Mapped to Deal Info&gt;Group Exposure&gt;Bank/FIs Exposure
+to Developer Group&gt;Undisbursed Amount</strong></td>
+<td colspan="2"><strong>Mapped to Deal Info&gt;Group
+Exposure&gt;Bank/FIs Exposure to Developer Group&gt;Proposed
+Exposure</strong></td>
+<td colspan="2"><strong>Mapped to Deal Info&gt;Group
+Exposure&gt;Bank/FIs Exposure to Developer Group&gt; Total Proposed
+Exposure (Including New)</strong></td>
+<td><strong>Mapped to Deal Info&gt;Group Exposure&gt;Bank/FIs Exposure
+to Developer Group&gt;Security Value</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td colspan="2"></td>
+<td colspan="2"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td colspan="2"></td>
+<td colspan="2"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Comments on Group Conduct</strong>: Mapped to Deal
+Info&gt;Group Exposure&gt;Group Account Conduct RTE</p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><h3 id="single-and-group-borrowing-limits">3. Single and Group
+Borrowing Limits:</h3>
+<p><mark>HDFC's Single Borrower Limit (SBL) &amp; Group Borrower Limit
+(GBL) as on 31-03-2022(Mapped to Group Exposure&gt;As on Date) is as
+follows:</mark></p>
+<p><mark>(In Rs crores)</mark></p>
+<table>
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 17%" />
+<col style="width: 16%" />
+<col style="width: 18%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Particulars</th>
+<th>As on 31st March XXXX</th>
+<th>Existing Exposure(A)</th>
+<th>Proposed Exposure(B)</th>
+<th>Total Exposure (A+B)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>Single Borrower Limit</p>
+<p><em>(15% of Owned Funds)</em></p></td>
+<td><p> <strong>Mapped to Deal Info&gt; Promoter Exposure&gt; Banks
+Permissible Exposure Level for SOL</strong></p>
+<p><em><strong>14,451.35</strong></em></p></td>
+<td><p><strong>Mapped to Deal Info &gt; Promoter Exposure&gt; Existing
+Loans</strong></p>
+<p><strong>3000.00</strong></p></td>
+<td> <strong>Mapped to Deal Info &gt; New Loans Requested</strong></td>
+<td><strong>Mapped to Deal Info &gt; Promoter Exposure&gt; Single
+Obliger Exposure</strong></td>
+</tr>
+<tr class="even">
+<td><p>Group Borrower Limit</p>
+<p><em>(Debt - 25% of owned funds)</em></p></td>
+<td> <strong>Mapped to Deal Info&gt; Group Exposure&gt; Banks
+Permissible Exposure Level for GOL</strong></td>
+<td>  <strong>Mapped to Deal Info &gt; Group Exposure</strong>&gt;
+<strong>Total Proposed Exposure – Total of Proposed Amount</strong></td>
+<td> <strong>Mapped to Deal Info &gt; Group
+Exposure</strong>&gt;<strong>Total of Proposed Amount New</strong></td>
+<td><strong>Mapped to Deal Info &gt; Group exposure &gt;Total Group
+Exposure (Including New)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong><u>Comments on Single Borrower Limit:</u> Mapped to Deal
+Info&gt;Comments on Single Borrower Limit</strong></p>
+<p><strong><u>Comments on Group Borrower Limit:</u> Mapped to Deal
+Info&gt;Comments on Group Borrower Limit</strong></p>
+<h3 id="account-conduct">4. Account Conduct:</h3>
+<ul>
+<li><p><strong>CIBIL Check</strong>: <strong>Mapped to Checks&gt;CIBIL
+Check</strong></p></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Relationship</th>
+<th>Score/Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong>: <strong>Mapped to Checks&gt;CIBIL
+Check&gt;Remarks</strong></p>
+<ul>
+<li><p><strong>Litigations against the company- Mapped to
+Checks&gt;CIBIL Check&gt;Litigations against the
+company</strong></p></li>
+<li><p><strong>Dow Jones Check:</strong></p></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 34%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Relationship</th>
+<th>AML Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mapped to Checks&gt;Dow Jones Check&gt;Comments</strong></p>
+<p>We have checked the names of the individuals / directors /
+shareholders / beneficial owners of the entities with whom the loan /
+investment transaction is being proposed and based on the search results
+as shown by our Dow Jones Screening service for Government Sanctions /
+Terrorism / Terrorism Financing screening/ negative screening database,
+we confirm that none of the names are appearing in the said search</p>
+<ul>
+<li><p><strong>Web Search- Mapped to Checks&gt;Web
+Search&gt;RTE</strong></p></li>
+</ul>
+<p><strong><u>5. Rating Rationale: (If Blank data, Not applicable to be
+populated)</u></strong></p>
+<p><strong>Mapped to Customer&gt; Rating&gt; External Credit Risk
+Rating&gt; Rating Rationale</strong></p>
+<h3 id="group-overview">6. Group Overview: </h3>
+<p><strong>Deal Info&gt;Proposal Info&gt;Group Overview RTE</strong></p>
+<p>Brookfield Asset Management is a leading global alternative asset
+manager with approximately US$ 600 billion of assets under management
+across real estate, infrastructure, renewable power, private equity and
+credit. Brookfield owns and operates long-life assets and businesses<a
+href="http://demo-hdfcclosap1.centralindia.cloudapp.azure.com:8080/clos_qa/components/viewer/viewform.jsp?WD_RID=&amp;WD_SID=ec7c3557-f379-4844-bf6c-38e23f361aa6&amp;WDESK_SID=b3cc081e-ac00-4f50-9506-edff198cad52#_msocom_1">[SM1]</a>,
+many of which form the backbone of the global economy. Utilizing its
+global reach, access to large-scale capital and operational</p>
+<p><strong><u>7. Borrower Overview.</u></strong></p>
+<p><strong>Deal Info&gt;Proposal Info&gt;Company Overview
+RTE</strong></p>
+<p>RMZ Infotech Pvt. Ltd. (“RIPL”)</p>
+<p>Date of incorporation – 25th November 2003</p>
+<p>The name of the Company was changed from ‘Ramanand Infotech Private
+Limited’ to ‘RMZ Infotech Private Limited’ in the Company’s EGM dated
+22-11-2005.</p>
+<p><strong><u>8.Ownership/ Shareholding Pattern as on &lt; Deal
+Info&gt;Shareholding/Ownership details&gt;As on Date)</u></strong></p>
+<p>The shareholding of the companies currently is as follows</p>
+<table>
+<colgroup>
+<col style="width: 60%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Relation/Shareholder of</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RMZ Infotech Pvt Ltd</td>
+<td>Borrower</td>
+</tr>
+<tr class="even">
+<td>Thanatos India Private Limited</td>
+<td>RMZ Infotech Pvt Ltd</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deal Info&gt;Shareholding/Ownership Details&gt;Borrower’s
+Shareholding Pattern</strong></p>
+<table>
+<colgroup>
+<col style="width: 68%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Name of the shareholder</strong></th>
+<th><strong>Shareholding %</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MILLENNIA REALTORS PRIVATE LIMITED</td>
+<td>0.93%</td>
+</tr>
+<tr class="even">
+<td>Thanatos India Private Limited</td>
+<td>99.07%</td>
+</tr>
+<tr class="odd">
+<td> Total</td>
+<td>100.00%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RMZ ECOWORLD INFRSTRUCTURE PRIVATE LIMITED</strong></p>
+<p><strong>Deal Info&gt;Shareholding/Ownership Details&gt;</strong>
+<strong>Relation of Name should come</strong></p>
+<table>
+<colgroup>
+<col style="width: 60%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Name of the shareholder</strong></th>
+<th><strong>Shareholding %</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><em><strong>Total</strong></em></td>
+<td><em><strong>100.00%</strong></em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Beneficial Owner: Deal Info &gt;Shareholding/Ownership
+Details &gt;Beneficial Owner</strong></p>
+<table>
+<colgroup>
+<col style="width: 60%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Sr No</strong></th>
+<th><strong>Beneficial Owner</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Comments: Deal Info &gt;Shareholding/Ownership Details
+&gt;Remarks RTE</strong></p>
+<ol start="9" type="1">
+<li><p><strong><u>Management Structure</u></strong></p></li>
+</ol>
+<p><strong>Deal Info &gt;Management Info&gt;Directors’/Owners
+Profile</strong></p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 18%" />
+<col style="width: 21%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Name</strong></th>
+<th><strong>Designation</strong></th>
+<th><strong>Age (Years)</strong></th>
+<th><strong>Qualification</strong></th>
+<th><strong>Experience (in years)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Entity Details&gt;Individual&gt; Relationship=Director,
+Partner, Proprietor</strong></td>
+<td><strong>Deal Info &gt;Management Info&gt; Directors’/Owners Profile
+&gt;Designation</strong></td>
+<td><strong>Mapped to Deal Info&gt;Entity Details&gt;Individual&gt;
+Relationship=Director, Partner, Proprietor&gt;Age</strong></td>
+<td><strong>Deal Info &gt;Management Info&gt; Directors’/Owners Profile
+&gt;Qualification</strong></td>
+<td><strong>Deal Info &gt;Management Info&gt; Directors’/Owners Profile
+&gt; Experience</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Mr. Vithal<br />
+Kernath Suravanshi</strong></td>
+<td></td>
+<td>03/06/1973</td>
+<td>Civil Engineer</td>
+<td>15 years</td>
+</tr>
+</tbody>
+</table>
+<p>Other Directorships (If Blank , it should not come)</p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 30%" />
+<col style="width: 43%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Director Name</td>
+<td>DIN</td>
+<td>Company Name</td>
+</tr>
+<tr class="even">
+<td><strong>Mapped to Deal Info&gt;Entity Details&gt;Individual&gt;
+Relationship=Director&gt;Entity Name</strong></td>
+<td><strong>Mapped to Deal Info&gt;Entity
+Details&gt;Individual&gt;Relationship= Directors&gt;ID Type=DIN&gt;ID
+No.</strong></td>
+<td><p><strong>Mapped to Deal Info&gt;Entity
+Details&gt;Individual&gt;Relationship=Director&gt;Other
+Directorships</strong></p>
+<p><strong>List should come</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Management Team: Deal Info &gt;Management Info&gt; Management
+Team Profile</strong></p>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Name</strong></th>
+<th><strong>Position</strong></th>
+<th><strong>Qualification</strong></th>
+<th><strong>Experience (in years)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Deal Info &gt;Management Info&gt; Management Team Profile
+&gt;Name</strong></td>
+<td><strong>Deal Info &gt;Management Info&gt; Management Team Profile
+&gt;Position</strong></td>
+<td><strong>Deal Info &gt;Management Info&gt; Management Team Profile
+&gt;Qualification</strong></td>
+<td><strong>Deal Info &gt;Management Info&gt; Management Team Profile
+&gt; Experience</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Mr. Vithal<br />
+Kernath Suravanshi</strong></td>
+<td></td>
+<td>Civil Engineer</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<p><strong><u>Comments</u> Deal Info &gt;Management Info&gt; Management
+Team Profile &gt;Remarks on Management Info</strong></p>
+<p>Vithal holds a bachelors’ degree in commerce from the Commercial
+University Limited, Delhi and has a master’s degree in business
+administration from the Narsee Monjee Institute of Management Studies,
+Mumbai. Vithal Kernath Suryavanshi is the regional head – west (Mumbai
+and Pune) at Brookfield Properties, India. Prior to joining, he has
+previously worked at K. Raheja Corp Private Limited. He has over 28
+years of experience in the commercial sales and leasing in the real
+estate sector.</p>
+<ol start="10" type="1">
+<li><p><strong><u>Financials</u></strong></p></li>
+</ol>
+<p><strong>Financials for Borrowing Entity: Deal Info
+&gt;Financials&gt;Entity Spreads&gt;Entity Name- Financial Model (By
+Default, First the spreads where Relationship=Borrower is to be
+populated)</strong></p>
+<p><strong>RMZ Infotech Private Limited-Probe Company
+Standalone</strong></p>
+<p>(Rs crores)</p>
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>BALANCE SHEET (Rs. Crore)</strong></th>
+<th><strong>Financial Year- Y1</strong></th>
+<th><strong>Financial Year- Y2</strong></th>
+<th><strong>Financial Year- Y3</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Equity and Liabilities</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Equity</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Share Capital</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Reserves and Surplus</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Other Equity</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Total Equity</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Liabilities</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Non-current Liabilities</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Long Term Borrowings</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Net Deferred Tax Liabilities</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Other Long Term Liabilities</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Long Term Provisions</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Total Non-current Liabilities</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Current Liabilities</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Short Term Borrowings</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Trade Payables</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Other Current Liabilities</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Short Term Provisions</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>Total Current Liabilities</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Total Equity and Liabilities</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Assets</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Net Fixed Assets</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Tangible Assets</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Intangible Assets</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>Total Net Fixed Assets</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="even">
+<td>Capital Work-in-progress</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>Other Non-current Assets</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Non-current Investments</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Net Deferred Tax Assets</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Long Term Loans and Advances</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Other Non-current Assets</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>Total Other Non-current Assets</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Current Assets</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Current Investments</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Inventories</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Trade Receivables</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Cash and Bank Balances</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Short Term Loans and Advances</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Other Current Assets</td>
+<td></td>
+<td></td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>Total Current Assets</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Total Assets</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>PROFIT &amp; LOSS (Rs. Crore)</strong></th>
+<th><strong>Financial Year-Y1</strong></th>
+<th><strong>Financial Year-Y2</strong></th>
+<th><strong>Financial Year-Y3</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Net Revenue</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Operating Cost</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Cost of Materials Consumed</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Purchases of Stock-in-trade</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Changes in Inventories / Finished Goods</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Employee Benefit Expense</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Other Expenses</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Total Operating Cost</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td>Operating Profit ( EBITDA )</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td>Other Income</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Depreciation and Amortization Expense</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Profit Before Interest and Tax</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>Finance Costs</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Profit Before Tax and Exceptional Items Before Tax</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>Exceptional Items Before Tax</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Profit Before Tax</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>Income Tax</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Profit for the Period from Continuing Operations</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Profit from Discontinuing Operations After Tax</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Profit for the Period</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Comments:</strong></p>
+<p><strong>Deal Info &gt;Financials&gt;Financial Analysis Comment
+&gt;RTE</strong></p>
+<p>The company has shown an extraordinary loss of INR 6282 crore in FY
+21. These losses are essentially investments in RMZ Estates Pvt Ltd and
+RMZ Buildcon Limited (RMZ Group companies) and Infinity assets by way of
+CCD’s which were written off. IF we ignore the extraordinary loss of INR
+6282 crore, the net loss of the company for FY 2021 was INR 169.87
+crore. The extraordinary loss was due to RMZ’s investments in the group
+companies which has to be written-off. The negative net-worth has no
+ramifications on the operations of the company. On the proposed
+merger/demerger, RIPL would move back to the RMZ group and all the
+assets and liabilities of RIPL would move to REIPL. In the unlikely
+event of non-approval of the scheme by NCLT, there will not be transfer
+of any assets / liabilities from RIPL. So there will not be any change
+in this entry. In the event RIPL recovers some portion of the investment
+in future, then the proportionate provision will get reversed and in the
+event, no recovery happens, then this provision will be used to write
+off these investments. In the second scenario, there will not be any
+further impact on P&amp;L Account of RIPL.</p>
+<p><strong>Deal Info &gt;Financials&gt;Entity Spreads&gt;Entity Name-
+Financial Model (Other Entities)</strong></p>
+<p><strong>RMZ Ecoworld Infrastructure – Probe
+LLP-Standalone</strong></p>
+<table>
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>STATEMENT OF ASSETS AND LIABILITIES (Rs.
+Crore)</strong></th>
+<th><strong>Financial Year-Y1</strong></th>
+<th><strong>Financial Year-Y2</strong></th>
+<th><strong>Financial Year-Y3</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Contribution and Liabilities</strong></td>
+<td> </td>
+<td> </td>
+<td>(latest year to be mapped here)</td>
+</tr>
+<tr class="even">
+<td><strong>Partner's Funds</strong></td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>Contribution Received</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Reserves and Surplus</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>Liabilities</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="even">
+<td>Secured Loans</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Unsecured Loans</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Short Term Borrowing</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Creditor / Trade Payables - Advance from Customers</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Other Liabilities</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>Provisions</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="even">
+<td>for Taxation</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>for Contingencies</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>for Insurance</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Other Provisions</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>Total Liabiities</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Assets</strong></td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Gross Fixed Assets</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Less: Depreciation and Amortization</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Net Fixed Assets</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>Investments</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Loans and Advances</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Inventories</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Debtors / Trade Receivables</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Cash and Cash Equivalents</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Other Assets</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>Total Assets</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="even">
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>STATEMENT OF INCOME AND EXPENDITURE (Rs.
+Crore)</strong></th>
+<th><strong>Financial Year-L-2</strong></th>
+<th><strong>Financial Year-L-1</strong></th>
+<th><strong>Financial Year-Latest year</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Net Revenue</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>Operating Cost</strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+</tr>
+<tr class="odd">
+<td>Cost of Materials Consumed</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Purchases of Stock-in-trade</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Changes in Inventories / Finished Goods</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Employee Benefit Expense</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Other Expenses</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>Total Operating Cost</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td>Operating Profit ( EBITDA )</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td>Other Income</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Depreciation and Amortization Expense</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Profit Before Interest and Tax</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>Finance Costs</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Profit Before Tax and Exceptional Items Before Tax</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>Exceptional Items Before Tax</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Profit Before Tax</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>Income Tax</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Profit for the Period from Continuing Operations</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Profit from Discontinuing Operations After Tax</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>Profit for the Period</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deal Info &gt;Financials&gt;Financial Comments
+&gt;RTE</strong></p>
+<p>The interest coverage ratio has moved up from 1.01 in FY 20 to 1.08
+in FY 21 due to improved EBITDA. The company is barely generating enough
+cash to service the interest on existing debt. The company has also paid
+approximately INR 90 crore towards principal payments. The vacancy in
+these assets is currently 8%. BAM has taken over the assets from RMZ in
+December 20. It expects to leverage its global expertise and stabilise
+the assets over the next 1-2 years. Considering the same it wants to
+refinance the existing debt which will improve the liquidity in the
+company.</p>
+<p><strong>Deal Info &gt;Financials&gt;Entity Spreads&gt;Entity Name-
+Financial Model (Other Entities)</strong></p>
+<p><strong>RMZ Infrastructure Extensive Spreads</strong></p>
+<table>
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Operating Performance</strong></th>
+<th colspan="3"><strong>Consolidated</strong></th>
+<th colspan="3"><strong>Standalone</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>In Rs Crs</strong></td>
+<td><strong>Year 1</strong></td>
+<td><strong>Year 2</strong></td>
+<td><strong>Year 3</strong></td>
+<td><strong>Year 1</strong></td>
+<td><strong>Year 2</strong></td>
+<td><strong>Year 3</strong></td>
+</tr>
+<tr class="even">
+<td>Total Operating Income</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><em>Growth</em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+</tr>
+<tr class="even">
+<td>EBITDA (without non-operating income)</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><em>EBITDA Margins - %</em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+</tr>
+<tr class="even">
+<td>Depreciation</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Interest Expenses</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Net Non-operating Income</td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+</tr>
+<tr class="odd">
+<td>PAT</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><em>PAT Margins - %</em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+<td><em> </em></td>
+</tr>
+<tr class="odd">
+<td>Net Cash Accruals</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>Balance Sheet Indicators</strong></td>
+<td colspan="3"><strong>Consolidated</strong></td>
+<td><strong>Standalone</strong></td>
+<td><strong>Standalone</strong></td>
+<td><strong>Standalone</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>In Rs Crs</strong></td>
+<td><strong>Year 1</strong></td>
+<td><strong>Year 2</strong></td>
+<td><strong>Year 3</strong></td>
+<td><strong>Year 1</strong></td>
+<td><strong>Year 1</strong></td>
+<td><strong>Year 1</strong></td>
+</tr>
+<tr class="even">
+<td>Tangible Networth (TNW)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>Long Term Debt</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Current Portion of Term Debt</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>Working Capital Bank Finance (incl. BD, STL &amp; Buyers
+Credit)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Total Debt</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>Total Debt including Corporate Guarantees extended</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><em>Cash &amp; Cash equivalents</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><em>Net Debt (Total Debt incl Corp Gty – Cash &amp; Cash
+Equivalents)</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Net Fixed Assets</td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+</tr>
+<tr class="odd">
+<td>Current Assets (including Cash &amp; Cash Equivalents)</td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+</tr>
+<tr class="even">
+<td>Current Liabilities (including bank borrowings)</td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+<td><em>-</em></td>
+</tr>
+<tr class="odd">
+<td>Investment &amp; Advances to Group Companies</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><strong>Ratios</strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+</tr>
+<tr class="odd">
+<td>Total Debt / TNW</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Total Outside Liability / TNW</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>TD incl Corporate Guarantee / TNW</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Net Debt (Incl Corp Gty) / NCA</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total Debt (inc. Corp Gty) / EBIDTA</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Net Debt (Incl Corp Gty) / EBITDA</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Current Ratio</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Adjusted Current Ratio (Excl CPLTD)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Interest coverage</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Cash Flow Available for Debt Servicing (EBIDTA - Tax)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Debt to be Serviced (Debt repayments due + Interest)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>DSCR</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deal Info &gt;Financials&gt;Financial Comments
+&gt;RTE</strong></p>
+<ol start="9" type="1">
+<li><p><strong><u>Financial</u></strong>
+<strong><u>Projections</u></strong></p></li>
+</ol>
+<p><strong>Mapped to Deal Info&gt;Financials &gt;
+Projections</strong></p>
+<table>
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 11%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 14%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Operating Statement</strong></th>
+<th><strong>Y1</strong></th>
+<th><strong>Y2</strong></th>
+<th><strong>Y3</strong></th>
+<th><strong>Y4</strong></th>
+<th><strong>Y5</strong></th>
+<th><strong>Y6</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>For the Financial Year ended 31st March</strong></td>
+<td><strong>2024</strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+</tr>
+<tr class="even">
+<td><strong>Select period</strong></td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong> </strong></td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Revenue from lease rentals</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Other Revenue</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>Total Revenue</strong></td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Rates &amp; Taxes</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Insurance</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Other Expenses</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>Total expenses</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Gross Profit</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td>Selling Exp/ Brokerage Cost</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Other General Expenses</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>EBIDTA</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="even">
+<td>Financing Cost</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Depreciation</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>PBT</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td>Tax</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>PAT</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="odd">
+<td>Depreciation</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Interest</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>Net Cash Accruals before interest</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+<td><strong>0.00</strong></td>
+</tr>
+<tr class="even">
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Principal installment due within 1 year</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Interest</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>Total Debt Servicing component</strong></td>
+<td><strong>-</strong></td>
+<td><strong>-</strong></td>
+<td><strong>-</strong></td>
+<td><strong>-</strong></td>
+<td><strong>-</strong></td>
+<td><strong>-</strong></td>
+</tr>
+<tr class="even">
+<td><strong>DSCR</strong></td>
+<td><strong>#DIV/0!</strong></td>
+<td><strong>#DIV/0!</strong></td>
+<td><strong>#DIV/0!</strong></td>
+<td><strong>#DIV/0!</strong></td>
+<td><strong>#DIV/0!</strong></td>
+<td><strong>#DIV/0!</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Minimum DSCR</strong></td>
+<td colspan="6"></td>
+</tr>
+<tr class="even">
+<td><strong>Average DSCR</strong></td>
+<td colspan="6"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Comments:</strong> <strong>Mapped to Deal Info&gt;Financials
+&gt; Projections</strong></p>
+<p><strong>Cash Flow</strong></p>
+<p><strong>Deal Info &gt;Financials&gt;Financial Highlights &gt;Cash
+Flow RTE</strong></p>
+<table>
+<colgroup>
+<col style="width: 59%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><em><strong>Cash Flow from Operating Activities</strong></em></th>
+<th><strong>31-Mar-21</strong></th>
+<th><strong>31-Mar -20</strong></th>
+<th><strong>31-Mar-19</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The company has shown an extraordinary loss of INR 6282 crore in FY
+21</p>
+<ol start="10" type="1">
+<li><p><strong><u>Current Proposal</u></strong></p></li>
+</ol>
+<p><strong>Mapped to Deal Info&gt;Proposal Info&gt;Current Proposal
+Details</strong></p>
+<ol start="11" type="1">
+<li><p><strong><u>Project Details:</u></strong></p></li>
+</ol>
+<p><strong>Project 1 Name &amp; Address : Mapped to Deal Info&gt;Project
+ID Search/Create&gt; Project Name 1 &amp; Address</strong></p>
+<p><strong>Brief About the Project-Mapped to Project ID
+Search/Create&gt; Project Name 1&gt;Brief About the Project</strong></p>
+<p><strong>Total Area: Mapped to Project ID Search/Create&gt; Project
+Name 1&gt;Total Area (in sqft)</strong></p>
+<p><strong>Premises Details- Mapped to Project ID Search/Create&gt;
+Project Name 1&gt;Leased Building Details</strong></p>
+<p><strong>(Area in sqft)</strong></p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 21%" />
+<col style="width: 14%" />
+<col style="width: 18%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Sr No</strong></td>
+<td><strong>Building name</strong></td>
+<td><strong>Status</strong></td>
+<td><strong>Leasable Area</strong></td>
+<td><strong>Leased Area</strong></td>
+<td><strong>Vacant area</strong></td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Mapped to Building name</td>
+<td>Mapped to Status</td>
+<td>Mapped to Leasable Area</td>
+<td>Mapped to Leased Area</td>
+<td>Mapped to Vacant Area</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><strong>Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tenant Details:</strong></p>
+<p><strong>Mapped to Tenant &amp; Lease Details Tab&gt; Only Top 10
+tenants to appear here, Balance others</strong></p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 13%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Sr No</td>
+<td>Lessee Name</td>
+<td>Leased area (in sqft)</td>
+<td>Rent psf per month</td>
+<td>Gross Rent per month (Rs)</td>
+<td>Net Rent per month (Rs)</td>
+<td>Leased Area as a % Total Leasable Area</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Total</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Others</td>
+<td>Blank</td>
+<td></td>
+<td>Blank</td>
+<td>Blank</td>
+<td>Blank</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Grand Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>*The difference between Gross &amp; Net Rent can be attributed
+towards CAM charges, TDS, margin etc</p>
+<p><strong>Comments-</strong> <strong>Customer Info &gt;Tenant
+Details&gt;Remarks</strong></p>
+<p><strong>Termination Clauses</strong></p>
+<p><strong>Customer Info &gt;Tenant Details&gt;Termination
+clauses-RTE</strong></p>
+<p><strong>Project 2: Mapped to Project Details Tab&gt;Project
+2</strong></p>
+<p><strong>Project 2 Name &amp; Address: Mapped to Deal Info&gt;Project
+ID Search/Create&gt; Project Name 2 &amp; Address</strong></p>
+<p><strong>Brief About the Project-Mapped to Project ID
+Search/Create&gt; Project Name 1&gt;Brief About the Project</strong></p>
+<p><strong>Total Area: Mapped to Project ID Search/Create&gt; Project
+Name 2&gt;Total Area (in sqft)</strong></p>
+<p><strong>Premises Details- Mapped to Project ID Search/Create&gt;
+Project Name 1&gt;Brief About the Project</strong></p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 21%" />
+<col style="width: 14%" />
+<col style="width: 18%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Sr No</td>
+<td>Building name</td>
+<td>Status</td>
+<td>Leasable Area (in Sqft)</td>
+<td>Leased Area (In Sqft)</td>
+<td>Vacant area (in Sqft)</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Mapped to Building name</td>
+<td>Mapped to Status</td>
+<td>Mapped to Leasable Area</td>
+<td>Mapped to Leased Area</td>
+<td>Mapped to Vacant Area</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><strong>Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tenant Details:</strong></p>
+<p><strong>Mapped to Tenant &amp; Lease Details Tab&gt; Only Top 10
+tenants to appear here, Balance others</strong></p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 19%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 13%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Sr No</td>
+<td>Lessee Name</td>
+<td>Leased area (in sqft)</td>
+<td>Rent psf per month</td>
+<td>Gross Rent per month (Rs)</td>
+<td>Net Rent per month (Rs)</td>
+<td>Leased Area as a % Total Leasable Area</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Total</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Others</td>
+<td>Blank</td>
+<td></td>
+<td>Blank</td>
+<td>Blank</td>
+<td>Blank</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Grand Total</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>*The difference between Gross &amp; Net Rent can be attributed
+towards CAM charges, TDS, margin etc</p>
+<p><strong>Comments-</strong> <strong>Customer Info &gt;Tenant
+Details&gt;Remarks</strong></p>
+<p><strong>Termination Clauses</strong></p>
+<p><strong>Customer Info &gt;Tenant Details&gt;Termination
+clauses-RTE</strong></p>
+<ol start="9" type="1">
+<li><p><strong><u>LRD Assessment-Calculation of Loan
+Eligibility</u></strong></p></li>
+</ol>
+<p><strong>Mapped to Lease and Tenant Tab&gt;LRD Assessment</strong></p>
+<table>
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th> <strong>Particulars</strong></th>
+<th><strong> </strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Recommended term months</td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>ROI p.a</td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Leasable Area (in sq. ft.)</td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Leased Area (in sqft)</td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Average Rent psft per month (Rs)</td>
+<td> </td>
+</tr>
+<tr class="even">
+<td><strong>Gross Rental - per month (Rs)</strong></td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>No of Escalations considered</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>CAM Charges (Rs)</td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Parking Revenue (Rs)</td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Other Income (Rs)</td>
+<td>Blank rows not to appear in the COM Note </td>
+</tr>
+<tr class="odd">
+<td>Other Expenses (Rs)</td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>TDS (%)</td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Margin (%)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Net Rental (per month)</strong></td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>NPV -Loan Eligibility basis Occupied Area</strong></td>
+<td><strong> </strong></td>
+</tr>
+<tr class="even">
+<td><strong>Loan amount Recommended</strong></td>
+<td><strong> </strong></td>
+</tr>
+<tr class="odd">
+<td>Bullet %</td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Bullet Amount</td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Unoccupied/ Vacant Area</td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td>Vacant Area %</td>
+<td> </td>
+</tr>
+<tr class="even">
+<td>Rental expected from vacant area</td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>LRD Eligibility basis Vacant Area</strong></td>
+<td> </td>
+</tr>
+<tr class="even">
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td><strong>Total LRD Eligibility (Including Vacant Area)</strong></td>
+<td><strong> </strong></td>
+</tr>
+<tr class="even">
+<td><p><strong>Total Loan Recommended</strong></p>
+<p><strong>(Incl Vacant Area)</strong></p></td>
+<td><strong> </strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Assumptions:</strong></p>
+<p><strong>Lease &amp; Tenant Tab&gt;LRD Eligibility
+&gt;Assumptions</strong></p>
+<ol start="10" type="1">
+<li><p><strong><u>Sensitivity :</u></strong></p></li>
+</ol>
+<p><strong>Mapped to Lease &amp; Tenant Tab&gt;Sensitivity
+Analysis&gt;RTE</strong></p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 16%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 14%" />
+<col style="width: 10%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Senstivity Basis ROI</strong></th>
+<th><strong>Base Scenario</strong></th>
+<th><strong>Increase in ROI by 0.5%</strong></th>
+<th><strong>Increase in ROI by 1%</strong></th>
+<th><strong>Increase in ROI by 1.5%</strong></th>
+<th><strong>Increase in ROI by 2%</strong></th>
+<th><strong>Increase in ROI by 2.5%</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>LRD Eligibility</strong></td>
+<td>7,82,49,69,552</td>
+<td>7,59,76,98,542</td>
+<td>7,16,91,09,947</td>
+<td>6,58,56,39,308</td>
+<td>5,90,49,61,670</td>
+<td>5,18,56,78,815</td>
+</tr>
+<tr class="even">
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Senstivity Basis Base Rent</strong></td>
+<td><strong>Base Scenario</strong></td>
+<td><strong>Increase in buffer by 5%</strong></td>
+<td><strong>Increase in buffer by 10%</strong></td>
+<td><strong>Increase in buffer by 15%</strong></td>
+<td><strong>Increase in buffer by 20%</strong></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>LRD Eligibility</strong></td>
+<td>7,82,49,69,552</td>
+<td>7433721074</td>
+<td>7042472596</td>
+<td>6651224119</td>
+<td>6259975641</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Two factor Senstivity</strong></td>
+<td><strong>Increase in buffer by 5%</strong></td>
+<td><strong>Increase in buffer by 10%</strong></td>
+<td><strong>Increase in buffer by 15%</strong></td>
+<td><strong>Increase in buffer by 20%</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Increase in ROI by 0.5%</td>
+<td>7,21,78,13,615</td>
+<td>6,83,79,28,688</td>
+<td>6,45,80,43,761</td>
+<td>6,07,81,58,833</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Increase in ROI by 1%</td>
+<td>6,81,06,54,450</td>
+<td>6,45,21,98,952</td>
+<td>6,09,37,43,455</td>
+<td>5,73,52,87,958</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Increase in ROI by 1.5%</td>
+<td>6,25,63,57,343</td>
+<td>5,92,70,75,377</td>
+<td>5,59,77,93,412</td>
+<td>5,26,85,11,447</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Increase in ROI by 2%</td>
+<td>5,60,97,13,587</td>
+<td>5,31,44,65,503</td>
+<td>5,01,92,17,420</td>
+<td>4,72,39,69,336</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Increase in ROI by 2.5%</td>
+<td>4,92,63,94,874</td>
+<td>4,66,71,10,933</td>
+<td>4,40,78,26,993</td>
+<td>4,14,85,43,052</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ol start="11" type="1">
+<li><p><strong><u>Deviation Matrix</u></strong></p></li>
+</ol>
+<p><strong>Mapped to Decision &amp; Remarks
+&gt;Deviations&gt;</strong></p>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 44%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Parameters</strong></th>
+<th><strong>HDFC Policy</strong></th>
+<th><strong>Parameters for the Proposed loan</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Mapped to Deviation Type</strong></td>
+<td><strong>Mapped to Policy Stipulations/Scheme
+Guidelines</strong></td>
+<td><strong>Mapped to Deviation Description</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong><u>Justification:</u></strong> <strong>Mapped to Decision
+&amp; Remarks &gt;Deviations&gt;Justification</strong></p>
+<ol start="12" type="1">
+<li><p><strong><u>Market Overview</u></strong></p></li>
+</ol>
+<p><strong>Lease &amp; Tenant Details &gt;Market Overview</strong></p>
+<p><strong><u>Bengalaru</u></strong></p>
+<p>Bengaluru, renowned as the ‘Silicon Valley’ of India, is the capital
+city and the main economic centre of Karnataka state. During the 1950s
+and 60s, the Central Government established large public-sector units
+such as Hindustan Machine Tools (HMT), Bharat Electronics Ltd. (BEL),
+etc. Prominent private sector companies such as Motor Industries Company
+(MICO) commenced their operations in the city in 1954. This enabled the
+city to emerge as a prominent hub for Research &amp; Development in
+India, with reputed</p>
+<table>
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 23%" />
+<col style="width: 24%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Development Name</strong></th>
+<th><strong>Developer</strong></th>
+<th><strong>Total Leasable</strong></th>
+<th><strong>Vacancy</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong> </strong></td>
+<td><strong> </strong></td>
+<td><strong>Area (Mn sft)</strong></td>
+<td><strong> </strong></td>
+</tr>
+<tr class="even">
+<td>Ramanujan Infocity</td>
+<td>Tata Realty</td>
+<td>4.5</td>
+<td>5-10%</td>
+</tr>
+<tr class="odd">
+<td>International Tech Park</td>
+<td>Capitaland</td>
+<td>2</td>
+<td>15-20%</td>
+</tr>
+<tr class="even">
+<td>Global Infocity Park</td>
+<td>Mapletree</td>
+<td>2.6</td>
+<td>10-15%</td>
+</tr>
+<tr class="odd">
+<td>World Trade Center</td>
+<td>Brigade Group</td>
+<td>2.1</td>
+<td>30-35%</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><ol start="13" type="1">
+<li><p><strong><u>Key Risks&gt; Mapped to Rating&gt;Risk &amp;
+Mitigants</u></strong></p></li>
+</ol>
+<ul>
+<li><p>Almost 68% of the leased area has been occupied by 10 companies.
+There could be a risk of vacancies in case there is an oversupply or
+Work from Home continues. This is a low to medium risk as these are
+Grade A assets and Brookfield can leverage on its global expertise for
+leasing these assets. As the Second wave has abated, companies are also
+being more responsive towards coming back to workplaces. Apart from
+that, the existing lessees have also invested in fit outs which will
+make them expensive to move out</p></li>
+<li><p>There is medium risk of tenants not paying the rentals due to
+stress emanating from Covid. However, since most of the tenants are
+reputed companies, the rental commitments have been honoured. The
+collection efficiency for the last 6 months is as follows:</p></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Jan-21</strong></th>
+<th><strong>Feb-21</strong></th>
+<th><strong>Mar-21</strong></th>
+<th><strong>Apr-21</strong></th>
+<th><strong>May-21</strong></th>
+<th><strong>Jun-21</strong></th>
+<th><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Entity</strong></td>
+<td><strong>Efficiency</strong></td>
+<td><strong>Efficiency</strong></td>
+<td><strong>Efficiency</strong></td>
+<td><strong>Efficiency</strong></td>
+<td><strong>Efficiency</strong></td>
+<td><strong>Efficiency</strong></td>
+<td><strong>Efficiency</strong></td>
+</tr>
+<tr class="even">
+<td>RIPL</td>
+<td>99.06%</td>
+<td>98.46%</td>
+<td>98.92%</td>
+<td>99.04%</td>
+<td>98.62%</td>
+<td>99.95%</td>
+<td>99.00%</td>
+</tr>
+</tbody>
+</table>
+<ol start="14" type="1">
+<li><p><strong><u>Environment Risk Assessment: (Rating: Low/
+Medium/High) – Mapped to Rating TAB&gt;E&amp; S
+Verification</u></strong></p></li>
+</ol>
+<p>E&amp;S Applicable: Mapped to Rating E&amp;S Applicable:
+<strong>Yes</strong></p>
+<p>ESG Rating: Mapped to Rating E&amp;S Rating:
+<strong>Medium</strong></p>
+<p>Green Building Rating available<strong>-</strong> Mapped to Green
+Building Rating Available- <strong>Yes</strong></p>
+<p>Green Building Rating Agency: Mapped to Green Building Rating
+Agency</p>
+<p>Green Building Rating Level: Mapped to Green Building Rating
+Level</p>
+<p>Green Certificate Issuance Date: Mapped to Green Certificate Issuance
+Date</p>
+<p>Rating Assessment: Mapped to Rating Assessment:
+<strong>External</strong></p>
+<p>Name of Agency (If External) : Mapped to Name of Agency(If
+External)</p>
+<p>ESG Remarks: Mapped to Rating&gt;E&amp;S Verification&gt;Remarks</p>
+<p><strong>The ESG team has gone through the documents and declaration
+provided by BAM</strong></p>
+<ol start="15" type="1">
+<li><p><strong><u>Risk</u> Categorization: Mapped to Checks&gt;Risk
+Categorisation</strong></p></li>
+</ol>
+<p><strong><u>Final Risk category:</u></strong> High</p>
+<table>
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 8%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Subcategory</strong></th>
+<th><strong>Y/N</strong></th>
+<th><strong>Risk Categorisation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Is beneficial owner PEP</td>
+<td>Yes</td>
+<td>High</td>
+</tr>
+<tr class="even">
+<td>Are 100% of the shares held by one single family</td>
+<td>Yes</td>
+<td>High</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><u><strong>Reason:</strong> (</u><strong>Only those rows to be mapped
+where Sub-category =Y, Risk Categorization=High)</strong></p>
+<p><strong>Comments:</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><ol start="16" type="1">
+<li><p><strong><u>Proposal Summary</u></strong></p></li>
+</ol>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Name of the Borrower</strong></td>
+<td><strong>Mapped to Deal Info&gt;Entity Details&gt;Entity Type=Non
+Individuals ,where relationship=Borrower&gt;Entity Name</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Loan Amount (In crores)</strong></td>
+<td><strong>Mapped to Deal Info&gt;Request Details&gt;Recommended Loan
+amount where Main Facility=No</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>End Use</strong></td>
+<td><strong>Mapped to Deal Info&gt;Request Details&gt;Detailed Facility
+Purpose where Main Facility=No</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Rate of interest</strong></td>
+<td><p><strong>Mapped to Deal Info&gt;Request Details&gt;Pricing where
+Main facility =No</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 18%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Benchmark Type</strong></th>
+<th><strong>Benchmark Rate</strong></th>
+<th><strong>Spread</strong></th>
+<th><strong>Effective Interest Rate</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+<tr class="odd">
+<td><strong>Interest Reset</strong></td>
+<td><p><strong>Mapped to Deal Info&gt;Request Details&gt;Pricing where
+Main facility =No</strong></p>
+<p><strong>Interest Reset Frequency</strong></p></td>
+</tr>
+<tr class="even">
+<td><strong>Fees</strong></td>
+<td><p><strong>To be Mapped to Loan Info &gt; Fees&gt;Facility ID-
+Effective Fee %( to be paid upfront + Applicable Taxes) (this standard
+text to come)</strong></p>
+<p><strong>1.00 % to be paid upfront + Applicable
+Taxes</strong></p></td>
+</tr>
+<tr class="odd">
+<td><strong>Term in months</strong></td>
+<td><p><strong>Deal Info&gt;Request Details&gt;Sub-facility Id- Tenor(In
+months</strong>)</p>
+<p><strong>48</strong></p></td>
+</tr>
+<tr class="even">
+<td><strong>Repayment</strong></td>
+<td><ul>
+<li><p>Interest-Monthly</p></li>
+<li><p>Principal Moratorium Period (In Months)- <strong>12</strong>
+months (Mapped to Deal Info&gt;Request
+Details&gt;Pricing&gt;Moratorium)</p></li>
+<li><p>Repayment Period (In months)-<strong>48</strong> months (Mapped
+to Deal info&gt;Request Details&gt;Pricing&gt;Repayment Period)</p></li>
+<li><p>Repayment Amount will be as per the Annexure</p></li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><strong>Primary Security</strong></td>
+<td><p><strong>To be mapped to Collateral Tab&gt; Primary &gt;
+Security&gt;Security Description</strong></p>
+<ol type="1">
+<li><p>Exclusive Mortgage of Centennial, RMBP II, Ecospace and RMZ
+Nxt.</p></li>
+<li><p>Hypothecation of receivables from aforesaid properties financed
+by way deed of hypothecation and Power of Attorney along with an Escrow
+arrangement.</p></li>
+<li><p>Pledge of 99.07% Shares / Compulsorily convertible Debentures of
+RIPL held by BAM.</p></li>
+<li><p>Extension of Pledge of Shares / Compulsorily convertible
+Debentures / any other form of equity of (RMZ Ecoworld Infrastucture
+Private Limited (REIPL), RMZ Azure Projects Private Limited (RAPPL), RMZ
+Northstar Projects Private Limited (RNSPPL) in favour of HDFC for the
+duration of the loan. The shares of REIPL and RAPPL are currently
+extended as security for the loan and the INR 6250 crore and INR 750
+crore to HDFC. Considering the repayment of the loan of INR 2600 crore
+the shares of the three companies (RIPL, REIPL &amp; RAPPL) will be
+exclusively pledged for the loan to REIPL by HDFC (i.e. INR 6250 crores
+and INR 750 crores) and the loan to RIPL by HDFC. <strong>The shares of
+RNSPPL will be also exclusively pledged for the proposed loan subject to
+approvals from the RBI.</strong></p></li>
+<li><p>Extension of Mortgage of RMBP I, RMZ Icon, Ecoworld Campus 1,2,
+3, 4AB, 4C, 6A, 6B, 7, 8A, 8B, RMZ Azure. RMZ Northstar, RMZ Ecoworld
+5A, 5B in favor of HDFC Ltd for the proposed loans.</p></li>
+<li><p>Extension of Hypothecation of Receivables of RMBP I, RMZ Icon,
+Ecoworld Campus 1,2, 3, 4AB, 4C, 6A, 6B, 7, 8A, 8B, RMZ Azure. RMZ
+Northstar, RMZ Ecoworld 5A, 5B in favor of HDFC Ltd for the proposed
+loans and POA</p></li>
+<li><p>Corporate Guarantee of REIPL, RAPPL and RNSPPL for the loan of
+INR 3075 crore to RIPL and the corporate guarantee of RIPL for the loan
+of INR 6250 crore and INR 750 crore loan to REIPL.  </p></li>
+</ol></td>
+</tr>
+<tr class="even">
+<td><strong>Additional Security</strong></td>
+<td><p><strong>Mapped to Collateral&gt;Additional Security&gt;Security
+Description &amp; Any Other Security RTE</strong></p>
+<ol type="1">
+<li><p>An exclusive charge on the scheduled sold/unsold receivables from
+the project to be funded (Natura Dain Tree Phase 1 &amp; 2), and all
+insurance proceeds, both present and future Scheduled    Receivables: 
+  Receivables/cash    flows/revenues including booking amounts arising
+out of or in connection with or relating to the
+project financed. </p></li>
+<li><p>An exclusive charge on the scheduled sold/unsold receivables from
+the project to be funded (Natura Dain Tree Phase 1 &amp; 2), and all
+insurance proceeds, both present and future Scheduled    Receivables: 
+  Receivables/cash    flows/revenues including booking amounts arising
+out of or in connection with or relating to the
+project financed. </p></li>
+</ol>
+<p><strong>All security description and Any other Security RTE to come
+in sequence</strong></p></td>
+</tr>
+<tr class="odd">
+<td><strong>Valuation</strong></td>
+<td><table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Security Name</th>
+<th>Valuation</th>
+<th>Valuation2</th>
+<th>Accepted Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Mapped to Collateral Tab&gt;Primary &amp; Additional
+Security&gt;Security Type= Immoveable Property&gt;Propert
+Name</strong></td>
+<td><p><strong>Mapped to Collateral Tab&gt;Primary &amp; Additional
+Security&gt;Security Type= Immoveable Property&gt; Valuation&gt;Market
+Value by Valuer 1-</strong></p>
+<p><strong>Valuer 1 Name</strong></p></td>
+<td><p><strong>Mapped to Collateral Tab&gt;Primary &amp; Additional
+Security&gt;Security Type= Immoveable Property&gt; Valuation&gt;Market
+Value by Valuer 2-</strong></p>
+<p><strong>Valuer 2Name</strong></p></td>
+<td><strong>Mapped to Collateral Tab&gt;Primary &amp; Additional
+Security&gt;Security Type= Immoveable Property&gt;Bank’s Considered
+Value</strong></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+<tr class="even">
+<td><strong>Timeline for Security Creation</strong></td>
+<td><p><strong>Mapped to Collateral Tab&gt; Timeline for Security
+Creation Remarks</strong></p>
+<ol type="1">
+<li><p>Securities 1, 2 to be created within 90 days from the first
+drawdown of the INR 3075 facility. Securities 5 &amp; 6 to be created
+within 90 days from the first drawdown of the INR 3075
+facility.</p></li>
+<li><p><strong>The pledge of shares of RNSPPL will be subject to
+approval of RBI approval as the shareholding of the company is held by
+Dubai Based entities of BAM</strong>. The security will have to be
+created within 90 days from the date of first drawdown subject to the
+approval from the RBI. In the event RBI rejects the application or does
+not respond to the application within 90 days from the first drawdown,
+the borrower will have an additional 90 days to find an amicable
+solution.</p></li>
+</ol>
+<p>The other securities and guarantees (except for Corporate Guarantee
+of RIPL for the loans to REIPL which will be created within 30 days from
+the date of the drawdown of INR 3075 crore) have to be created prior to
+the first drawdown. The extension of mortgage of 5 A and 5 B along with
+the hypothecation of receivables and POA will be created prior to the
+drawdown</p></td>
+</tr>
+<tr class="odd">
+<td><strong>DSRA</strong></td>
+<td><p><strong>Mapped to Offer Letter Details Tab&gt; DSRA</strong></p>
+<p>For Year 1 - Interest for three month for the period of the first
+year<br />
+Year 2 - 5 - Amount of INR 70 crore<br />
+Year 6 onward - 3 months peak instalment.<br />
+The DSRA will be reviewed and created at the beginning of each
+period</p></td>
+</tr>
+<tr class="even">
+<td><strong>Other Conditions</strong></td>
+<td><ol type="1">
+<li><p>In the event of, any change in the management control of the
+borrower without the approval of HDFC Ltd or any regulatory changes,
+before maturity of above facility, HDFC shall have the right to call
+back the outstanding amount immediately.</p></li>
+<li><p>Brookfield will submit an undertaking that they will not sell /
+Pledge or dispose any shares of RMZ Infotech Pvt Ltd/ Thanatos India Pvt
+Ltd without approval from HDFC ltd except for the terms of proposed
+merger / demerger filed with the NCLT.</p></li>
+<li><p>The existing loans to REIPL will be cross collateralized with the
+proposed loan to RIPL from HDFC Ltd. The securities for the proposed
+loan of INR 3075 crore will also be cross collateralised for the
+existing loans of INR 7000 crore (Exposure – INR 6993 crore) to REIPL
+extended by HDFC Ltd</p></li>
+<li><p>The loan will be subject to legal and technical due diligence
+from HDFC Ltd.</p></li>
+<li><p>Standard asset confirmation and NOC as is required in such
+refinancing transactions from existing lenders of RIPL</p></li>
+<li><p>Any incremental cash flows in RIPL would be utilised only for the
+operating / capital expenditure. Any utilisation of the excess cash
+other than the usage mentioned above will require an approval from HDFC
+Ltd</p></li>
+<li><p>In the eventuality that BAM is not able to move the commercial
+assets pertaining to the proposed loan in the REIT within 60 months from
+the date of the first drawdown of the loan, HDFC will have the right to
+review the rate of interest by way of a change in the spread.</p></li>
+<li><p>Board Resolutions from the companies involved for the General
+Corporate purposes and other statutory/Merger-demerger
+requirements</p></li>
+<li><p>There will be no change in the shareholding of the company or the
+immediate holding company/companies of the borrower with the prior
+approval of HDFC Ltd. The approval from HDFC ltd will not be
+unreasonably withheld.</p></li>
+</ol></td>
+</tr>
+<tr class="odd">
+<td><strong>Additional Interest</strong></td>
+<td><p>In case of default/delay in repayment of principal amount of the
+Facility on the due date/s, the Lender shall without prejudice to other
+rights and remedies that it may have, charge Additional Interest at the
+rate of 2% per annum over and above the Applicable Rate on such
+defaulted/delayed amount for such delayed number of days</p>
+<p>In case of default/delay in payment of interest on the Facility /
+outstanding amounts on the due dates, the Lender shall without prejudice
+to other rights and remedies that it may have, charge Additional
+Interest at the rate of 2% per annum on such defaulted/delayed amount
+for such delayed number of days</p></td>
+</tr>
+<tr class="even">
+<td><strong>Prepayment Charges</strong></td>
+<td><p>In case the Borrower wishes to prepay the Facility or any part
+thereof, it may do so with payment of prepayment charges / prepayment
+penalty calculated <strong>@ 2%( Mapped to Offer letter
+Details&gt;Prepayment Charges</strong>% )of the Facility or part thereof
+prepaid subject to the Borrower giving at least <strong>15 (Mapped to
+offer letter Details&gt;others&gt;Prepayment Notice Period </strong>)
+<strong>days’</strong> prior written notice to the Lender.</p>
+<p>The Borrower may prepay the Facility, in full or in part thereof
+(without any prepayment premium) within 60 days of any increase of
+Spread as aforesaid, subject to the Borrower providing an written notice
+of prepayment to the Lender within 15 days of such increase of
+Spread.</p></td>
+</tr>
+<tr class="odd">
+<td><strong>Primary Security value</strong></td>
+<td><strong>Mapped to Collateral&gt; Security Summary&gt;Primary
+Security Value</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Loan to value/ Security cover</strong></td>
+<td><p><strong>Mapped to Collateral&gt; Security Summary&gt;LTV/Security
+Cover</strong></p>
+<p>0.73/ 1.37</p></td>
+</tr>
+<tr class="odd">
+<td><strong>CIBIL</strong></td>
+<td><p><strong>To be mapped to Customer &gt; Checks &gt;
+CIBIL/Transunion&gt;</strong></p>
+<p><strong>Name – CIBIL Score/Rank - Remarks</strong></p></td>
+</tr>
+<tr class="even">
+<td><strong>List of Wilful Defaulters &amp; Google Check</strong></td>
+<td><p><strong>Mapped to Customer &gt; Checks&gt; RBI Defaulter’s
+List&gt;Name Status</strong></p>
+<p><strong>Mapped to Checks&gt;Web Search&gt;Comments</strong></p></td>
+</tr>
+</tbody>
+</table>
+<ol start="17" type="1">
+<li><p><strong><u>RECOMMENDATION</u></strong></p></li>
+</ol>
+<p>It is recommended that we may provide loan of &lt;<strong>Mapped to
+Deal info &gt; Request Details&gt; Proposed exposure (including
+New)</strong> crore to &lt;<strong>Mapped to Deal Info&gt;Entity
+Details&gt;Non Individual&gt;Relationship-Borrower&gt;Entity
+Name</strong>&gt; to subject to our terms and conditions.</p>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 23%" />
+<col style="width: 25%" />
+<col style="width: 28%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><p>Mapped to Relationship Manager Name</p>
+<p>Prepared by</p>
+<p>(Name)</p></td>
+<td><p>Mapped to Checker Name</p>
+<p>Checked by</p>
+<p>(Name)</p></td>
+<td><p>Mapped to Branch Manager Name in case of Other Branches and HOD
+in case of Mumbai Branch</p>
+<p>Recommended by</p>
+<p>(Branch Manager/HOD)</p></td>
+<td><p>Mapped to Regional Manager name in case of other Branches/NA in
+case of Mumbai Branch</p>
+<p>Regional Manager</p></td>
+</tr>
+</tbody>
+</table>
+<p>Approved By: Committee Name</p>
+<table>
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 52%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Approver 1 Name</td>
+<td>Date &amp; Time Stamp</td>
+</tr>
+<tr class="even">
+<td>Approver 2 Name</td>
+<td>Date &amp; Time Stamp</td>
+</tr>
+<tr class="odd">
+<td>Approver 3 Name</td>
+<td>Date &amp; Time Stamp</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+<tr class="even">
+<td><p><strong><u>List of</u></strong>
+<strong><u>Annexures:</u></strong></p>
+<table>
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Annexure I</strong></th>
+<th><strong>Repayment Schedule</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Annexure II</strong></td>
+<td><strong>System Classification</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Annexure III</strong></td>
+<td><strong>Banking Arrangement</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Annexure IV</strong></td>
+<td><strong>Lessee Profile</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Annexure V</strong></td>
+<td><strong>Group Overdue Details</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Annexure VI</strong></td>
+<td><strong>Other Annexures</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Annexure I: Repayment Schedule</strong></p>
+<p><strong><u>Repayment Schedule:</u></strong></p>
+<p><strong>Sub Facility ID 1:</strong></p>
+<p><strong>Mapped to Request Details&gt; Repayment Schedule &gt;
+Generated Repayment Schedule</strong></p>
+<p><strong>(In Rs crores)</strong></p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 19%" />
+<col style="width: 35%" />
+<col style="width: 32%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Month</strong></td>
+<td><strong>Instalment</strong></td>
+<td><strong>Cumulative Repayment</strong></td>
+<td><strong>Principal outstanding</strong></td>
+</tr>
+<tr class="even">
+<td>39</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>6.00</td>
+</tr>
+<tr class="odd">
+<td>40</td>
+<td>1.00</td>
+<td>2.00</td>
+<td>5.00</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Annexure II – System</strong>
+<strong>classification</strong></p>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 20%" />
+<col style="width: 71%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Corporate Group</td>
+<td><p><strong>Mapped to Deal info&gt;Entity Details&gt;Non Individual
+&gt;Group Name</strong></p>
+<p><strong>Brookfield Asset Management</strong></p></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Loan Type</td>
+<td><p><strong>Deal Info&gt;Request Details&gt;Sub Facility-Loan
+Type</strong></p>
+<p><strong>Lease rental Discounting</strong></p></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Loan Group</td>
+<td><p><strong>Deal Info&gt;Request Details&gt;Sub Facility-Loan
+Group</strong></p>
+<p><strong>Corporate</strong></p></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Industry Type</td>
+<td><p><strong>Mapped to Deal info&gt;Entity Details&gt;Non Individual
+&gt;Industry</strong></p>
+<p><strong>Real estate</strong></p></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Loan Scheme</td>
+<td><p><strong>Deal Info&gt;Request Details&gt;Sub Facility-Loan
+Scheme</strong></p>
+<p><strong>DOR</strong></p></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Loan Purpose</td>
+<td><p><strong>Deal Info&gt;Request Details&gt;Sub Facility-Loan
+Purpose</strong></p>
+<p><strong>Commercial</strong></p></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Constitution</td>
+<td><p><strong>Mapped to Deal info&gt;Entity Details&gt;Non Individual
+&gt;Constitution</strong></p>
+<p><strong>Private Limited</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong><u>Annexure III- Banking Arrangement</u></strong></p>
+<p><strong>Mapped to Deal Info&gt; Loans with Other Banks</strong></p>
+<p><strong>Comments: Mapped to Deal Info&gt;Banking Arrangement
+RTE</strong></p>
+<p><strong><u>Annexure IV- Lessee Profile</u></strong></p></td>
+</tr>
+<tr class="odd">
+<td><p><strong><u>(Only those lessee details will come in COM note where
+the checkbox is ticked- Lease &amp; Tenant Tab&gt;Included in COM
+Note)</u></strong></p>
+<p><strong><u>Blank rows if any should not be populated in the COM
+note</u></strong></p>
+<p><strong>Lessee 1 Name: Mapped to Lease &amp; Tenant Tab&gt; Lessee 1
+Name</strong></p></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 72%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Particulars</strong></td>
+<td><strong>Response</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Lessee ID</strong></td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt;Search/Create
+Lessee&gt;Lessee Details&gt; Lessee ID 1</strong></td>
+</tr>
+<tr class="odd">
+<td>Lessee credit rating</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 1&gt;Basic
+Details&gt;External rating</strong></td>
+</tr>
+<tr class="even">
+<td>Lessee profile</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 1&gt;Lessee
+Details&gt;Lessee Profile</strong></td>
+</tr>
+<tr class="odd">
+<td>Leased Area (in sqft)</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 1&gt;Lessee
+Details&gt;Leased Area</strong></td>
+</tr>
+<tr class="even">
+<td>Lease Term (in months)</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 1&gt;Lessee
+Details&gt; Lease term</strong></td>
+</tr>
+<tr class="odd">
+<td>Lease Commencement Date</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 1&gt;Lessee
+Details&gt; Lease Commencement date</strong></td>
+</tr>
+<tr class="even">
+<td>Residual Lease Tenure (in months)</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 1&gt;Lessee
+Details&gt;Residual Lease tenure</strong></td>
+</tr>
+<tr class="odd">
+<td>Lock In Period (in months)</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 1&gt;Lessee
+Details&gt;Lock in period</strong></td>
+</tr>
+<tr class="even">
+<td>Gross Rent per sq. ft.</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 1&gt;Lessee
+Details &gt;Expected gross rent/sqft</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Comments- Mapped to Lease &amp; Tenant Tab&gt;Tenant
+details&gt;Lessee 1 &gt;Comments</strong></p>
+<p><strong>Lessee 2 Name: Mapped to Lease &amp; Tenant Tab&gt; Lessee 2
+Name</strong></p>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 72%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Particulars</strong></td>
+<td><strong>Response</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Lessee ID</strong></td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt;Search/Create
+Lessee&gt;Lessee Details&gt; Lessee ID 1</strong></td>
+</tr>
+<tr class="odd">
+<td>Lessee credit rating</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 1&gt;Basic
+Details&gt;External rating</strong></td>
+</tr>
+<tr class="even">
+<td>Lessee profile</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 2&gt;Lessee
+Details&gt;Lessee Profile</strong></td>
+</tr>
+<tr class="odd">
+<td>Leased Area (in sqft)</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 2&gt;Lessee
+Details&gt;Leased Area</strong></td>
+</tr>
+<tr class="even">
+<td>Lease Term (in months)</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 2&gt;Lessee
+Details&gt; Lease term</strong></td>
+</tr>
+<tr class="odd">
+<td>Lease Commencement Date</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 2&gt;Lessee
+Details&gt; Lease Commencement date</strong></td>
+</tr>
+<tr class="even">
+<td>Residual Lease Tenure (in months)</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 2&gt;Lessee
+Details&gt;Residual Lease tenure</strong></td>
+</tr>
+<tr class="odd">
+<td>Lock In Period (in months)</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 2&gt;Lessee
+Details&gt;Lock in period</strong></td>
+</tr>
+<tr class="even">
+<td>Gross Rent per sq. ft.</td>
+<td><strong>Mapped to Lease &amp; Tenant Tab&gt; Lessee ID 2&gt;Lessee
+Details &gt;Expected gross rent/sqft</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Comments- Mapped to Lease &amp; Tenant Tab&gt;Tenant
+details&gt;Lessee 2 &gt;Comments</strong></p>
+<p><strong><u>Annexure V- Group Overdue Details</u></strong></p>
+<p><strong>(To be populated only in case of Overdues)</strong></p>
+<p>(<strong>Mapped to Deal Info&gt;Group Exposure &gt; Bank/FIs Exposure
+Group&gt;Overdue Details)</strong></p>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 11%" />
+<col style="width: 13%" />
+<col style="width: 12%" />
+<col style="width: 15%" />
+<col style="width: 10%" />
+<col style="width: 9%" />
+<col style="width: 10%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Lac No</th>
+<th>Borrower Name</th>
+<th>Sanctioned Amt </th>
+<th>Disbursed Amt </th>
+<th>Principal Outstanding</th>
+<th colspan="2">Principal Over Dues</th>
+<th colspan="2">Interest Overdues</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td>Months </td>
+<td>Amount</td>
+<td>Months </td>
+<td>Amount</td>
+</tr>
+<tr class="even">
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td>3</td>
+<td> </td>
+<td>1</td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="odd">
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr class="even">
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+<p><strong><u>Annexure VI- Others</u></strong></p>
+<p><strong>Mapped to Offer Letter Details&gt;Other
+Annexures</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+<div><p>Java-generated HTML</p></div>
