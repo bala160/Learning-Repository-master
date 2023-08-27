@@ -1,9 +1,6 @@
 package com.example.swagger.formdesign;
 
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,8 +16,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class All_Combo_ListBox_Table {
     private static Document emptyXmlDoc;
@@ -34,7 +34,7 @@ public class All_Combo_ListBox_Table {
             emptyXmlDoc = docBuilder.parse(new File("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Empty_form.xml"));
             allFieldXmlDoc = docBuilder.parse(new File("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\allFields.xml"));
 
-            FileInputStream excelFile = new FileInputStream(new File("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx"));
+            FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
             Workbook workbook = new XSSFWorkbook(excelFile);
             Sheet sheet = workbook.getSheetAt(0);
             Element emptyHeaderFrame = (Element) emptyXmlDoc.getElementsByTagName("HeaderFrame").item(0);
@@ -66,12 +66,7 @@ public class All_Combo_ListBox_Table {
                             emptyHeaderFrame.appendChild(tabControl);
                             tabControlGenerated = true;
                         }
-                    } /*else if (controlTypeToSearch.equalsIgnoreCase("sheet")) {
-                        if (tabControlGenerated) {
-                            Element sheetControl = createSheetElement(controlId, controlLabel);
-                            emptyHeaderFrame.getLastChild().appendChild(sheetControl);
-                        }
-                    }*/ else if (controlTypeToSearch.equalsIgnoreCase("sheet")) {
+                    } else if (controlTypeToSearch.equalsIgnoreCase("sheet")) {
                         if (tabControlGenerated) {
                             // Create the <sheet> element without a closing </Control> tag
                             Element sheetControl = emptyXmlDoc.createElement("Control");
@@ -87,22 +82,6 @@ public class All_Combo_ListBox_Table {
                             sheetControl.setAttribute("FontFamily", "");
                             sheetControl.setAttribute("ColumnLayout", "1");
                             sheetControl.setAttribute("Visible", "true");
-                            // Set other attributes for the sheet control...
-
-                            // Import style elements from allFieldXmlDoc
-                           /* Node styleNode = emptyXmlDoc.importNode(allFieldXmlDoc.getElementsByTagName("Style").item(0), true);
-                            sheetControl.appendChild(styleNode);
-
-                            // Create and append <Event> and <Events> tags
-                            Element eventElement = emptyXmlDoc.createElement("Event");
-                            Element eventsElement = emptyXmlDoc.createElement("Events");
-                            eventElement.appendChild(eventsElement);
-                            sheetControl.appendChild(eventElement);
-
-                            // Set the DataClass element
-                            Element dataClassElement = emptyXmlDoc.createElement("DataClass");
-                            dataClassElement.setAttribute("Name", dataClassName);
-                            sheetControl.appendChild(dataClassElement);*/
 
                             emptyHeaderFrame.getLastChild().appendChild(sheetControl);
                         }
@@ -149,9 +128,27 @@ public class All_Combo_ListBox_Table {
                                     }
                                     continue;
                                 } else if (controlTypeToSearch.equalsIgnoreCase("combo")) {
-                                    newControl = handleComboControl(controlId, controlLabel, dataType, groupId, identifier, title, saveValueType, dataClassName, dbQuery, caching);
+                                    newControl = handleComboControl(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching);
                                 } else if (controlTypeToSearch.equalsIgnoreCase("listbox")) {
-                                    newControl = handleListBoxControl(controlId, controlLabel, dataType, groupId, identifier, title, saveValueType, dataClassName, dbQuery, caching);
+                                    newControl = handleListBoxControl(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching);
+                                } else if (controlTypeToSearch.equalsIgnoreCase("textarea")) {
+                                    newControl = textarea(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                                } else if (controlTypeToSearch.equalsIgnoreCase("textbox")) {
+                                    newControl = textbox(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                                } else if (controlTypeToSearch.equalsIgnoreCase("checkbox")) {
+                                    newControl = checkbox(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                                } else if (controlTypeToSearch.equalsIgnoreCase("datepick")) {
+                                    newControl = datepick(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                                } else if (controlTypeToSearch.equalsIgnoreCase("label")) {
+                                    newControl = label(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                                } else if (controlTypeToSearch.equalsIgnoreCase("radio")) {
+                                    newControl = radio(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
                                 }
 
                                 NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
@@ -185,13 +182,7 @@ public class All_Combo_ListBox_Table {
         }
     }
 
-    // Define functions to create tab, sheet, and control elements as needed
     private static Element createTabElement(String controlId, String controlLabel, String controlTypeToSearch) {
-
-        /*<Control ControlId="tab1" ControlType="tab" Caption="tab1" FontStyle="" FontWeight="" FontSize=""
-        FontColor="" BackColor="" FontFamily="" DataOnDemand="N" FixTabHeader="N" CustomId=""
-        Visible="true" iFontColor="" ControlStyle="" Grouping="1" MergeSection="1" Enable="true"
-        ReadOnly="false" ReadOnlyStyle="N" Summary="" ShowSaveButtons="N" CombinedFontWeight="Bold">*/
         Element tabControlElement = emptyXmlDoc.createElement("Control");
         tabControlElement.setAttribute("ControlId", controlId);
         tabControlElement.setAttribute("ControlType", controlTypeToSearch);
@@ -219,15 +210,7 @@ public class All_Combo_ListBox_Table {
         return tabControlElement;
     }
 
-    private static Element createSheetElement(String controlId, String controlLabel) {
-        Element sheetElement = emptyXmlDoc.createElement("Control");
-        sheetElement.setAttribute("ControlId", controlId);
-        sheetElement.setAttribute("ControlType", "sheet");
-        sheetElement.setAttribute("ControlLabel", controlLabel);
-        return sheetElement;
-    }
-
-    private static Element generateTableControlElement(String controlId, String controlLabel, String dataType, String groupId, String identifier, String title, String insertionOrderIdColumn, String dataClassName, List<ColumnProperties> columns) {
+    private static Element generateTableControlElement(String controlId, String controlLabel, String dataType, String groupId, String identifier, String title, String insertionOrderIdColumn, String dataClassName, List<ColumnProperties> columns) throws IOException {
         Element tableControlElement = emptyXmlDoc.createElement("Control");
         tableControlElement.setAttribute("ControlId", controlId);
         tableControlElement.setAttribute("ControlType", "table");
@@ -237,11 +220,97 @@ public class All_Combo_ListBox_Table {
         tableControlElement.setAttribute("Identifier", identifier);
         tableControlElement.setAttribute("Title", title);
         tableControlElement.setAttribute("insertionOrderIdColumn", insertionOrderIdColumn);
+
         // Set other attributes for the table control...
 
-        // Import style elements from allFieldXmlDoc
-        Node styleNode = emptyXmlDoc.importNode(allFieldXmlDoc.getElementsByTagName("Style").item(0), true);
+        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         tableControlElement.appendChild(styleNode);
+
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        // Now, you can modify the style properties
+        Element styleElement = (Element) styleNode;
+
+        Sheet sheet = workbook.getSheet("table");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+
+        // Check if controlId exists in the "label" sheet
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String tableId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (tableId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        String[] styleAttributes = {
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "FontFamily",
+                "HeaderFontFamily",
+                "HeaderFontSize",
+                "HeaderFontColor",
+                "HeaderBackColor",
+                "Visible",
+                "Enable",
+                "Height",
+                "BorderColor",
+                "BorderWidth",
+                "MergeSection",
+                "Grouping",
+                "multiSelect",
+                "Summary",
+                "timeZone",
+                "HideAdd",
+                "HideDelete",
+                "ShowCheckboxColumn",
+                "isAdvancedListview",
+                "ListBtnAlignment",
+                "DuplicateRow",
+                "Searching",
+                "Sorting",
+                "CustomId",
+                "HidePrevNext",
+                "CombinedFontWeight",
+                "CombinedHeaderFontWeight"
+        };
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "label" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueFortable(attribute));
+            }
+        } else {
+            // controlId exists in the "label" sheet, apply user-defined or default style properties
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    styleElement.setAttribute(attribute,
+                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
+                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
+                                    getDefaultAttributeValueFortable(attribute)
+                    );
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueFortable(attribute));
+                }
+            }
+        }
+
 
         // Create and append <columns> tag before <event> tags
         Element columnsElement = emptyXmlDoc.createElement("columns");
@@ -252,7 +321,10 @@ public class All_Combo_ListBox_Table {
             columnElement.setAttribute("columnName", column.columnName);
             columnElement.setAttribute("complexFieldName", column.complexFieldName);
             columnElement.setAttribute("complexFieldType", column.complexFieldType);
+
             // Set other attributes for the column...
+
+            // Example attributes set with default values
             columnElement.setAttribute("HeaderFontSize", "4");
             columnElement.setAttribute("HeaderFontColor", "000000");
             columnElement.setAttribute("HeaderBackColor", "efefef");
@@ -262,10 +334,6 @@ public class All_Combo_ListBox_Table {
             columnElement.setAttribute("mappedControlField", "");
             columnElement.setAttribute("labelMethodStyle", "2");
             columnElement.setAttribute("labelCaption", "");
-            /*columnElement.setAttribute("complexFieldType", "Integer");
-            columnElement.setAttribute("complexFieldName", "ID");
-            columnElement.setAttribute("columnName", "ID");
-           */
             columnElement.setAttribute("columnMappedField", "2");
             columnElement.setAttribute("TotalFontSize", "4");
             columnElement.setAttribute("TotalFontColor", "000");
@@ -320,10 +388,24 @@ public class All_Combo_ListBox_Table {
     }
 
 
-    private static Element handleComboControl(String controlId, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType, String dataClassName, String dbQuery, String caching) {
+    private static String getDefaultAttributeValueFortable(String attributeName) {
+        return switch (attributeName) {
+            case "HeaderBackColor" -> "ffffff";
+            case "Visible", "Sorting", "Searching", "DuplicateRow", "Enable" -> "true";
+            case "Height" -> "300";
+            case "MergeSection", "multiSelect", "timeZone", "Grouping" -> "1";
+            case "HideAdd", "isAdvancedListview", "ShowCheckboxColumn", "HideDelete" -> "false";
+            case "ListBtnAlignment" -> "0";
+            case "HidePrevNext" -> "N";
+            case "CombinedFontWeight", "CombinedHeaderFontWeight" -> "Bold";
+            default -> "";
+        };
+    }
+
+    private static Element handleComboControl(String controlId, String controlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType, String dbQuery, String caching) throws IOException {
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
-        newControl.setAttribute("ControlType", "combo");
+        newControl.setAttribute("ControlType", controlType);
         newControl.setAttribute("ControlLabel", controlLabel);
         newControl.setAttribute("DataType", dataType);
         newControl.setAttribute("GroupId", groupId);
@@ -331,12 +413,6 @@ public class All_Combo_ListBox_Table {
         newControl.setAttribute("Title", title);
         newControl.setAttribute("SaveValueType", saveValueType);
 
-       /* Element fetchFromDB = emptyXmlDoc.createElement("FetchFromDB");
-        fetchFromDB.setAttribute("DBQuery", dbQuery);
-        fetchFromDB.setAttribute("Caching", caching);
-        fetchFromDB.setTextContent("true"); // Add the text content
-        newControl.appendChild(fetchFromDB);
-*/
         if (!dbQuery.isEmpty() && !caching.isEmpty()) {
             Element fetchFromDB = emptyXmlDoc.createElement("FetchFromDB");
             fetchFromDB.setAttribute("DBQuery", dbQuery);
@@ -348,19 +424,97 @@ public class All_Combo_ListBox_Table {
             Element optionsElement = emptyXmlDoc.createElement("Options");
             newControl.appendChild(optionsElement);
             newControl.insertBefore(optionsElement, newControl.getElementsByTagName("Style").item(0));
-
         }
 
-        // Import style elements from allFieldXmlDoc
-        Node styleNode = emptyXmlDoc.importNode(allFieldXmlDoc.getElementsByTagName("Style").item(0), true);
+        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         newControl.appendChild(styleNode);
 
-        /*// Remove existing Options element
-        NodeList optionsNodes = newControl.getElementsByTagName("Options");
-        if (optionsNodes.getLength() > 0) {
-            Element optionsElement = (Element) optionsNodes.item(0);
-            newControl.removeChild(optionsElement);
-        }*/
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        // Now, you can modify the style properties
+        Element styleElement = (Element) styleNode;
+
+        Sheet sheet = workbook.getSheet("combo");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+
+        // Check if controlId exists in the "label" sheet
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String comboId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (comboId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        String[] styleAttributes = {
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "FontFamily",
+                "Mandatory",
+                "Visible",
+                "ReadOnly",
+                "Enable",
+                "ValidationMessage",
+                "SortingOrder",
+                "ComboType",
+                "CharVisibleOnOption",
+                "ListSize",
+                "BorderColor",
+                "BorderWidth",
+                "ControlStyle",
+                "Grouping",
+                "MergeSection",
+                "LabelFontSize",
+                "LabelFontWeight",
+                "LabelFontFamily",
+                "LabelBackgoundColor",
+                "LabelFontColor",
+                "ToolTip",
+                "Summary",
+                "LabelInputRatio",
+                "LabelInputAlignment",
+                "ReadOnlyStyle",
+                "validateMandatoryDisable",
+                "CustomId",
+                "CombinedFontWeight"
+        };
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "label" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueForCombo(attribute));
+            }
+        } else {
+            // controlId exists in the "label" sheet, apply user-defined or default style properties
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    styleElement.setAttribute(attribute,
+                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
+                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
+                                    getDefaultAttributeValueForCombo(attribute)
+                    );
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueForCombo(attribute));
+                }
+            }
+        }
+
 
         Element eventElement = emptyXmlDoc.createElement("Event");
         Element eventsElement = emptyXmlDoc.createElement("Events");
@@ -373,42 +527,111 @@ public class All_Combo_ListBox_Table {
             newControl.removeChild(dataClassElement);
         }
 
-
-
-       /* // Import style elements from allFieldXmlDoc
-        Node styleNode = emptyXmlDoc.importNode(allFieldXmlDoc.getElementsByTagName("Style").item(0), true);
-        newControl.appendChild(styleNode);
-
-        // Create and append <Options> element
-        Element optionsElement = emptyXmlDoc.createElement("Options");
-        newControl.appendChild(optionsElement);
-
-        // Remove existing DataClass element
-        NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
-        if (dataClassNodes.getLength() > 0) {
-            Element dataClassElement = (Element) dataClassNodes.item(0);
-            newControl.removeChild(dataClassElement);
-        }
-
-        Element dataClassElement = emptyXmlDoc.createElement("DataClass");
-        dataClassElement.setAttribute("Name", dataClassName);
-        newControl.appendChild(dataClassElement);
-*/
         return newControl;
     }
 
 
-    private static Element handleListBoxControl(String controlId, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType, String dataClassName, String dbQuery, String caching) {
+    // Define a method to get default attribute values based on the attribute name
+    private static String getDefaultAttributeValueForCombo(String attributeName) {
+        switch (attributeName) {
+            case "FontStyle":
+                return "";
+            case "FontWeight":
+                return "";
+            case "FontSize":
+                return "";
+            case "FontColor":
+                return "";
+            case "BackColor":
+                return "";
+            case "FontFamily":
+                return "";
+            case "Mandatory":
+                return "false";
+            case "Visible":
+                return "true";
+            case "ReadOnly":
+                return "false";
+            case "Enable":
+                return "true";
+            case "ValidationMessage":
+                return "Missing or Invalid Value";
+            case "SortingOrder":
+                return "0";
+            case "ComboType":
+                return "";
+            case "CharVisibleOnOption":
+                return "";
+            case "ListSize":
+                return "";
+            case "BorderColor":
+                return "";
+            case "BorderWidth":
+                return "";
+            case "ControlStyle":
+                return "";
+            case "Grouping":
+                return "1";
+            case "MergeSection":
+                return "1";
+            case "LabelFontSize":
+                return "";
+            case "LabelFontWeight":
+                return "";
+            case "LabelFontFamily":
+                return "";
+            case "LabelBackgoundColor":
+                return "";
+            case "LabelFontColor":
+                return "";
+            case "ToolTip":
+                return "";
+            case "Summary":
+                return "";
+            case "LabelInputRatio":
+                return "";
+            case "LabelInputAlignment":
+                return "-1";
+            case "ReadOnlyStyle":
+                return "N";
+            case "validateMandatoryDisable":
+                return "N";
+            case "CustomId":
+                return "";
+            case "CombinedFontWeight":
+                return "Bold";
+            default:
+                return "";
+        }
+    }
+
+    public static Map<String, Integer> createColumnIndexMap(Sheet sheet) {
+        Map<String, Integer> columnIndexMap = new HashMap<>();
+        Row headerRow = sheet.getRow(0); // Assuming the header row is the first row
+
+        // Create a mapping of column names to their respective column indexes
+        for (Cell cell : headerRow) {
+            if (cell != null && cell.getCellType() == CellType.STRING) {
+                String columnName = cell.getStringCellValue();
+                columnIndexMap.put(columnName, cell.getColumnIndex());
+            }
+        }
+
+        return columnIndexMap;
+    }
+
+
+    private static Element handleListBoxControl(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType, String dbQuery, String caching) throws IOException {
+        System.out.println(controlId);
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
-        newControl.setAttribute("ControlType", "listbox");
+        newControl.setAttribute("ControlType", ControlType);
         newControl.setAttribute("ControlLabel", controlLabel);
         newControl.setAttribute("DataType", dataType);
         newControl.setAttribute("GroupId", groupId);
         newControl.setAttribute("Identifier", identifier);
         newControl.setAttribute("Title", title);
         newControl.setAttribute("SaveValueType", saveValueType);
-
 
         if (!dbQuery.isEmpty() && !caching.isEmpty()) {
             NodeList fetchFromDBNodes = newControl.getElementsByTagName("FetchFromDB");
@@ -425,43 +648,130 @@ public class All_Combo_ListBox_Table {
                 Element fetchFromDBElement = (Element) fetchFromDBNodes.item(0);
                 newControl.removeChild(fetchFromDBElement);
             }
-
-            // Create and append the Options element
             Element optionsElement = emptyXmlDoc.createElement("Options");
             newControl.appendChild(optionsElement);
             newControl.insertBefore(optionsElement, newControl.getElementsByTagName("Style").item(0));
         }
 
-
-        NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
-        if (dataClassNodes.getLength() > 0) {
-            Element dataClassElement = (Element) dataClassNodes.item(0);
-            newControl.removeChild(dataClassElement);
-        }
-
-
-      /*  // Import style elements from allFieldXmlDoc
-        Node styleNode = emptyXmlDoc.importNode(allFieldXmlDoc.getElementsByTagName("Style").item(0), true);
+        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         newControl.appendChild(styleNode);
 
-        // Create and append <Options> element
-        Element optionsElement = emptyXmlDoc.createElement("Options");
-        newControl.appendChild(optionsElement);
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
 
-        // Remove existing DataClass element
+        // Now, you can modify the style properties
+        Element styleElement = (Element) styleNode;
+
+        Sheet sheet = workbook.getSheet("listbox");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+
+        // Check if controlId exists in the "label" sheet
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String listboxId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (listboxId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        String[] styleAttributes = {
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "FontFamily",
+                "Mandatory",
+                "Visible",
+                "ReadOnly",
+                "Enable",
+                "ValidationMessage",
+                "SortingOrder",
+                "ComboType",
+                "CharVisibleOnOption",
+                "ListSize",
+                "BorderColor",
+                "BorderWidth",
+                "ControlStyle",
+                "Grouping",
+                "MergeSection",
+                "LabelFontSize",
+                "LabelFontWeight",
+                "LabelFontFamily",
+                "LabelBackgoundColor",
+                "LabelFontColor",
+                "ToolTip",
+                "Summary",
+                "LabelInputRatio",
+                "LabelInputAlignment",
+                "ReadOnlyStyle",
+                "validateMandatoryDisable",
+                "CustomId",
+                "CombinedFontWeight"
+        };
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "label" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueForlistbox(attribute));
+            }
+        } else {
+            // controlId exists in the "label" sheet, apply user-defined or default style properties
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    styleElement.setAttribute(attribute,
+                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
+                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
+                                    getDefaultAttributeValueForlistbox(attribute)
+                    );
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueForlistbox(attribute));
+                }
+            }
+        }
+
+
+        Element eventElement = emptyXmlDoc.createElement("Event");
+        Element eventsElement = emptyXmlDoc.createElement("Events");
+        eventElement.appendChild(eventsElement);
+        newControl.appendChild(eventElement);
+
         NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
         if (dataClassNodes.getLength() > 0) {
             Element dataClassElement = (Element) dataClassNodes.item(0);
             newControl.removeChild(dataClassElement);
         }
-
-        Element dataClassElement = emptyXmlDoc.createElement("DataClass");
-        dataClassElement.setAttribute("Name", dataClassName);
-        newControl.appendChild(dataClassElement);*/
 
         return newControl;
     }
-    // ... Other functions for control creation and handling ...
+
+
+    private static String getDefaultAttributeValueForlistbox(String attributeName) {
+        return switch (attributeName) {
+            case "Mandatory", "ReadOnly" -> "false";
+            case "Visible", "Enable" -> "true";
+            case "ValidationMessage" -> "Missing or Invalid Value";
+            case "SortingOrder" -> "0";
+            case "ComboType" -> "listbox";
+            case "Grouping", "MergeSection" -> "1";
+            case "LabelInputAlignment" -> "-1";
+            case "ReadOnlyStyle", "validateMandatoryDisable" -> "N";
+            case "CombinedFontWeight" -> "Bold";
+            default -> "";
+        };
+    }
 
     private static Element findControlElementByType(Document xmlDoc, String controlType) {
         NodeList controlNodes = xmlDoc.getElementsByTagName("Control");
@@ -473,6 +783,845 @@ public class All_Combo_ListBox_Table {
             }
         }
         return null;
+    }
+
+    public static Element textarea(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+        Element newControl = emptyXmlDoc.createElement("Control");
+        newControl.setAttribute("ControlId", controlId);
+        newControl.setAttribute("ControlType", ControlType);
+        newControl.setAttribute("ControlLabel", controlLabel);
+        newControl.setAttribute("DataType", dataType);
+        newControl.setAttribute("GroupId", groupId);
+        newControl.setAttribute("Identifier", identifier);
+        newControl.setAttribute("Title", title);
+        newControl.setAttribute("SaveValueType", saveValueType);
+
+        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        newControl.appendChild(styleNode);
+
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        // Now, you can modify the style properties
+        Element styleElement = (Element) styleNode;
+
+        Sheet sheet = workbook.getSheet("textarea");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+
+        // Check if controlId exists in the "label" sheet
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String textareaId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (textareaId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        String[] styleAttributes = {
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "FontFamily",
+                "Mandatory",
+                "ValidationMessage",
+                "Visible",
+                "ReadOnly",
+                "Enable",
+                "TextAlignment",
+                "Rows",
+                "MaximumChar",
+                "MaxLength",
+                "BorderColor",
+                "BorderWidth",
+                "ControlStyle",
+                "CombinedFontWeight",
+                "Grouping",
+                "RichText",
+                "MergeSection",
+                "TypeOfValue",
+                "Precision",
+                "DisableMaxLength",
+                "LabelFontSize",
+                "LabelFontWeight",
+                "LabelFontFamily",
+                "LabelBackgoundColor",
+                "LabelFontColor",
+                "ToolTip",
+                "AllowSpecialChars",
+                "Summary",
+                "ReadOnlyStyle",
+                "CharacterSet",
+                "AllowCopy",
+                "AllowPaste",
+                "LabelInputRatio",
+                "LabelInputAlignment",
+                "validateMandatoryDisable",
+                "CustomId",
+                "Alphabets",
+                "Spaces",
+                "Numerals",
+                "SpecialCharacters",
+                "PlaceHolder"
+        };
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "label" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueFortextarea(attribute));
+            }
+        } else {
+            // controlId exists in the "label" sheet, apply user-defined or default style properties
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    styleElement.setAttribute(attribute,
+                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
+                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
+                                    getDefaultAttributeValueFortextarea(attribute)
+                    );
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueFortextarea(attribute));
+                }
+            }
+        }
+
+        Element eventElement = emptyXmlDoc.createElement("Event");
+        Element eventsElement = emptyXmlDoc.createElement("Events");
+        eventElement.appendChild(eventsElement);
+        newControl.appendChild(eventElement);
+
+        NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
+        if (dataClassNodes.getLength() > 0) {
+            Element dataClassElement = (Element) dataClassNodes.item(0);
+            newControl.removeChild(dataClassElement);
+        }
+
+        return newControl;
+    }
+
+
+    private static String getDefaultAttributeValueFortextarea(String attributeName) {
+        return switch (attributeName) {
+            case "FontColor" -> "000000";
+            case "Mandatory", "ReadOnly", "DisableMaxLength" -> "false";
+            case "ValidationMessage" -> "Missing or Invalid Value";
+            case "Visible", "Enable", "Numerals", "Spaces", "Alphabets" -> "true";
+            case "Rows" -> "3";
+            case "MaximumChar" -> "100";
+            case "CombinedFontWeight" -> "Bold";
+            case "Grouping", "RichText", "MergeSection" -> "1";
+            case "AllowSpecialChars" -> "Y";
+            case "ReadOnlyStyle", "validateMandatoryDisable" -> "N";
+            case "CharacterSet", "AllowCopy", "AllowPaste" -> "0";
+            case "LabelInputAlignment" -> "-1";
+            default -> "";
+        };
+    }
+
+    public static Element textbox(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+        Element newControl = emptyXmlDoc.createElement("Control");
+        newControl.setAttribute("ControlId", controlId);
+        newControl.setAttribute("ControlType", ControlType);
+        newControl.setAttribute("ControlLabel", controlLabel);
+        newControl.setAttribute("DataType", dataType);
+        newControl.setAttribute("GroupId", groupId);
+        newControl.setAttribute("Identifier", identifier);
+        newControl.setAttribute("Title", title);
+        newControl.setAttribute("SaveValueType", saveValueType);
+
+        Element styleNode = emptyXmlDoc.createElement("Style");
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        Sheet sheet = workbook.getSheet("textbox");
+
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+        // Check if controlId exists in the "textbox" sheet
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String textboxId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (textboxId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "textbox" sheet
+            String[] styleAttributes = {
+                    "FontStyle",
+                    "FontWeight",
+                    "FontSize",
+                    "FontColor",
+                    "BackColor",
+                    "FontFamily",
+                    "Mandatory",
+                    "ValidationMessage",
+                    "Visible",
+                    "ReadOnly",
+                    "Enable",
+                    "Grouping",
+                    "DisableMaxLength",
+                    "BorderColor",
+                    "BorderWidth",
+                    "ControlStyle",
+                    "MergeSection",
+                    "MaskingValue",
+                    "FormattedValue",
+                    "RangeMax",
+                    "RangeMin",
+                    "TypeOfValue",
+                    "Precision",
+                    "SaveEncrypted",
+                    "MaxLength",
+                    "Alphabets",
+                    "Spaces",
+                    "Numerals",
+                    "SpecialCharacters",
+                    "Pattern",
+                    "LabelFontSize",
+                    "LabelFontWeight",
+                    "LabelFontFamily",
+                    "LabelBackgoundColor",
+                    "LabelFontColor",
+                    "LabelInputRatio",
+                    "ToolTip",
+                    "Summary",
+                    "ReadOnlyStyle",
+                    "AllowSpecialChars",
+                    "validateMandatoryDisable",
+                    "CharacterSet",
+                    "AllowCopy",
+                    "AllowPaste",
+                    "LabelInputAlignment",
+                    "CustomId",
+                    "LabelAsLink",
+                    "TextAlignment",
+                    "MaxValue",
+                    "MinValue",
+                    "PlaceHolder",
+                    "CombinedFontWeight"
+            };
+
+            for (String attribute : styleAttributes) {
+                styleNode.setAttribute(attribute, getDefaultAttributeValueFortextbox(attribute));
+            }
+        } else {
+            // controlId exists in the "textbox" sheet, apply user-defined or default style properties
+            String[] styleAttributes = {
+                    "FontStyle",
+                    "FontWeight",
+                    "FontSize",
+                    "FontColor",
+                    "BackColor",
+                    "FontFamily",
+                    "Mandatory",
+                    "ValidationMessage",
+                    "Visible",
+                    "ReadOnly",
+                    "Enable",
+                    "Grouping",
+                    "DisableMaxLength",
+                    "BorderColor",
+                    "BorderWidth",
+                    "ControlStyle",
+                    "MergeSection",
+                    "MaskingValue",
+                    "FormattedValue",
+                    "RangeMax",
+                    "RangeMin",
+                    "TypeOfValue",
+                    "Precision",
+                    "SaveEncrypted",
+                    "MaxLength",
+                    "Alphabets",
+                    "Spaces",
+                    "Numerals",
+                    "SpecialCharacters",
+                    "Pattern",
+                    "LabelFontSize",
+                    "LabelFontWeight",
+                    "LabelFontFamily",
+                    "LabelBackgoundColor",
+                    "LabelFontColor",
+                    "LabelInputRatio",
+                    "ToolTip",
+                    "Summary",
+                    "ReadOnlyStyle",
+                    "AllowSpecialChars",
+                    "validateMandatoryDisable",
+                    "CharacterSet",
+                    "AllowCopy",
+                    "AllowPaste",
+                    "LabelInputAlignment",
+                    "CustomId",
+                    "LabelAsLink",
+                    "TextAlignment",
+                    "MaxValue",
+                    "MinValue",
+                    "PlaceHolder",
+                    "CombinedFontWeight"
+            };
+
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex));
+                    // Check if the cell value is empty or null, if so, use the default value
+                    if (cellValue == null || cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueFortextbox(attribute);
+                    }
+                    styleNode.setAttribute(attribute, cellValue);
+                } else {
+                    // If the column index is not found, set the default value
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueFortextbox(attribute));
+                }
+            }
+        }
+
+        newControl.appendChild(styleNode);
+
+        Element eventElement = emptyXmlDoc.createElement("Event");
+        Element eventsElement = emptyXmlDoc.createElement("Events");
+        eventElement.appendChild(eventsElement);
+        newControl.appendChild(eventElement);
+
+        NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
+        if (dataClassNodes.getLength() > 0) {
+            Element dataClassElement = (Element) dataClassNodes.item(0);
+            newControl.removeChild(dataClassElement);
+        }
+
+        return newControl;
+    }
+
+
+
+
+    private static String getDefaultAttributeValueFortextbox(String attributeName) {
+        return switch (attributeName) {
+            case "FontColor" -> "000000";
+            case "Mandatory", "Visible", "ReadOnly", "Enable", "Grouping", "DisableMaxLength", "MergeSection", "FormattedValue", "RangeMax", "RangeMin", "SaveEncrypted", "Alphabets", "Spaces", "Numerals", "SpecialCharacters", "LabelInputAlignment", "CustomId", "LabelAsLink", "TextAlignment", "CombinedFontWeight" ->
+                    "true";
+            case "ValidationMessage" -> "Missing or Invalid Value";
+            case "MaskingValue" -> "nomasking";
+            case "AllowSpecialChars" -> "Y";
+            case "validateMandatoryDisable" -> "N";
+            case "CharacterSet", "AllowCopy", "AllowPaste" -> "0";
+            default -> "";
+        };
+    }
+
+    public static Element checkbox(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+        Element newControl = emptyXmlDoc.createElement("Control");
+        newControl.setAttribute("ControlId", controlId);
+        newControl.setAttribute("ControlType", ControlType);
+        newControl.setAttribute("ControlLabel", controlLabel);
+        newControl.setAttribute("DataType", dataType);
+        newControl.setAttribute("GroupId", groupId);
+        newControl.setAttribute("Identifier", identifier);
+        newControl.setAttribute("Title", title);
+        newControl.setAttribute("SaveValueType", saveValueType);
+
+        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        newControl.appendChild(styleNode);
+
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        // Now, you can modify the style properties
+        Element styleElement = (Element) styleNode;
+
+        Sheet sheet = workbook.getSheet("checkbox");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+
+        // Check if controlId exists in the "label" sheet
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String checkboxId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (checkboxId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        String[] styleAttributes = {
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "FontFamily",
+                "Mandatory",
+                "ValidationMessage",
+                "Visible",
+                "ReadOnly",
+                "Enable",
+                "BorderColor",
+                "BorderWidth",
+                "ControlStyle",
+                "Grouping",
+                "MergeSection",
+                "VerticalAlignment",
+                "ToolTip",
+                "Summary",
+                "CustomId",
+                "validateMandatoryDisable",
+                "ReadOnlyStyle",
+                "CombinedFontWeight"
+        };
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "label" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueForCheckbox(attribute));
+            }
+        } else {
+            // controlId exists in the "label" sheet, apply user-defined or default style properties
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    styleElement.setAttribute(attribute,
+                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
+                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
+                                    getDefaultAttributeValueForCheckbox(attribute)
+                    );
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueForCheckbox(attribute));
+                }
+            }
+        }
+
+        NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
+        if (dataClassNodes.getLength() > 0) {
+            Element dataClassElement = (Element) dataClassNodes.item(0);
+            newControl.removeChild(dataClassElement);
+        }
+
+        return newControl;
+    }
+
+
+    private static String getDefaultAttributeValueForCheckbox(String attributeName) {
+
+        return switch (attributeName) {
+            case "Mandatory", "ReadOnly" -> "false";
+            case "ValidationMessage" -> "Missing or Invalid Value";
+            case "Visible", "Enable" -> "true";
+            case "Grouping", "MergeSection" -> "1";
+            case "validateMandatoryDisable", "ReadOnlyStyle" -> "N";
+            case "CombinedFontWeight" -> "Bold";
+            default -> "";
+        };
+
+
+    }
+
+    public static Element datepick(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+        Element newControl = emptyXmlDoc.createElement("Control");
+        newControl.setAttribute("ControlId", controlId);
+        newControl.setAttribute("ControlType", ControlType);
+        newControl.setAttribute("ControlLabel", controlLabel);
+        newControl.setAttribute("DataType", dataType);
+        newControl.setAttribute("GroupId", groupId);
+        newControl.setAttribute("Identifier", identifier);
+        newControl.setAttribute("Title", title);
+        newControl.setAttribute("SaveValueType", saveValueType);
+
+        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        newControl.appendChild(styleNode);
+
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        // Now, you can modify the style properties
+        Element styleElement = (Element) styleNode;
+
+        Sheet sheet = workbook.getSheet("datepick");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+
+        // Check if controlId exists in the "datepick" sheet
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String datepickId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (datepickId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        String[] styleAttributes = {
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "FontFamily",
+                "Mandatory",
+                "ValidationMessage",
+                "Visible",
+                "ReadOnly",
+                "Enable",
+                "MinDateAsCurrent",
+                "MaxDateAsCurrent",
+                "BorderColor",
+                "BorderWidth",
+                "ControlStyle",
+                "TextAlignment",
+                "PickerType",
+                "OpenPicker",
+                "SelectPicker",
+                "Grouping",
+                "MergeSection",
+                "MinDate",
+                "MaxDate",
+                "LabelFontSize",
+                "LabelFontWeight",
+                "LabelFontFamily",
+                "LabelBackgoundColor",
+                "LabelFontColor",
+                "TimeZone",
+                "ToolTip",
+                "Summary",
+                "LabelInputRatio",
+                "LabelInputAlignment",
+                "ReadOnlyStyle",
+                "validateMandatoryDisable",
+                "CustomId",
+                "DefaultValue",
+                "CombinedFontWeight",
+                "DefaultHijriView"
+        };
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "datepick" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueFordatepick(attribute));
+            }
+        } else {
+            // controlId exists in the "datepick" sheet, apply user-defined or default style properties
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    styleElement.setAttribute(attribute,
+                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
+                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
+                                    getDefaultAttributeValueFordatepick(attribute)
+                    );
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueFordatepick(attribute));
+                }
+            }
+        }
+
+        Element eventElement = emptyXmlDoc.createElement("Event");
+        Element eventsElement = emptyXmlDoc.createElement("Events");
+        eventElement.appendChild(eventsElement);
+        newControl.appendChild(eventElement);
+
+        NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
+        if (dataClassNodes.getLength() > 0) {
+            Element dataClassElement = (Element) dataClassNodes.item(0);
+            newControl.removeChild(dataClassElement);
+        }
+
+        return newControl;
+    }
+
+
+    private static String getDefaultAttributeValueFordatepick(String attributeName) {
+
+        return switch (attributeName) {
+            case "Mandatory", "ReadOnly", "MinDateAsCurrent", "MaxDateAsCurrent", "TimeZone" -> "false";
+            case "ValidationMessage" -> "Missing or Invalid Value";
+            case "Visible", "Enable" -> "true";
+            case "PickerType", "MergeSection", "OpenPicker", "Grouping", "DefaultHijriView" -> "1";
+            case "LabelInputAlignment" -> "-1";
+            case "ReadOnlyStyle", "validateMandatoryDisable" -> "N";
+            case "CombinedFontWeight" -> "Bold";
+            default -> "";
+        };
+
+    }
+
+    public static Element label(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+        Element newControl = emptyXmlDoc.createElement("Control");
+        newControl.setAttribute("ControlId", controlId);
+        newControl.setAttribute("ControlType", ControlType);
+        newControl.setAttribute("ControlLabel", controlLabel);
+        newControl.setAttribute("DataType", dataType);
+        newControl.setAttribute("GroupId", groupId);
+        newControl.setAttribute("Identifier", identifier);
+        newControl.setAttribute("Title", title);
+        newControl.setAttribute("SaveValueType", saveValueType);
+
+        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        newControl.appendChild(styleNode);
+
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        // Now, you can modify the style properties
+        Element styleElement = (Element) styleNode;
+
+        Sheet sheet = workbook.getSheet("label");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+
+        // Check if controlId exists in the "label" sheet
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String labelId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (labelId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        String[] styleAttributes = {
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "FontFamily",
+                "Mandatory",
+                "Visible",
+                "ReadOnly",
+                "Enable",
+                "MergeSection",
+                "Grouping",
+                "TextAlignment",
+                "LinkURL",
+                "Link",
+                "SubSection",
+                "CustomId",
+                "CombinedFontWeight"
+        };
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "label" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueForlabel(attribute));
+            }
+        } else {
+            // controlId exists in the "label" sheet, apply user-defined or default style properties
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    styleElement.setAttribute(attribute,
+                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
+                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
+                                    getDefaultAttributeValueForlabel(attribute)
+                    );
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueForlabel(attribute));
+                }
+            }
+        }
+
+        NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
+        if (dataClassNodes.getLength() > 0) {
+            Element dataClassElement = (Element) dataClassNodes.item(0);
+            newControl.removeChild(dataClassElement);
+        }
+
+        return newControl;
+    }
+
+
+    private static String getDefaultAttributeValueForlabel(String attributeName) {
+        return switch (attributeName) {
+            case "Mandatory", "ReadOnly" -> "false";
+            case "Visible", "Enable" -> "true";
+            case "MergeSection", "Link", "Grouping" -> "1";
+            case "SubSection" -> "N";
+            case "CombinedFontWeight" -> "Bold";
+            default -> "";
+        };
+    }
+
+    public static Element radio(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+        Element newControl = emptyXmlDoc.createElement("Control");
+        newControl.setAttribute("ControlId", controlId);
+        newControl.setAttribute("ControlType", ControlType);
+        newControl.setAttribute("ControlLabel", controlLabel);
+        newControl.setAttribute("DataType", dataType);
+        newControl.setAttribute("GroupId", groupId);
+        newControl.setAttribute("Identifier", identifier);
+        newControl.setAttribute("Title", title);
+        newControl.setAttribute("SaveValueType", saveValueType);
+
+        // Create and append the Options element
+        Element optionsElement = emptyXmlDoc.createElement("Options");
+        newControl.appendChild(optionsElement);
+        newControl.insertBefore(optionsElement, newControl.getElementsByTagName("Style").item(0));
+
+        // Create and append the Style element
+        Node styleNode = emptyXmlDoc.createElement("Style");
+        newControl.appendChild(styleNode);
+
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        // Now, you can modify the style properties
+        Element styleElement = (Element) styleNode;
+
+        Sheet sheet = workbook.getSheet("radio");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+
+        // Check if controlId exists in the "radio" sheet
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String radioId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (radioId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        String[] styleAttributes = {
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "FontFamily",
+                "Mandatory",
+                "ValidationMessage",
+                "Visible",
+                "ReadOnly",
+                "Enable",
+                "BorderColor",
+                "BorderWidth",
+                "ControlStyle",
+                "Allignment",
+                "Grouping",
+                "MergeSection",
+                "LabelFontSize",
+                "LabelFontWeight",
+                "LabelFontFamily",
+                "LabelBackgoundColor",
+                "LabelFontColor",
+                "LabelInputRatio",
+                "LabelInputAlignment",
+                "VerticalAlignment",
+                "ToolTip",
+                "Summary",
+                "ReadOnlyStyle",
+                "validateMandatoryDisable",
+                "CustomId",
+                "CombinedFontWeight"
+        };
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "radio" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueForradio(attribute));
+            }
+        } else {
+            // controlId exists in the "radio" sheet, apply user-defined or default style properties
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    styleElement.setAttribute(attribute,
+                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
+                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
+                                    getDefaultAttributeValueForradio(attribute)
+                    );
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueForradio(attribute));
+                }
+            }
+        }
+
+        Element eventElement = emptyXmlDoc.createElement("Event");
+        Element eventsElement = emptyXmlDoc.createElement("Events");
+        eventElement.appendChild(eventsElement);
+        newControl.appendChild(eventElement);
+
+        NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
+        if (dataClassNodes.getLength() > 0) {
+            Element dataClassElement = (Element) dataClassNodes.item(0);
+            newControl.removeChild(dataClassElement);
+        }
+
+        return newControl;
+    }
+
+
+    private static String getDefaultAttributeValueForradio(String attributeName) {
+        return switch (attributeName) {
+            case "Mandatory", "ReadOnly" -> "false";
+            case "ValidationMessage" -> "Missing or Invalid Value";
+            case "Visible", "Enable" -> "true";
+            case "Allignment", "Grouping", "MergeSection" -> "1";
+            case "LabelInputAlignment" -> "-1";
+            case "ReadOnlyStyle", "validateMandatoryDisable" -> "N";
+            case "CombinedFontWeight" -> "Bold";
+            default -> "";
+        };
     }
 
     static class ColumnProperties {
