@@ -4,7 +4,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,6 +15,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -33,7 +33,8 @@ public class All_Combo_ListBox_Table {
 
             FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
             Workbook workbook = new XSSFWorkbook(excelFile);
-            Sheet sheet = workbook.getSheetAt(0);
+            Sheet sheet = workbook.getSheet("controlProperties");
+            Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
             Element emptyHeaderFrame = (Element) emptyXmlDoc.getElementsByTagName("HeaderFrame").item(0);
 
             DataFormatter dataFormatter = new DataFormatter();
@@ -41,173 +42,374 @@ public class All_Combo_ListBox_Table {
             boolean tableControlGenerated = false;
             boolean listviewControlGenerated = false;
 
+
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
 
-                if (row != null) {
-                    String controlId = dataFormatter.formatCellValue(row.getCell(0));
-                    String controlTypeToSearch = dataFormatter.formatCellValue(row.getCell(1));
-                    String controlLabel = dataFormatter.formatCellValue(row.getCell(2));
-                    String dataType = dataFormatter.formatCellValue(row.getCell(3));
-                    String groupId = dataFormatter.formatCellValue(row.getCell(5));
-                    String identifier = dataFormatter.formatCellValue(row.getCell(6));
-                    String title = dataFormatter.formatCellValue(row.getCell(4));
-                    String saveValueType = dataFormatter.formatCellValue(row.getCell(7));
-                    String dataClassName = dataFormatter.formatCellValue(row.getCell(8));
-                    String dbQuery = dataFormatter.formatCellValue(row.getCell(9));
-                    String caching = dataFormatter.formatCellValue(row.getCell(10));
-                    String insertionOrderIdColumn = dataFormatter.formatCellValue(row.getCell(11));
+                if (row == null) {
+                    continue;
+                }
 
-                    if (controlTypeToSearch.equalsIgnoreCase("tab")) {
-                        if (!tabControlGenerated) {
-                            Element tabControl = createTabElement(controlId, controlLabel, controlTypeToSearch);
-                            emptyHeaderFrame.appendChild(tabControl);
-                            tabControlGenerated = true;
+                String controlId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                String controlTypeToSearch = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlType")));
+                String controlLabel = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("controlLabel")));
+                String dataType = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("DataType")));
+                String groupId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("GroupId")));
+                String identifier = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("Identifier")));
+                String title = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("Title")));
+                String saveValueType = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("SaveValueType")));
+                String dataClassName = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("DataClass Name")));
+                String dbQuery = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("DBQuery")));
+                String caching = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("Caching")));
+                String insertionOrderIdColumn = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("InsertionOrderIdColumn")));
+                String caption = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("Sectioncaption")));
+                String columnLayout = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("SectioncolumnLayout")));
+
+                if (controlTypeToSearch.equalsIgnoreCase("section")) {
+                    Element sectionControl;
+                    List<frameControlNames> frameControl = new ArrayList<>();
+                    List<ColumnProperties> columns = new ArrayList<>();
+
+                    for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
+                        Row columnRow = sheet.getRow(j);
+
+                        if (columnRow == null) {
+                            continue;
                         }
-                    } else if (controlTypeToSearch.equalsIgnoreCase("sheet")) {
-                        if (tabControlGenerated) {
-                            // Create the <sheet> element without a closing </Control> tag
-                            Element sheetControl = emptyXmlDoc.createElement("Control");
-                            sheetControl.setAttribute("ControlId", controlId);
-                            sheetControl.setAttribute("ControlType", controlTypeToSearch);
-                            //sheetControl.setAttribute("ControlLabel", controlLabel);
-                            sheetControl.setAttribute("Caption", controlLabel);
-                            sheetControl.setAttribute("FontStyle", "");
-                            sheetControl.setAttribute("FontWeight", "");
-                            sheetControl.setAttribute("FontSize", "");
-                            sheetControl.setAttribute("FontColor", "");
-                            sheetControl.setAttribute("BackColor", "");
-                            sheetControl.setAttribute("FontFamily", "");
-                            sheetControl.setAttribute("ColumnLayout", "1");
-                            sheetControl.setAttribute("Visible", "true");
 
-                            emptyHeaderFrame.getLastChild().appendChild(sheetControl);
+                        String elementName = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ElementName")));
+
+                        if (elementName.equalsIgnoreCase("tableend")) {
+                            i = j; // Move to the next control
+                            break;
                         }
-                    } else {
-                        if (tabControlGenerated) {
-                            Element controlElement = findControlElementByType(allFieldXmlDoc, controlTypeToSearch);
-                            if (controlElement != null) {
-                                Element newControl = (Element) emptyXmlDoc.importNode(controlElement, true);
-                                newControl.setAttribute("ControlId", controlId);
-                                newControl.setAttribute("ControlLabel", controlLabel);
-                                newControl.setAttribute("DataType", dataType);
-                                newControl.setAttribute("GroupId", groupId);
-                                newControl.setAttribute("Identifier", identifier);
-                                newControl.setAttribute("Title", title);
-                                newControl.setAttribute("SaveValueType", saveValueType);
 
-                                if (controlTypeToSearch.equalsIgnoreCase("table")) {
-                                    if (!tableControlGenerated) {
-                                        List<ColumnProperties> columns = new ArrayList<>();
+                        String columnName = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ColumnName")));
+                        String complexFieldName = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ComplexFieldName")));
+                        String complexFieldType = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ComplexFieldType")));
+                        columns.add(new ColumnProperties(columnName, complexFieldName, complexFieldType));
+                    }
 
-                                        for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
-                                            Row columnRow = sheet.getRow(j);
+                    for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
+                        Row columnRow = sheet.getRow(j);
 
-                                            if (columnRow == null) {
-                                                continue;
-                                            }
+                        if (columnRow == null) {
+                            continue;
+                        }
 
-                                            String elementName = dataFormatter.formatCellValue(columnRow.getCell(12));
+                        String frameControlName = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("FrameName")));
 
-                                            if (elementName.equalsIgnoreCase("tableend")) {
-                                                i = j; // Move to the next control
-                                                break;
-                                            }
+                        if (frameControlName.equalsIgnoreCase("frameend")) {
+                            i = j; // Move to the next control
+                            break;
+                        }
+                        frameControl.add(new frameControlNames(frameControlName));
+                    }
 
-                                            String columnName = dataFormatter.formatCellValue(columnRow.getCell(13));
-                                            String complexFieldName = dataFormatter.formatCellValue(columnRow.getCell(14));
-                                            String complexFieldType = dataFormatter.formatCellValue(columnRow.getCell(15));
-                                            columns.add(new ColumnProperties(columnName, complexFieldName, complexFieldType));
+                    sectionControl = section(controlId, controlLabel, dataType, groupId, identifier, title, saveValueType, frameControl, dataClassName, caption, columnLayout);
+
+
+                    // Insert the section control after the </HeaderFrame> element
+                    emptyHeaderFrame.getParentNode().insertBefore(sectionControl, emptyHeaderFrame.getNextSibling());
+                } else if (controlTypeToSearch.equalsIgnoreCase("tab")) {
+                    if (!tabControlGenerated) {
+                        Element tabControl = createTabElement(controlId, controlLabel, controlTypeToSearch);
+                        emptyHeaderFrame.appendChild(tabControl);
+                        tabControlGenerated = true;
+                    }
+                } else if (controlTypeToSearch.equalsIgnoreCase("tabend")) {
+                    if (tabControlGenerated) {
+                        tabControlGenerated = false;
+                    }
+                } else if (controlTypeToSearch.equalsIgnoreCase("sheet")) {
+                    if (tabControlGenerated) {
+                        // Create the <sheet> element without a closing </Control> tag
+                        Element sheetControl = emptyXmlDoc.createElement("Control");
+                        sheetControl.setAttribute("ControlId", controlId);
+                        sheetControl.setAttribute("ControlType", controlTypeToSearch);
+                        //sheetControl.setAttribute("ControlLabel", controlLabel);
+                        sheetControl.setAttribute("Caption", controlLabel);
+                        sheetControl.setAttribute("FontStyle", "");
+                        sheetControl.setAttribute("FontWeight", "");
+                        sheetControl.setAttribute("FontSize", "");
+                        sheetControl.setAttribute("FontColor", "");
+                        sheetControl.setAttribute("BackColor", "");
+                        sheetControl.setAttribute("FontFamily", "");
+                        sheetControl.setAttribute("ColumnLayout", "1");
+                        sheetControl.setAttribute("Visible", "true");
+
+                        emptyHeaderFrame.getLastChild().appendChild(sheetControl);
+                    }
+                } else {
+                    if (tabControlGenerated) {
+                        Element controlElement = findControlElementByType(allFieldXmlDoc, controlTypeToSearch);
+                        if (controlElement != null) {
+                            Element newControl = (Element) emptyXmlDoc.importNode(controlElement, true);
+                            newControl.setAttribute("ControlId", controlId);
+                            newControl.setAttribute("ControlLabel", controlLabel);
+                            newControl.setAttribute("DataType", dataType);
+                            newControl.setAttribute("GroupId", groupId);
+                            newControl.setAttribute("Identifier", identifier);
+                            newControl.setAttribute("Title", title);
+                            newControl.setAttribute("SaveValueType", saveValueType);
+
+                            if (controlTypeToSearch.equalsIgnoreCase("table")) {
+                                if (!tableControlGenerated) {
+                                    List<ColumnProperties> columns = new ArrayList<>();
+
+                                    for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
+                                        Row columnRow = sheet.getRow(j);
+
+                                        if (columnRow == null) {
+                                            continue;
                                         }
 
-                                        Element tableControlElement = generateTableControlElement(controlId, controlLabel, dataType, groupId, identifier, title, insertionOrderIdColumn, dataClassName, columns);
-                                        emptyHeaderFrame.getLastChild().getLastChild().appendChild(tableControlElement);
-                                        tableControlGenerated = true;
+                                        String elementName = dataFormatter.formatCellValue(columnRow.getCell(12));
+
+                                        if (elementName.equalsIgnoreCase("tableend")) {
+                                            i = j; // Move to the next control
+                                            break;
+                                        }
+
+                                        String columnName = dataFormatter.formatCellValue(columnRow.getCell(13));
+                                        String complexFieldName = dataFormatter.formatCellValue(columnRow.getCell(14));
+                                        String complexFieldType = dataFormatter.formatCellValue(columnRow.getCell(15));
+                                        columns.add(new ColumnProperties(columnName, complexFieldName, complexFieldType));
                                     }
-                                    continue;
-                                } else if (controlTypeToSearch.equalsIgnoreCase("combo")) {
-                                    newControl = handleComboControl(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching);
-                                } else if (controlTypeToSearch.equalsIgnoreCase("listbox")) {
-                                    newControl = handleListBoxControl(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching);
-                                } else if (controlTypeToSearch.equalsIgnoreCase("textarea")) {
-                                    newControl = textarea(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType,dataClassName);
 
-                                } else if (controlTypeToSearch.equalsIgnoreCase("textbox")) {
-                                    newControl = textbox(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+                                    Element tableControlElement = generateTableControlElement(controlId, controlLabel, dataType, groupId, identifier, title, insertionOrderIdColumn, dataClassName, columns);
+                                    emptyHeaderFrame.getLastChild().getLastChild().appendChild(tableControlElement);
+                                    tableControlGenerated = true;
+                                }
+                                continue;
+                            } else if (controlTypeToSearch.equalsIgnoreCase("combo")) {
+                                newControl = handleComboControl(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching);
+                            } else if (controlTypeToSearch.equalsIgnoreCase("listbox")) {
+                                newControl = handleListBoxControl(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching);
+                            } else if (controlTypeToSearch.equalsIgnoreCase("textarea")) {
+                                newControl = textarea(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dataClassName);
 
-                                } else if (controlTypeToSearch.equalsIgnoreCase("checkbox")) {
-                                    newControl = checkbox(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+                            } else if (controlTypeToSearch.equalsIgnoreCase("textbox")) {
+                                newControl = textbox(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
 
-                                } else if (controlTypeToSearch.equalsIgnoreCase("datepick")) {
-                                    newControl = datepick(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+                            } else if (controlTypeToSearch.equalsIgnoreCase("checkbox")) {
+                                newControl = checkbox(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
 
-                                } else if (controlTypeToSearch.equalsIgnoreCase("label")) {
-                                    newControl = label(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+                            } else if (controlTypeToSearch.equalsIgnoreCase("datepick")) {
+                                newControl = datepick(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
 
-                                } else if (controlTypeToSearch.equalsIgnoreCase("radio")) {
-                                    newControl = radio(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+                            } else if (controlTypeToSearch.equalsIgnoreCase("label")) {
+                                newControl = label(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
 
-                                } else if (controlTypeToSearch.equalsIgnoreCase("ListView")) {
-                                    if (!listviewControlGenerated) {
-                                        List<ColumnProperties> columns = new ArrayList<>();
-                                        List<frameControlNames> frameControl = new ArrayList<>();
+                            } else if (controlTypeToSearch.equalsIgnoreCase("radio")) {
+                                newControl = radio(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
 
-                                        for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
-                                            Row columnRow = sheet.getRow(j);
+                            } else if (controlTypeToSearch.equalsIgnoreCase("EmptyCell") && controlTypeToSearch.equalsIgnoreCase("EmptyRow")) {
+                                newControl = handleEmptyCellControl(controlId, controlLabel, dataType, groupId, identifier, title);
+                            } else if (controlId.startsWith("Slider")) {
+                                newControl = handleSliderControlElement(controlId, controlLabel, dataType, groupId, identifier, title);
+                            } else if (controlId.startsWith("Doclist")) {
+                                newControl = handleDoclistControlElement(controlId, controlLabel, dataType, groupId, identifier, title);
+                            } else if (controlId.startsWith("Toggle")) {
+                                newControl = handleToggleControlElement(controlId, controlLabel, dataType, groupId, identifier, title);
+                            } else if (controlId.startsWith("Tile")) {
+                                newControl = handleTileControlElement(controlId, controlLabel, dataType, groupId, identifier, title);
+                            } else if (controlTypeToSearch.equalsIgnoreCase("ListView")) {
+                                if (!listviewControlGenerated) {
+                                    List<ColumnProperties> columns = new ArrayList<>();
+                                    List<frameControlNames> frameControl = new ArrayList<>();
 
-                                            if (columnRow == null) {
-                                                continue;
-                                            }
+                                    for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
+                                        Row columnRow = sheet.getRow(j);
 
-                                            String elementName = dataFormatter.formatCellValue(columnRow.getCell(12));
-
-                                            if (elementName.equalsIgnoreCase("columnend")) {
-                                                i = j; // Move to the next control
-                                                break;
-                                            }
-
-                                            String columnName = dataFormatter.formatCellValue(columnRow.getCell(13));
-                                            String complexFieldName = dataFormatter.formatCellValue(columnRow.getCell(14));
-                                            String complexFieldType = dataFormatter.formatCellValue(columnRow.getCell(15));
-                                            columns.add(new ColumnProperties(columnName, complexFieldName, complexFieldType));
+                                        if (columnRow == null) {
+                                            continue;
                                         }
 
-                                        for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
-                                            Row columnRow = sheet.getRow(j);
+                                        String elementName = dataFormatter.formatCellValue(columnRow.getCell(12));
 
-                                            if (columnRow == null) {
-                                                continue;
-                                            }
-
-                                            String controlName = dataFormatter.formatCellValue(columnRow.getCell(16));
-
-                                            if (controlName.equalsIgnoreCase("frameend")) {
-                                                i = j; // Move to the next control
-                                                break;
-                                            }
-                                            frameControl.add(new frameControlNames(controlName));
+                                        if (elementName.equalsIgnoreCase("columnend")) {
+                                            i = j; // Move to the next control
+                                            break;
                                         }
 
-                                        Element tableControlElement = listview(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, insertionOrderIdColumn, dataClassName, columns, saveValueType,frameControl);
-                                        emptyHeaderFrame.getLastChild().getLastChild().appendChild(tableControlElement);
-                                        tableControlGenerated = true;
+                                        String columnName = dataFormatter.formatCellValue(columnRow.getCell(13));
+                                        String complexFieldName = dataFormatter.formatCellValue(columnRow.getCell(14));
+                                        String complexFieldType = dataFormatter.formatCellValue(columnRow.getCell(15));
+                                        columns.add(new ColumnProperties(columnName, complexFieldName, complexFieldType));
                                     }
-                                    continue;
+
+                                    for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
+                                        Row columnRow = sheet.getRow(j);
+
+                                        if (columnRow == null) {
+                                            continue;
+                                        }
+
+                                        String controlName = dataFormatter.formatCellValue(columnRow.getCell(16));
+
+                                        if (controlName.equalsIgnoreCase("frameend")) {
+                                            i = j; // Move to the next control
+                                            break;
+                                        }
+                                        frameControl.add(new frameControlNames(controlName));
+                                    }
+
+                                    Element tableControlElement = listview(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, insertionOrderIdColumn, dataClassName, columns, saveValueType, frameControl, dbQuery, caching);
+                                    emptyHeaderFrame.getLastChild().getLastChild().appendChild(tableControlElement);
+                                    tableControlGenerated = true;
                                 }
-
-                                NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
-                                if (dataClassNodes.getLength() > 0) {
-                                    Element dataClassElement = (Element) dataClassNodes.item(0);
-                                    newControl.removeChild(dataClassElement);
-                                }
-
-                                Element dataClassElement = emptyXmlDoc.createElement("DataClass");
-                                dataClassElement.setAttribute("Name", dataClassName);
-                                newControl.appendChild(dataClassElement);
-
-                                emptyHeaderFrame.getLastChild().getLastChild().appendChild(newControl);
+                                continue;
                             }
+
+                            assert newControl != null;
+                            NodeList dataClassNodes = Objects.requireNonNull(newControl).getElementsByTagName("DataClass");
+                            if (dataClassNodes.getLength() > 0) {
+                                Element dataClassElement = (Element) dataClassNodes.item(0);
+                                newControl.removeChild(dataClassElement);
+                            }
+
+                            Element dataClassElement = emptyXmlDoc.createElement("DataClass");
+                            dataClassElement.setAttribute("Name", dataClassName);
+                            newControl.appendChild(dataClassElement);
+
+                            emptyHeaderFrame.getLastChild().getLastChild().appendChild(newControl);
                         }
+                    }
+                }
+                if (!tabControlGenerated) {
+                    Element controlElement = findControlElementByType(allFieldXmlDoc, controlTypeToSearch);
+                    if (controlElement != null) {
+                        Element newControl = (Element) emptyXmlDoc.importNode(controlElement, true);
+                        newControl.setAttribute("ControlId", controlId);
+                        newControl.setAttribute("ControlLabel", controlLabel);
+                        newControl.setAttribute("DataType", dataType);
+                        newControl.setAttribute("GroupId", groupId);
+                        newControl.setAttribute("Identifier", identifier);
+                        newControl.setAttribute("Title", title);
+                        newControl.setAttribute("SaveValueType", saveValueType);
+
+                        if (controlTypeToSearch.equalsIgnoreCase("table")) {
+                            if (!tableControlGenerated) {
+                                List<ColumnProperties> columns = new ArrayList<>();
+
+                                for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
+                                    Row columnRow = sheet.getRow(j);
+
+                                    if (columnRow == null) {
+                                        continue;
+                                    }
+
+                                    String elementName = dataFormatter.formatCellValue(columnRow.getCell(12));
+
+                                    if (elementName.equalsIgnoreCase("tableend")) {
+                                        i = j; // Move to the next control
+                                        break;
+                                    }
+
+                                    String columnName = dataFormatter.formatCellValue(columnRow.getCell(13));
+                                    String complexFieldName = dataFormatter.formatCellValue(columnRow.getCell(14));
+                                    String complexFieldType = dataFormatter.formatCellValue(columnRow.getCell(15));
+                                    columns.add(new ColumnProperties(columnName, complexFieldName, complexFieldType));
+                                }
+
+                                Element tableControlElement = generateTableControlElement(controlId, controlLabel, dataType, groupId, identifier, title, insertionOrderIdColumn, dataClassName, columns);
+                                emptyHeaderFrame.getLastChild().getLastChild().appendChild(tableControlElement);
+                                tableControlGenerated = true;
+                            }
+                            continue;
+                        } else if (controlTypeToSearch.equalsIgnoreCase("combo")) {
+                            newControl = handleComboControl(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching);
+                        } else if (controlTypeToSearch.equalsIgnoreCase("listbox")) {
+                            newControl = handleListBoxControl(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching);
+                        } else if (controlTypeToSearch.equalsIgnoreCase("textarea")) {
+                            newControl = textarea(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType, dataClassName);
+
+                        } else if (controlTypeToSearch.equalsIgnoreCase("textbox")) {
+                            newControl = textbox(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                        } else if (controlTypeToSearch.equalsIgnoreCase("checkbox")) {
+                            newControl = checkbox(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                        } else if (controlTypeToSearch.equalsIgnoreCase("datepick")) {
+                            newControl = datepick(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                        } else if (controlTypeToSearch.equalsIgnoreCase("label")) {
+                            newControl = label(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                        } else if (controlTypeToSearch.equalsIgnoreCase("radio")) {
+                            newControl = radio(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, saveValueType);
+
+                        } else if (controlTypeToSearch.equalsIgnoreCase("EmptyCell") && controlTypeToSearch.equalsIgnoreCase("EmptyRow")) {
+                            newControl = handleEmptyCellControl(controlId, controlLabel, dataType, groupId, identifier, title);
+                        } else if (controlId.startsWith("Slider")) {
+                            newControl = handleSliderControlElement(controlId, controlLabel, dataType, groupId, identifier, title);
+                        } else if (controlId.startsWith("Doclist")) {
+                            newControl = handleDoclistControlElement(controlId, controlLabel, dataType, groupId, identifier, title);
+                        } else if (controlId.startsWith("Toggle")) {
+                            newControl = handleToggleControlElement(controlId, controlLabel, dataType, groupId, identifier, title);
+                        } else if (controlId.startsWith("Tile")) {
+                            newControl = handleTileControlElement(controlId, controlLabel, dataType, groupId, identifier, title);
+                        } else if (controlTypeToSearch.equalsIgnoreCase("ListView")) {
+                            if (!listviewControlGenerated) {
+                                List<ColumnProperties> columns = new ArrayList<>();
+                                List<frameControlNames> frameControl = new ArrayList<>();
+
+                                for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
+                                    Row columnRow = sheet.getRow(j);
+
+                                    if (columnRow == null) {
+                                        continue;
+                                    }
+
+                                    String elementName = dataFormatter.formatCellValue(columnRow.getCell(12));
+
+                                    if (elementName.equalsIgnoreCase("columnend")) {
+                                        i = j; // Move to the next control
+                                        break;
+                                    }
+
+                                    String columnName = dataFormatter.formatCellValue(columnRow.getCell(13));
+                                    String complexFieldName = dataFormatter.formatCellValue(columnRow.getCell(14));
+                                    String complexFieldType = dataFormatter.formatCellValue(columnRow.getCell(15));
+                                    columns.add(new ColumnProperties(columnName, complexFieldName, complexFieldType));
+                                }
+
+                                for (int j = i + 1; j <= sheet.getLastRowNum(); j++) {
+                                    Row columnRow = sheet.getRow(j);
+
+                                    if (columnRow == null) {
+                                        continue;
+                                    }
+
+                                    String controlName = dataFormatter.formatCellValue(columnRow.getCell(16));
+
+                                    if (controlName.equalsIgnoreCase("frameend")) {
+                                        i = j; // Move to the next control
+                                        break;
+                                    }
+                                    frameControl.add(new frameControlNames(controlName));
+                                }
+
+                                Element tableControlElement = listview(controlId, controlTypeToSearch, controlLabel, dataType, groupId, identifier, title, insertionOrderIdColumn, dataClassName, columns, saveValueType, frameControl, dbQuery, caching);
+                                emptyHeaderFrame.getLastChild().getLastChild().appendChild(tableControlElement);
+                                tableControlGenerated = true;
+                            }
+                            continue;
+                        }
+
+                        assert newControl != null;
+                        NodeList dataClassNodes = Objects.requireNonNull(newControl).getElementsByTagName("DataClass");
+                        if (dataClassNodes.getLength() > 0) {
+                            Element dataClassElement = (Element) dataClassNodes.item(0);
+                            newControl.removeChild(dataClassElement);
+                        }
+
+                        Element dataClassElement = emptyXmlDoc.createElement("DataClass");
+                        dataClassElement.setAttribute("Name", dataClassName);
+                        newControl.appendChild(dataClassElement);
+
+                        emptyHeaderFrame.appendChild(newControl);
                     }
                 }
             }
@@ -254,7 +456,9 @@ public class All_Combo_ListBox_Table {
         return tabControlElement;
     }
 
-    private static Element generateTableControlElement(String controlId, String controlLabel, String dataType, String groupId, String identifier, String title, String insertionOrderIdColumn, String dataClassName, List<ColumnProperties> columns) throws IOException {
+    private static Element generateTableControlElement(String controlId, String controlLabel, String
+            dataType, String groupId, String identifier, String title, String insertionOrderIdColumn, String
+                                                               dataClassName, List<ColumnProperties> columns) throws IOException {
         Element tableControlElement = emptyXmlDoc.createElement("Control");
         tableControlElement.setAttribute("ControlId", controlId);
         tableControlElement.setAttribute("ControlType", "table");
@@ -267,14 +471,13 @@ public class All_Combo_ListBox_Table {
 
         // Set other attributes for the table control...
 
-        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        Element styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         tableControlElement.appendChild(styleNode);
 
         FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
         Workbook workbook = new XSSFWorkbook(excelFile);
 
         // Now, you can modify the style properties
-        Element styleElement = (Element) styleNode;
 
         Sheet sheet = workbook.getSheet("table");
         DataFormatter dataFormatter = new DataFormatter();
@@ -335,24 +538,29 @@ public class All_Combo_ListBox_Table {
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "label" sheet
             for (String attribute : styleAttributes) {
-                styleElement.setAttribute(attribute, getDefaultAttributeValueFortable(attribute));
+                styleNode.setAttribute(attribute, getDefaultAttributeValueFortable(attribute));
             }
         } else {
             // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    styleElement.setAttribute(attribute,
-                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
-                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
-                                    getDefaultAttributeValueFortable(attribute)
-                    );
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueFortable(attribute);
+                    }
+
+                    styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
-                    styleElement.setAttribute(attribute, getDefaultAttributeValueFortable(attribute));
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueFortable(attribute));
                 }
             }
+// ...
         }
 
 
@@ -434,45 +642,22 @@ public class All_Combo_ListBox_Table {
 
     private static String getDefaultAttributeValueFortable(String attributeName) {
         return switch (attributeName) {
-            case "FontStyle" -> "";
-            case "FontWeight" -> "";
-            case "FontSize" -> "";
-            case "FontColor" -> "";
-            case "BackColor" -> "";
-            case "FontFamily" -> "";
-            case "HeaderFontFamily" -> "";
-            case "HeaderFontSize" -> "";
-            case "HeaderFontColor" -> "";
             case "HeaderBackColor" -> "ffffff";
-            case "Visible" -> "true";
-            case "Enable" -> "true";
+            case "Visible", "Enable", "DuplicateRow", "Sorting", "Searching" -> "true";
             case "Height" -> "300";
-            case "BorderColor" -> "";
-            case "BorderWidth" -> "";
-            case "MergeSection" -> "1";
-            case "Grouping" -> "1";
-            case "multiSelect" -> "1";
-            case "Summary" -> "";
-            case "timeZone" -> "1";
-            case "HideAdd" -> "false";
-            case "HideDelete" -> "false";
-            case "ShowCheckboxColumn" -> "false";
-            case "isAdvancedListview" -> "false";
+            case "MergeSection", "Grouping", "multiSelect", "timeZone" -> "1";
+            case "HideAdd", "HideDelete", "ShowCheckboxColumn", "isAdvancedListview" -> "false";
             case "ListBtnAlignment" -> "0";
-            case "DuplicateRow" -> "true";
-            case "Searching" -> "true";
-            case "Sorting" -> "true";
-            case "CustomId" -> "";
             case "HidePrevNext" -> "N";
-            case "CombinedFontWeight" -> "Bold";
-            case "CombinedHeaderFontWeight" -> "Bold";
+            case "CombinedFontWeight", "CombinedHeaderFontWeight" -> "Bold";
             default -> "";
         };
     }
 
-    private static Element listview(String controlId, String controlType, String controlLabel, String dataType, String groupId, String identifier, String title, String insertionOrderIdColumn, String dataClassName, List<ColumnProperties> columns, String saveValueType,List<frameControlNames> controlNames) throws IOException {
-
-        List<frameControlNames> controlTypes = controlNames;
+    private static Element listview(String controlId, String controlType, String controlLabel, String
+            dataType, String groupId, String identifier, String title, String insertionOrderIdColumn, String
+                                            dataClassName, List<ColumnProperties> columns, String saveValueType, List<frameControlNames> controlNames, String dbQuery, String caching) throws
+            IOException {
 
         Element tableControlElement = emptyXmlDoc.createElement("Control");
         tableControlElement.setAttribute("ControlId", controlId);
@@ -486,16 +671,15 @@ public class All_Combo_ListBox_Table {
 
         // Set other attributes for the table control...
 
-        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        Element styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         tableControlElement.appendChild(styleNode);
 
         FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
         Workbook workbook = new XSSFWorkbook(excelFile);
 
         // Now, you can modify the style properties
-        Element styleElement = (Element) styleNode;
 
-        Sheet sheet = workbook.getSheet("table");
+        Sheet sheet = workbook.getSheet("listview");
         DataFormatter dataFormatter = new DataFormatter();
         Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
 
@@ -554,24 +738,29 @@ public class All_Combo_ListBox_Table {
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "label" sheet
             for (String attribute : styleAttributes) {
-                styleElement.setAttribute(attribute, getDefaultAttributeValueForlistview(attribute));
+                styleNode.setAttribute(attribute, getDefaultAttributeValueForlistview(attribute));
             }
         } else {
             // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    styleElement.setAttribute(attribute,
-                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
-                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
-                                    getDefaultAttributeValueForlistview(attribute)
-                    );
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueForlistview(attribute);
+                    }
+
+                    styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
-                    styleElement.setAttribute(attribute, getDefaultAttributeValueForlistview(attribute));
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueForlistview(attribute));
                 }
             }
+// ...
         }
 
 
@@ -639,49 +828,121 @@ public class All_Combo_ListBox_Table {
         // Create the ListViewFrameLayoutXML and Frame elements
         Element ListViewFrameLayoutXML = emptyXmlDoc.createElement("ListViewFrameLayoutXML");
         Element Frame = emptyXmlDoc.createElement("Frame");
-        Frame.setAttribute("FrameId", "columnFrameLayout");
-        Frame.setAttribute("SectionTheme", "Select");
-        Frame.setAttribute("ControlType", "frame");
-        Frame.setAttribute("Caption", "ListView");
-        Frame.setAttribute("FontStyle", "");
-        Frame.setAttribute("FontWeight", "");
-        Frame.setAttribute("FontSize", "");
-        Frame.setAttribute("FontColor", "");
-        Frame.setAttribute("BackColor", "");
-        Frame.setAttribute("SectionBackColor", "");
-        Frame.setAttribute("FontFamily", "");
-        Frame.setAttribute("Enable", "true");
-        Frame.setAttribute("DataOnDemand", "N");
-        Frame.setAttribute("ColumnLayout", "3");
-        Frame.setAttribute("BorderColor", "");
-        Frame.setAttribute("BorderWidth", "1");
-        Frame.setAttribute("Grouping", "1");
-        Frame.setAttribute("MergeSection", "1");
-        Frame.setAttribute("ReadOnlyStyle", "N");
-        Frame.setAttribute("Summary", "");
-        Frame.setAttribute("CustomId", "");
-        Frame.setAttribute("CombinedFontWeight", "Regular");
-        Frame.setAttribute("FrameState", "false");
-        Frame.setAttribute("FrameVisible", "false");
-        Frame.setAttribute("GridLayout", "false");
-        Frame.setAttribute("GridLayoutInputLabel", "FFFFFF");
-        Frame.setAttribute("GridLayoutBorderColor", "FFFFFF");
+        tableControlElement.appendChild(Frame);
+        sheet = workbook.getSheet("frame");
+        columnIndexMap = createColumnIndexMap(sheet);
+        boolean frameIdExists = false;
+        row = null;
+
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String listboxId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (listboxId.equals(controlId)) {
+                    frameIdExists = true;
+                    break;
+                }
+            }
+        }
+
+        styleAttributes = new String[]{
+                "FrameId",
+                "SectionTheme",
+                "ControlType",
+                "Caption",
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "SectionBackColor",
+                "FontFamily",
+                "Enable",
+                "DataOnDemand",
+                "ColumnLayout",
+                "BorderColor",
+                "BorderWidth",
+                "Grouping",
+                "MergeSection",
+                "ReadOnlyStyle",
+                "Summary",
+                "CustomId",
+                "CombinedFontWeight",
+                "FrameState",
+                "FrameVisible",
+                "GridLayout",
+                "GridLayoutInputLabel",
+                "GridLayoutBorderColor"
+        };
+
+        if (!frameIdExists) {
+            // Set default style properties if controlId does not exist in the "label" sheet
+            for (String attribute : styleAttributes) {
+                Frame.setAttribute(attribute, getDefaultAttributeValueForframe(attribute));
+            }
+        } else {
+            // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueForframe(attribute);
+                    }
+
+                    Frame.setAttribute(attribute, cellValue);
+                } else {
+                    // If the column index is not found, set the default value
+                    Frame.setAttribute(attribute, getDefaultAttributeValueForframe(attribute));
+                }
+            }
+// ...
+        }
 
 
-        for (int i = 0; i < controlTypes.size(); i++) {
-            frameControlNames control = controlTypes.get(i);
-            String names = control.controlName; // Assuming "getName" is the method to get the name property
-            System.out.println("names--------------------" + names);
+        for (int i = 0; i < controlNames.size(); i++) {
+            frameControlNames control = controlNames.get(i);
+            String names = control.controlName;
+            System.out.println(controlNames.size() + " Names-------------");
             if (names.equalsIgnoreCase("textarea")) {
-                // Create and append a textarea control
-                System.out.println("Adding textarea control to Frame");
-                Frame.appendChild(textarea(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType,dataClassName));
+                Frame.appendChild(textarea(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType, dataClassName));
+            } else if (names.equalsIgnoreCase("combo")) {
+                Frame.appendChild(handleComboControl(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching));
+            } else if (names.equalsIgnoreCase("listbox")) {
+                Frame.appendChild(handleListBoxControl(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType, dbQuery, caching));
+            } else if (names.equalsIgnoreCase("textarea")) {
+                Frame.appendChild(textarea(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType, dataClassName));
+            } else if (names.equalsIgnoreCase("textbox")) {
+                Frame.appendChild(textbox(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType));
+            } else if (names.equalsIgnoreCase("checkbox")) {
+                Frame.appendChild(checkbox(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType));
+            } else if (names.equalsIgnoreCase("datepick")) {
+                Frame.appendChild(datepick(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType));
+            } else if (names.equalsIgnoreCase("label")) {
+                Frame.appendChild(label(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType));
+            } else if (names.equalsIgnoreCase("radio")) {
+                Frame.appendChild(radio(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType));
+            } else if (names.equalsIgnoreCase("EmptyCell") || names.equalsIgnoreCase("EmptyRow")) {
+                Frame.appendChild(handleEmptyCellControl(controlId, names, dataType, groupId, identifier, title));
+            } else if (controlId.startsWith("Slider")) {
+                Frame.appendChild(handleSliderControlElement(controlId, names, dataType, groupId, identifier, title));
+            } else if (controlId.startsWith("Doclist")) {
+                Frame.appendChild(handleDoclistControlElement(controlId, names, dataType, groupId, identifier, title));
+            } else if (controlId.startsWith("Toggle")) {
+                Frame.appendChild(handleToggleControlElement(controlId, names, dataType, groupId, identifier, title));
+            } else if (controlId.startsWith("Tile")) {
+                Frame.appendChild(handleTileControlElement(controlId, names, dataType, groupId, identifier, title));
             } else if (names.equalsIgnoreCase("frameend")) {
-                System.out.println("Encountered 'frameend', breaking out of the loop");
-                // If you encounter "frameend," you can break out of the loop
                 break;
             }
         }
+
+
         Element eventElement = emptyXmlDoc.createElement("Event");
         Element eventsElement = emptyXmlDoc.createElement("Events");
         eventElement.appendChild(eventsElement);
@@ -709,43 +970,54 @@ public class All_Combo_ListBox_Table {
 
     private static String getDefaultAttributeValueForlistview(String attributeName) {
         return switch (attributeName) {
+            case "HeaderBackColor" -> "ffffff";
+            case "Visible", "Enable", "DuplicateRow", "Searching", "Sorting" -> "true";
+            case "Height" -> "300";
+            case "MergeSection", "multiSelect", "Grouping", "timeZone" -> "1";
+            case "HideAdd", "HideDelete", "ShowCheckboxColumn", "isAdvancedListview" -> "false";
+            case "ListBtnAlignment" -> "0";
+            case "HidePrevNext" -> "N";
+            case "CombinedFontWeight", "CombinedHeaderFontWeight" -> "Bold";
+            default -> "";
+        };
+    }
+
+    private static String getDefaultAttributeValueForframe(String attributeName) {
+        return switch (attributeName) {
+            case "FrameId" -> "columnFrameLayout";
+            case "SectionTheme" -> "Select";
+            case "ControlType" -> "frame";
+            case "Caption" -> "ListView";
             case "FontStyle" -> "";
             case "FontWeight" -> "";
             case "FontSize" -> "";
             case "FontColor" -> "";
             case "BackColor" -> "";
+            case "SectionBackColor" -> "";
             case "FontFamily" -> "";
-            case "HeaderFontFamily" -> "";
-            case "HeaderFontSize" -> "";
-            case "HeaderFontColor" -> "";
-            case "HeaderBackColor" -> "ffffff";
-            case "Visible" -> "true";
             case "Enable" -> "true";
-            case "Height" -> "300";
+            case "DataOnDemand" -> "N";
+            case "ColumnLayout" -> "3";
             case "BorderColor" -> "";
-            case "BorderWidth" -> "";
-            case "MergeSection" -> "1";
+            case "BorderWidth" -> "1";
             case "Grouping" -> "1";
-            case "multiSelect" -> "1";
+            case "MergeSection" -> "1";
+            case "ReadOnlyStyle" -> "N";
             case "Summary" -> "";
-            case "timeZone" -> "1";
-            case "HideAdd" -> "false";
-            case "HideDelete" -> "false";
-            case "ShowCheckboxColumn" -> "false";
-            case "isAdvancedListview" -> "false";
-            case "ListBtnAlignment" -> "0";
-            case "DuplicateRow" -> "true";
-            case "Searching" -> "true";
-            case "Sorting" -> "true";
             case "CustomId" -> "";
-            case "HidePrevNext" -> "N";
-            case "CombinedFontWeight" -> "Bold";
-            case "CombinedHeaderFontWeight" -> "Bold";
+            case "CombinedFontWeight" -> "Regular";
+            case "FrameState" -> "false";
+            case "FrameVisible" -> "false";
+            case "GridLayout" -> "false";
+            case "GridLayoutInputLabel" -> "FFFFFF";
+            case "GridLayoutBorderColor" -> "FFFFFF";
             default -> "";
         };
     }
 
-    private static Element handleComboControl(String controlId, String controlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType, String dbQuery, String caching) throws IOException {
+    private static Element handleComboControl(String controlId, String controlType, String controlLabel, String
+            dataType, String groupId, String identifier, String title, String saveValueType, String dbQuery, String caching) throws
+            IOException {
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
         newControl.setAttribute("ControlType", controlType);
@@ -769,14 +1041,13 @@ public class All_Combo_ListBox_Table {
             newControl.insertBefore(optionsElement, newControl.getElementsByTagName("Style").item(0));
         }
 
-        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        Element styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         newControl.appendChild(styleNode);
 
         FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
         Workbook workbook = new XSSFWorkbook(excelFile);
 
         // Now, you can modify the style properties
-        Element styleElement = (Element) styleNode;
 
         Sheet sheet = workbook.getSheet("combo");
         DataFormatter dataFormatter = new DataFormatter();
@@ -838,24 +1109,29 @@ public class All_Combo_ListBox_Table {
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "label" sheet
             for (String attribute : styleAttributes) {
-                styleElement.setAttribute(attribute, getDefaultAttributeValueForCombo(attribute));
+                styleNode.setAttribute(attribute, getDefaultAttributeValueForCombo(attribute));
             }
         } else {
             // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    styleElement.setAttribute(attribute,
-                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
-                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
-                                    getDefaultAttributeValueForCombo(attribute)
-                    );
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueForCombo(attribute);
+                    }
+
+                    styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
-                    styleElement.setAttribute(attribute, getDefaultAttributeValueForCombo(attribute));
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueForCombo(attribute));
                 }
             }
+// ...
         }
 
 
@@ -877,38 +1153,13 @@ public class All_Combo_ListBox_Table {
     // Define a method to get default attribute values based on the attribute name
     private static String getDefaultAttributeValueForCombo(String attributeName) {
         return switch (attributeName) {
-            case "FontStyle" -> "";
-            case "FontWeight" -> "";
-            case "FontSize" -> "";
-            case "FontColor" -> "";
-            case "BackColor" -> "";
-            case "FontFamily" -> "";
-            case "Mandatory" -> "false";
-            case "Visible" -> "true";
-            case "ReadOnly" -> "false";
-            case "Enable" -> "true";
+            case "Mandatory", "ReadOnly" -> "false";
+            case "Visible", "Enable" -> "true";
             case "ValidationMessage" -> "Missing or Invalid Value";
             case "SortingOrder" -> "0";
-            case "ComboType" -> "";
-            case "CharVisibleOnOption" -> "";
-            case "ListSize" -> "";
-            case "BorderColor" -> "";
-            case "BorderWidth" -> "";
-            case "ControlStyle" -> "";
-            case "Grouping" -> "1";
-            case "MergeSection" -> "1";
-            case "LabelFontSize" -> "";
-            case "LabelFontWeight" -> "";
-            case "LabelFontFamily" -> "";
-            case "LabelBackgoundColor" -> "";
-            case "LabelFontColor" -> "";
-            case "ToolTip" -> "";
-            case "Summary" -> "";
-            case "LabelInputRatio" -> "";
+            case "Grouping", "MergeSection" -> "1";
             case "LabelInputAlignment" -> "-1";
-            case "ReadOnlyStyle" -> "N";
-            case "validateMandatoryDisable" -> "N";
-            case "CustomId" -> "";
+            case "ReadOnlyStyle", "validateMandatoryDisable" -> "N";
             case "CombinedFontWeight" -> "Bold";
             default -> "";
 
@@ -922,7 +1173,7 @@ public class All_Combo_ListBox_Table {
         // Create a mapping of column names to their respective column indexes
         for (Cell cell : headerRow) {
             if (cell != null && cell.getCellType() == CellType.STRING) {
-                String columnName = cell.getStringCellValue();
+                String columnName = cell.getStringCellValue().trim();
                 columnIndexMap.put(columnName, cell.getColumnIndex());
             }
         }
@@ -931,7 +1182,9 @@ public class All_Combo_ListBox_Table {
     }
 
 
-    private static Element handleListBoxControl(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType, String dbQuery, String caching) throws IOException {
+    private static Element handleListBoxControl(String controlId, String ControlType, String controlLabel, String
+            dataType, String groupId, String identifier, String title, String saveValueType, String dbQuery, String caching) throws
+            IOException {
         System.out.println(controlId);
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
@@ -963,14 +1216,13 @@ public class All_Combo_ListBox_Table {
             newControl.insertBefore(optionsElement, newControl.getElementsByTagName("Style").item(0));
         }
 
-        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        Element styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         newControl.appendChild(styleNode);
 
         FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
         Workbook workbook = new XSSFWorkbook(excelFile);
 
         // Now, you can modify the style properties
-        Element styleElement = (Element) styleNode;
 
         Sheet sheet = workbook.getSheet("listbox");
         DataFormatter dataFormatter = new DataFormatter();
@@ -1032,24 +1284,29 @@ public class All_Combo_ListBox_Table {
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "label" sheet
             for (String attribute : styleAttributes) {
-                styleElement.setAttribute(attribute, getDefaultAttributeValueForlistbox(attribute));
+                styleNode.setAttribute(attribute, getDefaultAttributeValueForlistbox(attribute));
             }
         } else {
             // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    styleElement.setAttribute(attribute,
-                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
-                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
-                                    getDefaultAttributeValueForlistbox(attribute)
-                    );
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueForlistbox(attribute);
+                    }
+
+                    styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
-                    styleElement.setAttribute(attribute, getDefaultAttributeValueForlistbox(attribute));
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueForlistbox(attribute));
                 }
             }
+// ...
         }
 
 
@@ -1070,38 +1327,14 @@ public class All_Combo_ListBox_Table {
 
     private static String getDefaultAttributeValueForlistbox(String attributeName) {
         return switch (attributeName) {
-            case "FontStyle" -> "";
-            case "FontWeight" -> "";
-            case "FontSize" -> "";
-            case "FontColor" -> "";
-            case "BackColor" -> "";
-            case "FontFamily" -> "";
-            case "Mandatory" -> "false";
-            case "Visible" -> "true";
-            case "ReadOnly" -> "false";
-            case "Enable" -> "true";
+            case "Mandatory", "ReadOnly" -> "false";
+            case "Visible", "Enable" -> "true";
             case "ValidationMessage" -> "Missing or Invalid Value";
             case "SortingOrder" -> "0";
             case "ComboType" -> "listbox";
-            case "CharVisibleOnOption" -> "";
-            case "ListSize" -> "";
-            case "BorderColor" -> "";
-            case "BorderWidth" -> "";
-            case "ControlStyle" -> "";
-            case "Grouping" -> "1";
-            case "MergeSection" -> "1";
-            case "LabelFontSize" -> "";
-            case "LabelFontWeight" -> "";
-            case "LabelFontFamily" -> "";
-            case "LabelBackgoundColor" -> "";
-            case "LabelFontColor" -> "";
-            case "ToolTip" -> "";
-            case "Summary" -> "";
-            case "LabelInputRatio" -> "";
+            case "Grouping", "MergeSection" -> "1";
             case "LabelInputAlignment" -> "-1";
-            case "ReadOnlyStyle" -> "N";
-            case "validateMandatoryDisable" -> "N";
-            case "CustomId" -> "";
+            case "ReadOnlyStyle", "validateMandatoryDisable" -> "N";
             case "CombinedFontWeight" -> "Bold";
             default -> "";
         };
@@ -1119,7 +1352,9 @@ public class All_Combo_ListBox_Table {
         return null;
     }
 
-    public static Element textarea(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType, String dataClassName) throws IOException {
+    public static Element textarea(String controlId, String ControlType, String controlLabel, String
+            dataType, String groupId, String identifier, String title, String saveValueType, String dataClassName) throws
+            IOException {
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
         newControl.setAttribute("ControlType", ControlType);
@@ -1130,14 +1365,13 @@ public class All_Combo_ListBox_Table {
         newControl.setAttribute("Title", title);
         newControl.setAttribute("SaveValueType", saveValueType);
 
-        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        Element styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         newControl.appendChild(styleNode);
 
         FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
         Workbook workbook = new XSSFWorkbook(excelFile);
 
         // Now, you can modify the style properties
-        Element styleElement = (Element) styleNode;
 
         Sheet sheet = workbook.getSheet("textarea");
         DataFormatter dataFormatter = new DataFormatter();
@@ -1212,36 +1446,35 @@ public class All_Combo_ListBox_Table {
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "label" sheet
             for (String attribute : styleAttributes) {
-                styleElement.setAttribute(attribute, getDefaultAttributeValueFortextarea(attribute));
+                styleNode.setAttribute(attribute, getDefaultAttributeValueFortextarea(attribute));
             }
         } else {
             // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    styleElement.setAttribute(attribute,
-                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
-                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
-                                    getDefaultAttributeValueFortextarea(attribute)
-                    );
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueFortextarea(attribute);
+                    }
+
+                    styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
-                    styleElement.setAttribute(attribute, getDefaultAttributeValueFortextarea(attribute));
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueFortextarea(attribute));
                 }
             }
+// ...
         }
 
         Element eventElement = emptyXmlDoc.createElement("Event");
         Element eventsElement = emptyXmlDoc.createElement("Events");
         eventElement.appendChild(eventsElement);
         newControl.appendChild(eventElement);
-
-        /*NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
-        if (dataClassNodes.getLength() > 0) {
-            Element dataClassElement = (Element) dataClassNodes.item(0);
-            newControl.removeChild(dataClassElement);
-        }*/
 
         Element dataClassElement = emptyXmlDoc.createElement("DataClass");
         dataClassElement.setAttribute("Name", dataClassName);
@@ -1253,57 +1486,23 @@ public class All_Combo_ListBox_Table {
 
     private static String getDefaultAttributeValueFortextarea(String attributeName) {
         return switch (attributeName) {
-            case "FontStyle" -> "";
-            case "FontWeight" -> "";
-            case "FontSize" -> "";
-            case "FontColor" -> "";
-            case "BackColor" -> "";
-            case "FontFamily" -> "";
-            case "Mandatory" -> "false";
+            case "Mandatory", "ReadOnly", "DisableMaxLength" -> "false";
             case "ValidationMessage" -> "Missing or Invalid Value";
-            case "Visible" -> "true";
-            case "ReadOnly" -> "false";
-            case "Enable" -> "true";
-            case "TextAlignment" -> "";
+            case "Visible", "Enable", "Alphabets", "Spaces", "Numerals" -> "true";
             case "Rows" -> "3";
             case "MaximumChar" -> "100";
-            case "MaxLength" -> "";
-            case "BorderColor" -> "";
-            case "BorderWidth" -> "";
-            case "ControlStyle" -> "";
             case "CombinedFontWeight" -> "Bold";
-            case "Grouping" -> "1";
-            case "RichText" -> "1";
-            case "MergeSection" -> "1";
-            case "TypeOfValue" -> "";
-            case "Precision" -> "";
-            case "DisableMaxLength" -> "false";
-            case "LabelFontSize" -> "";
-            case "LabelFontWeight" -> "";
-            case "LabelFontFamily" -> "";
-            case "LabelBackgoundColor" -> "";
-            case "LabelFontColor" -> "";
-            case "ToolTip" -> "";
+            case "Grouping", "RichText", "MergeSection" -> "1";
             case "AllowSpecialChars" -> "Y";
-            case "Summary" -> "";
-            case "ReadOnlyStyle" -> "N";
-            case "CharacterSet" -> "0";
-            case "AllowCopy" -> "0";
-            case "AllowPaste" -> "0";
-            case "LabelInputRatio" -> "";
+            case "ReadOnlyStyle", "validateMandatoryDisable" -> "N";
+            case "CharacterSet", "AllowCopy", "AllowPaste" -> "0";
             case "LabelInputAlignment" -> "-1";
-            case "validateMandatoryDisable" -> "N";
-            case "CustomId" -> "";
-            case "Alphabets" -> "true";
-            case "Spaces" -> "true";
-            case "Numerals" -> "true";
-            case "SpecialCharacters" -> "";
-            case "PlaceHolder" -> "";
             default -> "";
         };
     }
 
-    public static Element textbox(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+    public static Element textbox(String controlId, String ControlType, String controlLabel, String
+            dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
         newControl.setAttribute("ControlType", ControlType);
@@ -1339,138 +1538,87 @@ public class All_Combo_ListBox_Table {
             }
         }
 
+        String[] styleAttributes = {
+                "FontStyle",
+                "FontWeight",
+                "FontSize",
+                "FontColor",
+                "BackColor",
+                "FontFamily",
+                "Mandatory",
+                "ValidationMessage",
+                "Visible",
+                "ReadOnly",
+                "Enable",
+                "Grouping",
+                "DisableMaxLength",
+                "BorderColor",
+                "BorderWidth",
+                "ControlStyle",
+                "MergeSection",
+                "MaskingValue",
+                "FormattedValue",
+                "RangeMax",
+                "RangeMin",
+                "TypeOfValue",
+                "Precision",
+                "SaveEncrypted",
+                "MaxLength",
+                "Alphabets",
+                "Spaces",
+                "Numerals",
+                "SpecialCharacters",
+                "Pattern",
+                "LabelFontSize",
+                "LabelFontWeight",
+                "LabelFontFamily",
+                "LabelBackgoundColor",
+                "LabelFontColor",
+                "LabelInputRatio",
+                "ToolTip",
+                "Summary",
+                "ReadOnlyStyle",
+                "AllowSpecialChars",
+                "validateMandatoryDisable",
+                "CharacterSet",
+                "AllowCopy",
+                "AllowPaste",
+                "LabelInputAlignment",
+                "CustomId",
+                "LabelAsLink",
+                "TextAlignment",
+                "MaxValue",
+                "MinValue",
+                "PlaceHolder",
+                "CombinedFontWeight"
+        };
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "textbox" sheet
-            String[] styleAttributes = {
-                    "FontStyle",
-                    "FontWeight",
-                    "FontSize",
-                    "FontColor",
-                    "BackColor",
-                    "FontFamily",
-                    "Mandatory",
-                    "ValidationMessage",
-                    "Visible",
-                    "ReadOnly",
-                    "Enable",
-                    "Grouping",
-                    "DisableMaxLength",
-                    "BorderColor",
-                    "BorderWidth",
-                    "ControlStyle",
-                    "MergeSection",
-                    "MaskingValue",
-                    "FormattedValue",
-                    "RangeMax",
-                    "RangeMin",
-                    "TypeOfValue",
-                    "Precision",
-                    "SaveEncrypted",
-                    "MaxLength",
-                    "Alphabets",
-                    "Spaces",
-                    "Numerals",
-                    "SpecialCharacters",
-                    "Pattern",
-                    "LabelFontSize",
-                    "LabelFontWeight",
-                    "LabelFontFamily",
-                    "LabelBackgoundColor",
-                    "LabelFontColor",
-                    "LabelInputRatio",
-                    "ToolTip",
-                    "Summary",
-                    "ReadOnlyStyle",
-                    "AllowSpecialChars",
-                    "validateMandatoryDisable",
-                    "CharacterSet",
-                    "AllowCopy",
-                    "AllowPaste",
-                    "LabelInputAlignment",
-                    "CustomId",
-                    "LabelAsLink",
-                    "TextAlignment",
-                    "MaxValue",
-                    "MinValue",
-                    "PlaceHolder",
-                    "CombinedFontWeight"
-            };
 
             for (String attribute : styleAttributes) {
                 styleNode.setAttribute(attribute, getDefaultAttributeValueFortextbox(attribute));
             }
         } else {
             // controlId exists in the "textbox" sheet, apply user-defined or default style properties
-            String[] styleAttributes = {
-                    "FontStyle",
-                    "FontWeight",
-                    "FontSize",
-                    "FontColor",
-                    "BackColor",
-                    "FontFamily",
-                    "Mandatory",
-                    "ValidationMessage",
-                    "Visible",
-                    "ReadOnly",
-                    "Enable",
-                    "Grouping",
-                    "DisableMaxLength",
-                    "BorderColor",
-                    "BorderWidth",
-                    "ControlStyle",
-                    "MergeSection",
-                    "MaskingValue",
-                    "FormattedValue",
-                    "RangeMax",
-                    "RangeMin",
-                    "TypeOfValue",
-                    "Precision",
-                    "SaveEncrypted",
-                    "MaxLength",
-                    "Alphabets",
-                    "Spaces",
-                    "Numerals",
-                    "SpecialCharacters",
-                    "Pattern",
-                    "LabelFontSize",
-                    "LabelFontWeight",
-                    "LabelFontFamily",
-                    "LabelBackgoundColor",
-                    "LabelFontColor",
-                    "LabelInputRatio",
-                    "ToolTip",
-                    "Summary",
-                    "ReadOnlyStyle",
-                    "AllowSpecialChars",
-                    "validateMandatoryDisable",
-                    "CharacterSet",
-                    "AllowCopy",
-                    "AllowPaste",
-                    "LabelInputAlignment",
-                    "CustomId",
-                    "LabelAsLink",
-                    "TextAlignment",
-                    "MaxValue",
-                    "MinValue",
-                    "PlaceHolder",
-                    "CombinedFontWeight"
-            };
-
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex));
-                    // Check if the cell value is empty or null, if so, use the default value
-                    if (cellValue == null || cellValue.isEmpty()) {
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
                         cellValue = getDefaultAttributeValueFortextbox(attribute);
                     }
+
                     styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
                     styleNode.setAttribute(attribute, getDefaultAttributeValueFortextbox(attribute));
                 }
             }
+// ...
         }
 
         newControl.appendChild(styleNode);
@@ -1492,63 +1640,22 @@ public class All_Combo_ListBox_Table {
 
     private static String getDefaultAttributeValueFortextbox(String attributeName) {
         return switch (attributeName) {
-            case "FontStyle" -> "";
-            case "FontWeight" -> "";
-            case "FontSize" -> "";
-            case "FontColor" -> "";
-            case "BackColor" -> "";
-            case "FontFamily" -> "";
-            case "Mandatory" -> "false";
+            case "Mandatory", "ReadOnly", "DisableMaxLength" -> "false";
             case "ValidationMessage" -> "Missing or Invalid Value";
-            case "Visible" -> "true";
-            case "ReadOnly" -> "false";
-            case "Enable" -> "true";
-            case "Grouping" -> "1";
-            case "DisableMaxLength" -> "false";
-            case "BorderColor" -> "";
-            case "BorderWidth" -> "";
-            case "ControlStyle" -> "";
-            case "MergeSection" -> "1";
-            case "MaskingValue" -> "nomasking";
-            case "FormattedValue" -> "N";
-            case "RangeMax" -> "0";
-            case "RangeMin" -> "0";
-            case "TypeOfValue" -> "";
-            case "Precision" -> "";
-            case "SaveEncrypted" -> "N";
-            case "MaxLength" -> "";
-            case "Alphabets" -> "true";
-            case "Spaces" -> "true";
-            case "Numerals" -> "true";
-            case "SpecialCharacters" -> "";
-            case "Pattern" -> "";
-            case "LabelFontSize" -> "";
-            case "LabelFontWeight" -> "";
-            case "LabelFontFamily" -> "";
-            case "LabelBackgroundColor" -> "";
-            case "LabelFontColor" -> "";
-            case "LabelInputRatio" -> "";
-            case "ToolTip" -> "";
-            case "Summary" -> "";
-            case "ReadOnlyStyle" -> "N";
+            case "Visible", "Enable", "Alphabets", "Spaces", "Numerals" -> "true";
+            case "Grouping", "MergeSection" -> "1";
+            case "MaskingValue" -> "nom asking";
+            case "FormattedValue", "SaveEncrypted", "ReadOnlyStyle", "validateMandatoryDisable", "LabelAsLink" -> "N";
+            case "RangeMax", "RangeMin", "CharacterSet", "AllowCopy", "AllowPaste" -> "0";
             case "AllowSpecialChars" -> "Y";
-            case "validateMandatoryDisable" -> "N";
-            case "CharacterSet" -> "0";
-            case "AllowCopy" -> "0";
-            case "AllowPaste" -> "0";
             case "LabelInputAlignment" -> "-1";
-            case "CustomId" -> "";
-            case "LabelAsLink" -> "N";
-            case "TextAlignment" -> "";
-            case "MaxValue" -> "";
-            case "MinValue" -> "";
-            case "PlaceHolder" -> "";
             case "CombinedFontWeight" -> "Bold";
             default -> "";
         };
     }
 
-    public static Element checkbox(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+    public static Element checkbox(String controlId, String ControlType, String controlLabel, String
+            dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
         newControl.setAttribute("ControlType", ControlType);
@@ -1559,14 +1666,13 @@ public class All_Combo_ListBox_Table {
         newControl.setAttribute("Title", title);
         newControl.setAttribute("SaveValueType", saveValueType);
 
-        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        Element styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         newControl.appendChild(styleNode);
 
         FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
         Workbook workbook = new XSSFWorkbook(excelFile);
 
         // Now, you can modify the style properties
-        Element styleElement = (Element) styleNode;
 
         Sheet sheet = workbook.getSheet("checkbox");
         DataFormatter dataFormatter = new DataFormatter();
@@ -1618,24 +1724,29 @@ public class All_Combo_ListBox_Table {
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "label" sheet
             for (String attribute : styleAttributes) {
-                styleElement.setAttribute(attribute, getDefaultAttributeValueForCheckbox(attribute));
+                styleNode.setAttribute(attribute, getDefaultAttributeValueForCheckbox(attribute));
             }
         } else {
             // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    styleElement.setAttribute(attribute,
-                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
-                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
-                                    getDefaultAttributeValueForCheckbox(attribute)
-                    );
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueForCheckbox(attribute);
+                    }
+
+                    styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
-                    styleElement.setAttribute(attribute, getDefaultAttributeValueForCheckbox(attribute));
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueForCheckbox(attribute));
                 }
             }
+// ...
         }
 
         Element eventElement = emptyXmlDoc.createElement("Event");
@@ -1656,28 +1767,11 @@ public class All_Combo_ListBox_Table {
 
     private static String getDefaultAttributeValueForCheckbox(String attributeName) {
         return switch (attributeName) {
-            case "FontStyle" -> "";
-            case "FontWeight" -> "";
-            case "FontSize" -> "";
-            case "FontColor" -> "";
-            case "BackColor" -> "";
-            case "FontFamily" -> "";
-            case "Mandatory" -> "false";
+            case "Mandatory", "ReadOnly" -> "false";
             case "ValidationMessage" -> "Missing or Invalid Value";
-            case "Visible" -> "true";
-            case "ReadOnly" -> "false";
-            case "Enable" -> "true";
-            case "BorderColor" -> "";
-            case "BorderWidth" -> "";
-            case "ControlStyle" -> "";
-            case "Grouping" -> "1";
-            case "MergeSection" -> "1";
-            case "VerticalAlignment" -> "";
-            case "ToolTip" -> "";
-            case "Summary" -> "";
-            case "CustomId" -> "";
-            case "validateMandatoryDisable" -> "N";
-            case "ReadOnlyStyle" -> "N";
+            case "Visible", "Enable" -> "true";
+            case "Grouping", "MergeSection" -> "1";
+            case "validateMandatoryDisable", "ReadOnlyStyle" -> "N";
             case "CombinedFontWeight" -> "Bold";
             default -> "";
         };
@@ -1685,7 +1779,8 @@ public class All_Combo_ListBox_Table {
 
     }
 
-    public static Element datepick(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+    public static Element datepick(String controlId, String ControlType, String controlLabel, String
+            dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
         newControl.setAttribute("ControlType", ControlType);
@@ -1696,14 +1791,13 @@ public class All_Combo_ListBox_Table {
         newControl.setAttribute("Title", title);
         newControl.setAttribute("SaveValueType", saveValueType);
 
-        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        Element styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         newControl.appendChild(styleNode);
 
         FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
         Workbook workbook = new XSSFWorkbook(excelFile);
 
         // Now, you can modify the style properties
-        Element styleElement = (Element) styleNode;
 
         Sheet sheet = workbook.getSheet("datepick");
         DataFormatter dataFormatter = new DataFormatter();
@@ -1772,24 +1866,29 @@ public class All_Combo_ListBox_Table {
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "datepick" sheet
             for (String attribute : styleAttributes) {
-                styleElement.setAttribute(attribute, getDefaultAttributeValueFordatepick(attribute));
+                styleNode.setAttribute(attribute, getDefaultAttributeValueFordatepick(attribute));
             }
         } else {
             // controlId exists in the "datepick" sheet, apply user-defined or default style properties
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    styleElement.setAttribute(attribute,
-                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
-                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
-                                    getDefaultAttributeValueFordatepick(attribute)
-                    );
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueFordatepick(attribute);
+                    }
+
+                    styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
-                    styleElement.setAttribute(attribute, getDefaultAttributeValueFordatepick(attribute));
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueFordatepick(attribute));
                 }
             }
+// ...
         }
 
         Element eventElement = emptyXmlDoc.createElement("Event");
@@ -1810,52 +1909,20 @@ public class All_Combo_ListBox_Table {
     private static String getDefaultAttributeValueFordatepick(String attributeName) {
 
         return switch (attributeName) {
-            case "FontStyle" -> "";
-            case "FontWeight" -> "";
-            case "FontSize" -> "";
-            case "FontColor" -> "";
-            case "BackColor" -> "";
-            case "FontFamily" -> "";
-            case "Mandatory" -> "false";
+            case "Mandatory", "ReadOnly", "MinDateAsCurrent", "MaxDateAsCurrent", "TimeZone" -> "false";
             case "ValidationMessage" -> "Missing or Invalid Value";
-            case "Visible" -> "true";
-            case "ReadOnly" -> "false";
-            case "Enable" -> "true";
-            case "MinDateAsCurrent" -> "false";
-            case "MaxDateAsCurrent" -> "false";
-            case "BorderColor" -> "";
-            case "BorderWidth" -> "";
-            case "ControlStyle" -> "";
-            case "TextAlignment" -> "";
-            case "PickerType" -> "1";
-            case "OpenPicker" -> "1";
-            case "SelectPicker" -> "";
-            case "Grouping" -> "1";
-            case "MergeSection" -> "1";
-            case "MinDate" -> "";
-            case "MaxDate" -> "";
-            case "LabelFontSize" -> "";
-            case "LabelFontWeight" -> "";
-            case "LabelFontFamily" -> "";
-            case "LabelBackgoundColor" -> "";
-            case "LabelFontColor" -> "";
-            case "TimeZone" -> "false";
-            case "ToolTip" -> "";
-            case "Summary" -> "";
-            case "LabelInputRatio" -> "";
+            case "Visible", "Enable" -> "true";
+            case "PickerType", "OpenPicker", "Grouping", "MergeSection", "DefaultHijriView" -> "1";
             case "LabelInputAlignment" -> "-1";
-            case "ReadOnlyStyle" -> "N";
-            case "validateMandatoryDisable" -> "N";
-            case "CustomId" -> "";
-            case "DefaultValue" -> "";
+            case "ReadOnlyStyle", "validateMandatoryDisable" -> "N";
             case "CombinedFontWeight" -> "Bold";
-            case "DefaultHijriView" -> "1";
             default -> "";
         };
 
     }
 
-    public static Element label(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+    public static Element label(String controlId, String ControlType, String controlLabel, String dataType, String
+            groupId, String identifier, String title, String saveValueType) throws IOException {
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
         newControl.setAttribute("ControlType", ControlType);
@@ -1866,14 +1933,13 @@ public class All_Combo_ListBox_Table {
         newControl.setAttribute("Title", title);
         newControl.setAttribute("SaveValueType", saveValueType);
 
-        Node styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
+        Element styleNode = emptyXmlDoc.createElement("Style"); // Create a Style element
         newControl.appendChild(styleNode);
 
         FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
         Workbook workbook = new XSSFWorkbook(excelFile);
 
         // Now, you can modify the style properties
-        Element styleElement = (Element) styleNode;
 
         Sheet sheet = workbook.getSheet("label");
         DataFormatter dataFormatter = new DataFormatter();
@@ -1920,24 +1986,29 @@ public class All_Combo_ListBox_Table {
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "label" sheet
             for (String attribute : styleAttributes) {
-                styleElement.setAttribute(attribute, getDefaultAttributeValueForlabel(attribute));
+                styleNode.setAttribute(attribute, getDefaultAttributeValueForlabel(attribute));
             }
         } else {
             // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    styleElement.setAttribute(attribute,
-                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
-                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
-                                    getDefaultAttributeValueForlabel(attribute)
-                    );
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueForlabel(attribute);
+                    }
+
+                    styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
-                    styleElement.setAttribute(attribute, getDefaultAttributeValueForlabel(attribute));
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueForlabel(attribute));
                 }
             }
+// ...
         }
 
         NodeList dataClassNodes = newControl.getElementsByTagName("DataClass");
@@ -1952,29 +2023,17 @@ public class All_Combo_ListBox_Table {
 
     private static String getDefaultAttributeValueForlabel(String attributeName) {
         return switch (attributeName) {
-            case "FontStyle" -> "";
-            case "FontWeight" -> "";
-            case "FontSize" -> "";
-            case "FontColor" -> "";
-            case "BackColor" -> "";
-            case "FontFamily" -> "";
-            case "Mandatory" -> "false";
-            case "Visible" -> "true";
-            case "ReadOnly" -> "false";
-            case "Enable" -> "true";
-            case "MergeSection" -> "1";
-            case "Grouping" -> "1";
-            case "TextAlignment" -> "";
-            case "LinkURL" -> "";
-            case "Link" -> "1";
+            case "Mandatory", "ReadOnly" -> "false";
+            case "Visible", "Enable" -> "true";
+            case "MergeSection", "Grouping", "Link" -> "1";
             case "SubSection" -> "N";
-            case "CustomId" -> "";
             case "CombinedFontWeight" -> "Bold";
             default -> "";
         };
     }
 
-    public static Element radio(String controlId, String ControlType, String controlLabel, String dataType, String groupId, String identifier, String title, String saveValueType) throws IOException {
+    public static Element radio(String controlId, String ControlType, String controlLabel, String dataType, String
+            groupId, String identifier, String title, String saveValueType) throws IOException {
         Element newControl = emptyXmlDoc.createElement("Control");
         newControl.setAttribute("ControlId", controlId);
         newControl.setAttribute("ControlType", ControlType);
@@ -1991,14 +2050,13 @@ public class All_Combo_ListBox_Table {
         newControl.insertBefore(optionsElement, newControl.getElementsByTagName("Style").item(0));
 
         // Create and append the Style element
-        Node styleNode = emptyXmlDoc.createElement("Style");
+        Element styleNode = emptyXmlDoc.createElement("Style");
         newControl.appendChild(styleNode);
 
         FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
         Workbook workbook = new XSSFWorkbook(excelFile);
 
         // Now, you can modify the style properties
-        Element styleElement = (Element) styleNode;
 
         Sheet sheet = workbook.getSheet("radio");
         DataFormatter dataFormatter = new DataFormatter();
@@ -2058,24 +2116,29 @@ public class All_Combo_ListBox_Table {
         if (!controlIdExists) {
             // Set default style properties if controlId does not exist in the "radio" sheet
             for (String attribute : styleAttributes) {
-                styleElement.setAttribute(attribute, getDefaultAttributeValueForradio(attribute));
+                styleNode.setAttribute(attribute, getDefaultAttributeValueForradio(attribute));
             }
         } else {
             // controlId exists in the "radio" sheet, apply user-defined or default style properties
+            // ...
             for (String attribute : styleAttributes) {
                 Integer columnIndex = columnIndexMap.get(attribute);
 
                 if (columnIndex != null) {
-                    styleElement.setAttribute(attribute,
-                            dataFormatter.formatCellValue(row.getCell(columnIndex)) != null ?
-                                    dataFormatter.formatCellValue(row.getCell(columnIndex)) :
-                                    getDefaultAttributeValueForradio(attribute)
-                    );
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueForradio(attribute);
+                    }
+
+                    styleNode.setAttribute(attribute, cellValue);
                 } else {
                     // If the column index is not found, set the default value
-                    styleElement.setAttribute(attribute, getDefaultAttributeValueForradio(attribute));
+                    styleNode.setAttribute(attribute, getDefaultAttributeValueForradio(attribute));
                 }
             }
+// ...
         }
 
         Element eventElement = emptyXmlDoc.createElement("Event");
@@ -2106,6 +2169,7 @@ public class All_Combo_ListBox_Table {
         };
     }
 
+
     static class ColumnProperties {
         String columnName;
         String complexFieldName;
@@ -2116,6 +2180,7 @@ public class All_Combo_ListBox_Table {
             this.complexFieldName = complexFieldName;
             this.complexFieldType = complexFieldType;
         }
+
     }
 
     static class frameControlNames {
@@ -2125,4 +2190,456 @@ public class All_Combo_ListBox_Table {
             this.controlName = controlName;
         }
     }
+
+    private static Element handleEmptyCellControl(String controlId, String controlLabel, String dataType, String
+            groupId, String identifier, String title) {
+        Element controlElement = findControlElementByType(allFieldXmlDoc, "EmptyCell");
+        if (controlElement != null) {
+            Element newControl = (Element) emptyXmlDoc.importNode(controlElement, true);
+            newControl.setAttribute("ControlId", controlId);
+            newControl.setAttribute("ControlLabel", controlLabel);
+            newControl.setAttribute("DataType", dataType);
+            newControl.setAttribute("GroupId", groupId);
+            newControl.setAttribute("Identifier", identifier);
+            newControl.setAttribute("Title", title);
+
+           /* NodeList styleNodes = controlElement.getElementsByTagName("Style");
+            styleNodes.getLength();// newControl.appendChild(importedStyleNode);*/
+
+            return newControl;
+        }
+        return null;
+    }
+
+
+    private static Element handleDoclistControlElement(String controlId, String controlLabel, String
+            dataType, String groupId, String identifier, String title) throws IOException {
+        Element controlElement = emptyXmlDoc.createElement("Control");
+        controlElement.setAttribute("ControlId", controlId);
+        controlElement.setAttribute("ControlType", "CustomControl");
+        controlElement.setAttribute("ControlLabel", controlLabel);
+        controlElement.setAttribute("DataType", dataType);
+        controlElement.setAttribute("GroupId", groupId);
+        controlElement.setAttribute("Identifier", identifier);
+        controlElement.setAttribute("Title", title);
+
+// Create <Event> and <Events> elements
+        Element eventElement = emptyXmlDoc.createElement("Event");
+        Element eventsElement = emptyXmlDoc.createElement("Events");
+        eventElement.appendChild(eventsElement);
+
+// Append <Event> element to control
+        controlElement.appendChild(eventElement);
+
+// Create <Style> element
+        Element styleElement = emptyXmlDoc.createElement("Style");
+        controlElement.appendChild(styleElement);
+
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        Sheet sheet = workbook.getSheet("doclist");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+        //System.out.println(columnIndexMap+"--------------------------------------");
+        boolean controlIdExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String radioId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (radioId.equals(controlId)) {
+                    controlIdExists = true;
+                    break;
+                }
+            }
+        }
+
+
+        String[] styleAttributes = {
+                "ControlIcon",
+                "ControlName",
+                "CustomControlType",
+                "DocComment",
+                "DocControlID",
+                "DocIndex",
+                "DocName",
+                "DocSize",
+                "DocType",
+                "Latitude",
+                "Longitude",
+                "NoOfPageInDoc",
+                "WaiverComments",
+                "WaiverDoc"
+        };
+
+        if (!controlIdExists) {
+            // Set default style properties if controlId does not exist in the "radio" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueFordoclist(attribute));
+            }
+        } else {
+            // controlId exists in the "radio" sheet, apply user-defined or default style properties
+            // ...
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueFordoclist(attribute);
+                    }
+
+                    styleElement.setAttribute(attribute, cellValue);
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueFordoclist(attribute));
+                }
+            }
+// ...
+        }
+
+// Create <DocList> element
+        Element docListElement = emptyXmlDoc.createElement("DocList");
+        styleElement.appendChild(docListElement);
+
+// Append <Style> element to control
+        controlElement.appendChild(styleElement);
+
+// Create <DataClass> element
+        Element dataClassElement = emptyXmlDoc.createElement("DataClass");
+        dataClassElement.setAttribute("Name", "");
+
+// Append <DataClass> element to control
+        controlElement.appendChild(dataClassElement);
+
+        return controlElement;
+    }
+
+    private static String getDefaultAttributeValueFordoclist(String attributeName) {
+        return switch (attributeName) {
+            case "ControlIcon" -> "doclist.png";
+            case "ControlName", "CustomControlType" -> "Doclist";
+            default -> "";
+        };
+    }
+
+    private static Element handleToggleControlElement(String controlId, String controlLabel, String
+            dataType, String groupId, String identifier, String title) {
+        Element controlElement = emptyXmlDoc.createElement("Control");
+        controlElement.setAttribute("ControlId", controlId);
+        controlElement.setAttribute("ControlType", "CustomControl");
+        controlElement.setAttribute("ControlLabel", controlLabel);
+        controlElement.setAttribute("DataType", dataType);
+        controlElement.setAttribute("GroupId", groupId);
+        controlElement.setAttribute("Identifier", identifier);
+        controlElement.setAttribute("Title", title);
+
+// Create <Event> and <Events> elements
+        Element eventElement = emptyXmlDoc.createElement("Event");
+        Element eventsElement = emptyXmlDoc.createElement("Events");
+        eventElement.appendChild(eventsElement);
+
+// Append <Event> element to control
+        controlElement.appendChild(eventElement);
+
+// Create <Style> element with static attributes
+        Element styleElement = emptyXmlDoc.createElement("Style");
+        styleElement.setAttribute("ControlName", "Toggle");
+        styleElement.setAttribute("CustomControlType", "Toggle");
+        styleElement.setAttribute("ControlIcon", "toggle.png");
+
+// Append <Style> element to control
+        controlElement.appendChild(styleElement);
+
+// Create <DataClass> element
+        Element dataClassElement = emptyXmlDoc.createElement("DataClass");
+        dataClassElement.setAttribute("Name", "");
+
+// Append <DataClass> element to control
+        controlElement.appendChild(dataClassElement);
+
+        return controlElement;
+    }
+
+
+    private static Element handleTileControlElement(String controlId, String controlLabel, String dataType, String
+            groupId, String identifier, String title) throws IOException {
+        Element controlElement = emptyXmlDoc.createElement("Control");
+        controlElement.setAttribute("ControlId", controlId);
+        controlElement.setAttribute("ControlType", "CustomControl");
+        controlElement.setAttribute("ControlLabel", controlLabel);
+        controlElement.setAttribute("DataType", dataType);
+        controlElement.setAttribute("GroupId", groupId);
+        controlElement.setAttribute("Identifier", identifier);
+        controlElement.setAttribute("Title", title);
+
+// Create <Event> and <Events> elements
+        Element eventElement = emptyXmlDoc.createElement("Event");
+        Element eventsElement = emptyXmlDoc.createElement("Events");
+        eventElement.appendChild(eventsElement);
+
+// Append <Event> element to control
+        controlElement.appendChild(eventElement);
+
+// Create <Style> element with static attributes
+        Element styleElement = emptyXmlDoc.createElement("Style");
+        controlElement.appendChild(styleElement);
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        Sheet sheet = workbook.getSheet("tile");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+        boolean ControlLabelExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String listboxId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (listboxId.equals(controlId)) {
+                    ControlLabelExists = true;
+                    break;
+                }
+            }
+        }
+
+
+        String[] styleAttributes = {
+                "ControlName",
+                "CustomControlType",
+                "ControlIcon",
+                "TileHeader",
+                "TileButtonLabel",
+                "TileAlignLabel",
+                "VisibleOnMobile"
+        };
+
+        if (!ControlLabelExists) {
+            // Set default style properties if controlId does not exist in the "label" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueFortile(attribute));
+            }
+        } else {
+            // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueFortile(attribute);
+                    }
+
+                    styleElement.setAttribute(attribute, cellValue);
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueFortile(attribute));
+                }
+            }
+// ...
+        }
+
+// Create <DataClass> element
+        Element dataClassElement = emptyXmlDoc.createElement("DataClass");
+        dataClassElement.setAttribute("Name", "");
+
+// Append <DataClass> element to control
+        controlElement.appendChild(dataClassElement);
+
+        return controlElement;
+    }
+
+    private static String getDefaultAttributeValueFortile(String attributeName) {
+        return switch (attributeName) {
+            case "ControlName" -> "Tile";
+            case "CustomControlType" -> "Tile";
+            case "ControlIcon" -> "tile.png";
+            case "TileHeader" -> "";
+            case "TilePoint" -> "";
+            case "TileButtonLabel" -> "";
+            case "TileAlignLabel" -> "left";
+            case "VisibleOnMobile" -> "yes";
+            default -> "";
+        };
+    }
+
+    private static Element handleSliderControlElement(String controlId, String controlLabel, String
+            dataType, String groupId, String identifier, String title) throws IOException {
+        Element controlElement = emptyXmlDoc.createElement("Control");
+        controlElement.setAttribute("ControlId", controlId);
+        controlElement.setAttribute("ControlType", "CustomControl");
+        controlElement.setAttribute("ControlLabel", controlLabel);
+        controlElement.setAttribute("DataType", dataType);
+        controlElement.setAttribute("GroupId", groupId);
+        controlElement.setAttribute("Identifier", identifier);
+        controlElement.setAttribute("Title", title);
+
+// Create <Event> and <Events> elements
+        Element eventElement = emptyXmlDoc.createElement("Event");
+        Element eventsElement = emptyXmlDoc.createElement("Events");
+        eventElement.appendChild(eventsElement);
+
+// Append <Event> element to control
+        controlElement.appendChild(eventElement);
+
+// Create <Style> element with static attributes
+        Element styleElement = emptyXmlDoc.createElement("Style");
+
+        FileInputStream excelFile = new FileInputStream("C:\\Users\\Balakrishnan\\Documents\\test\\23-08\\Checkinput11.xlsx");
+        Workbook workbook = new XSSFWorkbook(excelFile);
+
+        Sheet sheet = workbook.getSheet("slider");
+        DataFormatter dataFormatter = new DataFormatter();
+        Map<String, Integer> columnIndexMap = createColumnIndexMap(sheet);
+        boolean ControlLabelExists = false;
+        Row row = null; // Define row here
+
+        // Assuming controlId is unique, you can set controlIdExists to true if a match is found.
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            row = sheet.getRow(i); // Assign the row
+
+            if (row != null) {
+                String listboxId = dataFormatter.formatCellValue(row.getCell(columnIndexMap.get("ControlId")));
+                if (listboxId.equals(controlLabel)) {
+                    ControlLabelExists = true;
+                    break;
+                }
+            }
+        }
+
+
+        String[] styleAttributes = {
+                "ControlName",
+                "CustomControlType",
+                "ControlIcon",
+                "max",
+                "min",
+                "value",
+                "unit",
+        };
+
+        if (!ControlLabelExists) {
+            // Set default style properties if controlId does not exist in the "label" sheet
+            for (String attribute : styleAttributes) {
+                styleElement.setAttribute(attribute, getDefaultAttributeValueForslider(attribute));
+            }
+        } else {
+            // controlId exists in the "label" sheet, apply user-defined or default style properties
+            // ...
+            for (String attribute : styleAttributes) {
+                Integer columnIndex = columnIndexMap.get(attribute);
+
+                if (columnIndex != null) {
+                    String cellValue = dataFormatter.formatCellValue(row.getCell(columnIndex)).trim();
+
+                    // Check if the cellValue is empty or contains only whitespace characters
+                    if (cellValue.isEmpty()) {
+                        cellValue = getDefaultAttributeValueForslider(attribute);
+                    }
+
+                    styleElement.setAttribute(attribute, cellValue);
+                } else {
+                    // If the column index is not found, set the default value
+                    styleElement.setAttribute(attribute, getDefaultAttributeValueForslider(attribute));
+                }
+            }
+// ...
+        }
+
+// Append <Style> element to control
+        controlElement.appendChild(styleElement);
+
+// Create <DataClass> element
+        Element dataClassElement = emptyXmlDoc.createElement("DataClass");
+        dataClassElement.setAttribute("Name", "");
+
+// Append <DataClass> element to control
+        controlElement.appendChild(dataClassElement);
+
+        return controlElement;
+    }
+
+    private static String getDefaultAttributeValueForslider(String attributeName) {
+        return switch (attributeName) {
+            case "ControlName" -> "Slider";
+            case "CustomControlType" -> "Slider";
+            case "ControlIcon" -> "slider.png";
+            case "DocType" -> "100";
+            case "max" -> "0";
+            case "min" -> "0";
+            case "unit" -> "";
+            default -> "";
+        };
+    }
+
+    private static Element section(String controlId, String controlLabel, String
+            dataType, String groupId, String identifier, String title, String
+                                           saveValueType, List<frameControlNames> controlNames, String dataClassName, String caption, String ColumnLayout) throws IOException {
+
+        Element Frame = emptyXmlDoc.createElement("Frame");
+        Frame.setAttribute("FrameId", "columnFrameLayout");
+        Frame.setAttribute("SectionTheme", "Select");
+        Frame.setAttribute("ControlType", "frame");
+        Frame.setAttribute("Caption", caption);
+        Frame.setAttribute("FontStyle", "");
+        Frame.setAttribute("FontWeight", "");
+        Frame.setAttribute("FontSize", "");
+        Frame.setAttribute("FontColor", "");
+        Frame.setAttribute("BackColor", "");
+        Frame.setAttribute("SectionBackColor", "");
+        Frame.setAttribute("FontFamily", "");
+        Frame.setAttribute("Enable", "true");
+        Frame.setAttribute("DataOnDemand", "N");
+        Frame.setAttribute("ColumnLayout", ColumnLayout);
+        Frame.setAttribute("BorderColor", "");
+        Frame.setAttribute("BorderWidth", "1");
+        Frame.setAttribute("Grouping", "1");
+        Frame.setAttribute("MergeSection", "1");
+        Frame.setAttribute("ReadOnlyStyle", "N");
+        Frame.setAttribute("Summary", "");
+        Frame.setAttribute("CustomId", "");
+        Frame.setAttribute("CombinedFontWeight", "Regular");
+        Frame.setAttribute("FrameState", "false");
+        Frame.setAttribute("FrameVisible", "false");
+        Frame.setAttribute("GridLayout", "false");
+        Frame.setAttribute("GridLayoutInputLabel", "FFFFFF");
+        Frame.setAttribute("GridLayoutBorderColor", "FFFFFF");
+
+
+        for (frameControlNames control : controlNames) {
+            String names = control.controlName; // Assuming "getName" is the method to get the name property
+            //System.out.println("SectionNames--------------------" + names);
+            if (names.equalsIgnoreCase("textarea")) {
+                // Create and append a textarea control
+                System.out.println("Adding textarea control to Frame");
+
+                Frame.appendChild(textarea(controlId, names, controlLabel, dataType, groupId, identifier, title, saveValueType, dataClassName));
+            } else if (names.equalsIgnoreCase("frameend")) {
+                System.out.println("Encountered 'frameend', breaking out of the loop");
+                // If you encounter "frameend," you can break out of the loop
+                break;
+            }
+        }
+
+        Element eventElement1 = emptyXmlDoc.createElement("Event");
+        Element eventsElement1 = emptyXmlDoc.createElement("Events");
+        eventElement1.appendChild(eventsElement1);
+        Frame.appendChild(eventElement1);
+
+        return Frame;
+    }
+
 }
+
